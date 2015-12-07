@@ -1,0 +1,44 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+  color: #00b7ff;
+}
+header {
+  background: #eee;
+  padding: 10px;
+  margin: 0 0 20px;
+}
+a.loadmore {
+  background: #eee;
+  padding: 10px;
+  display: block;
+  margin: 10px 0;
+}
+article {
+  padding: 10px;
+  display: block;
+  margin: 10px 0;
+}
+article time {
+  color: #aaa;
+  display: inline-block;
+  vertical-align: top;
+  width: 150px;
+}
+article span {
+  display: inline-block;
+  vertical-align: top;
+}
+form {
+  background: #eee;
+  padding: 10px;
+  margin: 10px 0;
+}
+form textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 10px;
+}

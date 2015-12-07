@@ -1,0 +1,5 @@
+each item in items
+  include ./item.jade
+
+if nextCount
+  a.loadmore.js-loadMore(href="/?lastSeen="+lastSeen(items)) load next

@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  header
+    a(href="/") Home
+    label
+      input(type="checkbox" name="ajax") 
+      = " ajax enabled?"
+
+  include form
+  #list
+    include list
+    
