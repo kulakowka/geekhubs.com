@@ -5,6 +5,11 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
 
   body
+    header
+      a(href="/") Home
+      label
+        input(type="checkbox" name="ajax") 
+        = " ajax enabled?"
     block content
     script(src="http://code.jquery.com/jquery-2.1.4.min.js")
     script(src="/javascripts/app.js")

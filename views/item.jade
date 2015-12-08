@@ -1,3 +1,6 @@
 article
-  time= moment(item.createdAt).calendar()
+  
   span= item.content
+  .meta
+    a.reply(href="/"+item._id) reply
+    a.createdAt(href="/"+item._id)= moment(item.createdAt).calendar()

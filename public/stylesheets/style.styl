@@ -14,23 +14,32 @@ a.loadmore
   padding 10px
   display block
   margin 10px 0
-  
+
+article + article
+  border-top 1px solid #eee  
 article
   //background #eee
   padding 10px
   display block
-  margin 10px 0
-  // outline 1px solid blue
-  time
-    // outline 1px solid red
-    color #aaa
-    display inline-block
-    vertical-align top
-    width 150px
+  margin 0
+  font-size 13px
+  .meta
+    margin 5px 0 0
+    a
+      text-decoration none
+      color #aaa
+      display inline-block
+      font-size 12px
+      padding 5px 0px
+      margin-right 10px
+      &:hover
+        color red
+    
+      
+    
   span
     // outline 1px solid red
-    display inline-block
-    vertical-align top
+    display block
     
 form 
   background #eee

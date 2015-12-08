@@ -16,20 +16,31 @@ a.loadmore {
   display: block;
   margin: 10px 0;
 }
+article + article {
+  border-top: 1px solid #eee;
+}
 article {
   padding: 10px;
   display: block;
-  margin: 10px 0;
+  margin: 0;
+  font-size: 13px;
 }
-article time {
+article .meta {
+  margin: 5px 0 0;
+}
+article .meta a {
+  text-decoration: none;
   color: #aaa;
   display: inline-block;
-  vertical-align: top;
-  width: 150px;
+  font-size: 12px;
+  padding: 5px 0px;
+  margin-right: 10px;
+}
+article .meta a:hover {
+  color: #f00;
 }
 article span {
-  display: inline-block;
-  vertical-align: top;
+  display: block;
 }
 form {
   background: #eee;

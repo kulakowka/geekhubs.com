@@ -11,13 +11,21 @@ var PERPAGE = 5
 // view helpers
 router.use(getViewHelpers)
 
-/* GET items list. */
+/* GET items list */
 router.get('/', getItems, getNextCount, (req, res, next) => {
   var template = req.xhr ? 'list' : 'index'
   res.render(template, {
     title: 'Items list'
   })
 })
+
+/* GET item */
+router.get('/:id', getItem, (req, res, next) => {
+  res.render('show', {
+    title: res.locals.item.title
+  })
+})
+
 
 /* POST create item. */
 router.post('/', (req, res, next) => {
@@ -29,6 +37,20 @@ router.post('/', (req, res, next) => {
 })
 
 module.exports = router
+
+
+
+// load item for show
+function getItem (req, res, next) {
+  
+  Item
+  .findById(req.params.id)
+  .exec((err, item) => {
+    if (err) return next(err)
+    res.locals.item = item
+    next()
+  })
+}
 
 // load items for show
 function getItems (req, res, next) {
