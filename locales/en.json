@@ -1,0 +1,10 @@
+{
+	"Hello": "Hello",
+	"%s replies": {
+		"one": "%s reply",
+		"other": "%s replies"
+	},
+	"Show replies for this comment": "Show replies for this comment",
+	"Go to this comment page": "Go to this comment page",
+	"Go to parent comment": "Go to parent comment"
+}

@@ -8,6 +8,20 @@ header
   background #eee
   padding 10px
   margin 0 0 20px
+
+article
+  outline 1px solid blue
+  position relative
+  &:before
+    font-size 10px
+    padding 0 5px
+    background blue
+    color white
+    content attr(class)
+    position absolute
+    right 0
+    top 0px
+    outline 1px solid blue
   
 a.loadmore
   background #eee
@@ -21,7 +35,7 @@ article
   //background #eee
   padding 10px
   display block
-  margin 0
+  margin 10px 0
   font-size 13px
   .meta
     margin 5px 0 0
@@ -40,11 +54,33 @@ article
   span
     // outline 1px solid red
     display block
-    
+
+.replies
+  margin-left 20px
+
 form 
-  background #eee
+  background aliceblue
+  outline 1px solid blue
   padding 10px
   margin 10px 0
+  position relative
+  &:before
+    position relative
+  &:before
+    font-size 10px
+    padding 0 5px
+    background blue
+    color white
+    content attr(action)
+    position absolute
+    right 0
+    top 0px
+    outline 1px solid blue
+  input
+    display block
+    width 100%
+    box-sizing border-box 
+    margin 0 0 10px
   textarea
     display block
     width 100%

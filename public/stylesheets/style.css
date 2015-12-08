@@ -10,6 +10,21 @@ header {
   padding: 10px;
   margin: 0 0 20px;
 }
+article {
+  outline: 1px solid #00f;
+  position: relative;
+}
+article:before {
+  font-size: 10px;
+  padding: 0 5px;
+  background: #00f;
+  color: #fff;
+  content: attr(class);
+  position: absolute;
+  right: 0;
+  top: 0px;
+  outline: 1px solid #00f;
+}
 a.loadmore {
   background: #eee;
   padding: 10px;
@@ -22,7 +37,7 @@ article + article {
 article {
   padding: 10px;
   display: block;
-  margin: 0;
+  margin: 10px 0;
   font-size: 13px;
 }
 article .meta {
@@ -42,10 +57,35 @@ article .meta a:hover {
 article span {
   display: block;
 }
+.replies {
+  margin-left: 20px;
+}
 form {
-  background: #eee;
+  background: #f0f8ff;
+  outline: 1px solid #00f;
   padding: 10px;
   margin: 10px 0;
+  position: relative;
+}
+form:before {
+  position: relative;
+}
+form:before {
+  font-size: 10px;
+  padding: 0 5px;
+  background: #00f;
+  color: #fff;
+  content: attr(action);
+  position: absolute;
+  right: 0;
+  top: 0px;
+  outline: 1px solid #00f;
+}
+form input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 10px;
 }
 form textarea {
   display: block;
