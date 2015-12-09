@@ -1,6 +1,17 @@
 var mongoose = require('mongoose');
 var marked = require('marked');
 
+marked.setOptions({
+  // renderer: new marked.Renderer(),
+  gfm: true,
+  tables: false,
+  breaks: true,
+  pedantic: false,
+  sanitize: true,
+  smartLists: true,
+  smartypants: false
+});
+
 mongoose.connect('mongodb://localhost/app2', function() {
   
   return;  // drop database and populate data?
