@@ -5,11 +5,11 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
 
   body
-    header
-      a(href="/") Home
-      label
-        input(type="checkbox" name="ajax") 
-        = " ajax enabled?"
-    block content
+    .layout
+      header
+        a(href="/") Home
+      block content
     script(src="http://code.jquery.com/jquery-2.1.4.min.js")
+    script(src="https://cdn.jsdelivr.net/jquery.autosize/3.0.14/autosize.min.js")
+    script(src="https://cdn.jsdelivr.net/jquery.hotkeys/0.8b/jquery.hotkeys.min.js")
     script(src="/javascripts/app.js")

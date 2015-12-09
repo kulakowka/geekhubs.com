@@ -1,40 +1,38 @@
-/* global $ */
+/* global $, autosize */
 
 $(document)
-  .on('submit', 'form', submitForm)
   .on('click', '.list .js-loadMore', loadMore)
   .on('click', '.js-show-replies', loadReplies)
+  .on('keydown', '.commentForm textarea', submitFormOnKeyUp)
+  .on('submit', '.commentForm', submitForm)
+
+
+
+// from a jQuery collection
+autosize($('textarea'))
 
 function loadReplies () {
-  if (!ajaxEnabled()) return true
-
   var link = $(this)
   var url = link.attr('href')
   var item = link.closest('article')
   var replies = item.next('.replies')
 
-  $.get(url).done(function(html){
+  $.get(url).done(function (html) {
     if (replies.length) {
       replies.remove()
     } else {
-      item.after(html)  
+      item.after(html)
+      autosize(item.next('.replies').find('textarea'))
     }
-  }).fail(function(){
+  }).fail(function () {
     console.log('fail', arguments)
   })
 
   return false
 }
 
-// helper for ajax option
-function ajaxEnabled () {
-  return $('input[name="ajax"]').is(':checked')
-}
-
 // load more callback
 function loadMore () {
-  if (!ajaxEnabled()) return true
-
   var link = $(this)
   var list = link.closest('.list')
   var url = link.attr('href')
@@ -50,13 +48,17 @@ function loadMore () {
   return false
 }
 
-// submit form callback
-function submitForm () {
-  if (!ajaxEnabled()) return true
+function submitFormOnKeyUp (event) {
+  if (!(event.keyCode === 13 && !event.shiftKey)) return true
+  
+  $(this).closest('form').trigger('submit')
 
+  return false
+}
+// submit form callback
+function submitForm (event) {  
   var form = $(this)
   var list = form.next('.list')
-  
   var action = form.attr('action')
   var data = form.serialize()
 

@@ -1,53 +1,90 @@
-body
-  padding: 50px
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
-a
-  color: #00B7FF
+fontsize1 = 13px
 
+body
+  padding 50px
+  font fontsize1 "Lucida Grande", Helvetica, Arial, sans-serif
+
+a
+  color #00B7FF
+  text-decoration none
+  &:hover
+    text-decoration underline
+
+.layout
+  max-width 600px
+  margin auto
+  
 header
-  background #eee
+  background aliceblue
   padding 10px
   margin 0 0 20px
-
-article
-  outline 1px solid blue
-  position relative
-  &:before
-    font-size 10px
-    padding 0 5px
-    background blue
-    color white
-    content attr(class)
-    position absolute
-    right 0
-    top 0px
-    outline 1px solid blue
+  //display none
+    
+// article
+//   outline 1px solid blue
+//   position relative
+//   &:before
+//     font-size 10px
+//     padding 0 5px
+//     background blue
+//     color white
+//     content attr(class)
+//     position absolute
+//     right 0
+//     top 0px
+//     outline 1px solid blue
   
 a.loadmore
-  background #eee
+  background aliceblue
   padding 10px
   display block
   margin 10px 0
 
+form + article,
+article + form,
 article + article
   border-top 1px solid #eee  
 article
   //background #eee
-  padding 10px
+  padding 1em 0
   display block
-  margin 10px 0
-  font-size 13px
+  margin 0px 0
+  font-size fontsize1
+  line-height 1.5em
+  color black
+  .content
+    
+    p,
+    h1,
+    > h2,
+    > h3,
+    > h4,
+    > h5,
+    > h6,
+    > ul,
+    > blockquote
+      &:first-child
+        margin-top 0
+      &:last-child
+        margin-bottom 0.5em
   .meta
     margin 5px 0 0
+    font-size fontsize1 - 1
     a
-      text-decoration none
-      color #aaa
+      color grey
       display inline-block
-      font-size 12px
-      padding 5px 0px
+      // padding 5px 0px
       margin-right 10px
-      &:hover
-        color red
+
+    
+    .hidden
+      display none
+    &:hover
+      .hidden
+        display inline-block
+    .createdAt,
+    .parent
+      color lightgrey
     
       
     
@@ -58,31 +95,34 @@ article
 .replies
   margin-left 20px
 
-form 
-  background aliceblue
-  outline 1px solid blue
-  padding 10px
-  margin 10px 0
-  position relative
-  &:before
-    position relative
-  &:before
-    font-size 10px
-    padding 0 5px
-    background blue
-    color white
-    content attr(action)
-    position absolute
-    right 0
-    top 0px
-    outline 1px solid blue
-  input
-    display block
-    width 100%
-    box-sizing border-box 
-    margin 0 0 10px
+
+.commentForm
+  // background aliceblue
+  // outline 1px solid blue
+  padding 10px 0
+  margin 0px 0
+  // position relative
+  // &:before
+  //   position relative
+  // &:before
+  //   font-size 10px
+  //   padding 0 5px
+  //   background blue
+  //   color white
+  //   content attr(action)
+  //   position absolute
+  //   right 0
+  //   top 0px
+  //   outline 1px solid blue
   textarea
     display block
     width 100%
     box-sizing border-box 
     margin 0 0 10px
+    border 1px solid #eee  
+    resize none
+    padding 5px
+    font-size fontsize1
+    &:focus
+      outline none
+      border-color #00B7FF

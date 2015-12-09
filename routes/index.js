@@ -32,14 +32,10 @@ router.post('/', (req, res, next) => {
   item.save((err) => {
     if (err) return next(err)
     
-    if (req.xhr) {
-      console.log('saved', item)
-      res.render('item', {item})
-    } else {
-      res.redirect(redirectTo)  
-    }
-
+    if (req.xhr) return res.render('item', {item})
     
+    res.redirect(redirectTo)  
+
   })
 })
 

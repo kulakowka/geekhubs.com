@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
+var marked = require('marked');
 
 mongoose.connect('mongodb://localhost/app2', function() {
+  
+  return;  // drop database and populate data?
+
   mongoose.connection.db.dropDatabase(function(err, result) {
     new Item({content: '1 root comment', parentId: 'root'}).save(function(error, item) {
       ['1.1'].map((content, index) => {
@@ -41,6 +45,20 @@ var itemSchema = new Schema({
   content: String 
 });
 
+itemSchema.virtual('contentHTML').get(function () {
+  return marked(this.content)
+})
+
+// получить коммент родитель
+itemSchema.methods.getPerent = function (cb) {
+  return this.model('Item').findById(this.parentId).exec(cb)
+}
+
+// получить кол-во ответов на коммент
+itemSchema.methods.getRepliesCount = function (cb) {
+  return this.model('Item').count({parentId: this._id}).exec(cb)
+}
+
 // Хук вызывается перед сохранением документа
 itemSchema.pre('save', function (next) {
   // необходимо пометить документ как "был новым только что", 
@@ -57,8 +75,8 @@ itemSchema.post('save', function (item) {
   if (item.parentId === 'root') return; 
   if (!item.wasNew) return;
 
-  getPerent(item, (err, parent) => {
-    getRepliesCount(parent, (err, count) => {
+  item.getPerent((err, parent) => {
+    parent.getRepliesCount((err, count) => {
       parent.repliesCount = count
       parent.repliedAt = item.createdAt
       parent.save()
@@ -71,17 +89,5 @@ var Item = mongoose.model('Item', itemSchema);
 module.exports.mongoose = mongoose
 module.exports.Item = Item
 
-// получить коммент родитель
-function getPerent (item, callback) {
-  Item
-  .findById(item.parentId)
-  .exec(callback)
-}
 
-// получить кол-во ответов на коммент
-function getRepliesCount (item, callback) {
-  Item
-  .count({parentId: item._id})
-  .exec(callback)
-}
 

@@ -1,4 +1,5 @@
-form(action="/?redirectTo=/"+parentId method="post")
+form.commentForm(action="/?redirectTo=/"+parentId method="post")
   input(type="hidden" name="parentId" value=parentId placeholder="parentId")
-  textarea(type="text" name="content" placeholder="content")
-  button(type="submit") submit
+  textarea(type="text" rows="1" name="content" placeholder="Type here" autofocus)
+  noscript
+    button(type="submit") submit
