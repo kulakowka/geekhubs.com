@@ -1,0 +1,8 @@
+form.articleForm(action=(article.slug ? "/articles/"+article.slug+"?_method=PUT" : "/articles") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
+  input(type="hidden" name="slug" placeholder="slug" value=article.slug maxLength="200")
+  div
+    input(type="text" name="title" placeholder="title" value=article.title maxLength="150")
+  div
+    textarea(name="content" rows="6" placeholder="content")= article.content
+  div
+    button(type="submit") save

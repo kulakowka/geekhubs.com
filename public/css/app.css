@@ -1,0 +1,69 @@
+body {
+  padding: 50px;
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+a {
+  color: #00b7ff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.layout {
+  max-width: 600px;
+  margin: auto;
+}
+header {
+  background: #f0f8ff;
+  padding: 10px;
+  margin: 0 0 20px;
+}
+header a + a {
+  display: inline-block;
+  margin-left: 20px;
+}
+.articleForm button {
+  font-size: 16px;
+  background: #00b7ff;
+  color: #fff;
+  border: 0;
+  padding: 5px 20px;
+}
+.articleForm input[type="text"],
+.articleForm textarea {
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 0 10px;
+  border: 1px solid #eee;
+  resize: none;
+  padding: 5px;
+  font-size: 16px;
+  padding: 5px 10px;
+}
+.articleForm input[type="text"]:focus,
+.articleForm textarea:focus {
+  outline: none;
+  border-color: #00b7ff;
+}
+.articleForm input[type="text"] {
+  font-size: 22px;
+}
+article h1 a.title {
+  font-size: 22px;
+  color: #333;
+}
+article h1 a.edit {
+  font-weight: normal;
+  margin-left: 10px;
+  font-size: 10px;
+  vertical-align: super;
+}

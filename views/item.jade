@@ -1,9 +1,0 @@
-article(class="item_"+item._id)
-  .content!= item.contentHTML
-  .meta
-    a.js-show-replies(href="/"+item._id title=__('Show replies for this comment'))= item.repliesCount ? __n('%s replies', item.repliesCount) : __('reply')
-    
-    span.hidden
-      a.createdAt(href="/"+item._id title=moment(item.createdAt).calendar())= moment(item.createdAt).fromNow()
-      if item.parentId !== 'root'
-        a.parent(href="/"+item.parentId title=__("Go to parent comment")) parent

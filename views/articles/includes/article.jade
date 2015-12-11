@@ -1,0 +1,6 @@
+article
+  h1 
+    a.title(href="/articles/"+article.slug)= article.title
+    a.edit(href="/articles/"+article.slug+"/edit") edit
+  
+  = article.content

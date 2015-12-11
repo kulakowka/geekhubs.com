@@ -1,0 +1,65 @@
+fontsize1 = 16px
+fontsize2 = 22px
+
+body
+  padding 50px
+  font fontsize1 "Lucida Grande", Helvetica, Arial, sans-serif
+*
+  box-sizing border-box
+  
+a
+  color #00B7FF
+  text-decoration none
+  &:hover
+    text-decoration underline
+
+.layout
+  max-width 600px
+  margin auto
+  
+header
+  background aliceblue
+  padding 10px
+  margin 0 0 20px
+  
+  a + a
+    display inline-block
+    margin-left 20px
+    
+
+.articleForm
+  button
+    font-size fontsize1
+    background #00B7FF
+    color #fff
+    border 0
+    padding 5px 20px
+  
+  input[type="text"],
+  textarea
+    font-size fontsize1
+    display block
+    width 100%
+    box-sizing border-box 
+    margin 0 0 10px
+    border 1px solid #eee  
+    resize none
+    padding 5px
+    font-size fontsize1
+    padding 5px 10px
+    &:focus
+      outline none
+      border-color #00B7FF
+  input[type="text"]
+    font-size fontsize2
+
+article
+  h1
+    a.title
+      font-size fontsize2
+      color #333
+    a.edit      
+      font-weight normal
+      margin-left 10px
+      font-size 10px
+      vertical-align super
