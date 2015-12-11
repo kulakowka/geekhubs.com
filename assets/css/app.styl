@@ -1,9 +1,15 @@
 fontsize1 = 16px
 fontsize2 = 22px
+fontsize3 = 13px
+fontfamily1 = "Lucida Grande", Helvetica, Arial, sans-serif
+
+@import 'code'
 
 body
   padding 50px
-  font fontsize1 "Lucida Grande", Helvetica, Arial, sans-serif
+  font-size fontsize1 
+  font-family fontfamily1
+
 *
   box-sizing border-box
   
@@ -28,16 +34,20 @@ header
     
 
 .articleForm
+  
   button
     font-size fontsize1
+    font-family fontfamily1
     background #00B7FF
     color #fff
     border 0
     padding 5px 20px
   
+  .preview,
   input[type="text"],
   textarea
     font-size fontsize1
+    font-family fontfamily1
     display block
     width 100%
     box-sizing border-box 
@@ -47,13 +57,48 @@ header
     padding 5px
     font-size fontsize1
     padding 5px 10px
+    line-height 1.5em
     &:focus
       outline none
-      border-color #00B7FF
+      // border-color #00B7FF
   input[type="text"]
     font-size fontsize2
+    
+  .tabs
+    .tab
+      font-size fontsize3
+      font-weight bold
+      position relative
+      bottom -1px
+      display inline-block
+      border-top 1px solid transparent
+      border-left 1px solid transparent
+      border-right 1px solid transparent
+      border-bottom 1px solid transparent
+      border-top-left-radius 5px
+      border-top-right-radius 5px
+      padding 5px 15px 
+      cursor pointer
+      color grey
+      &.active
+        color #333
+        border-top 1px solid #eee
+        border-left 1px solid #eee
+        border-right 1px solid #eee
+        border-bottom 1px solid #fff
+  .frame
+    display none
+    &.open
+      display block
+  .preview 
+    h1, h2, h3, h4, h5, h6, p 
+      &:first-child 
+        margin-top 0
 
+article + article
+  margin-top 50px
 article
+  
   h1
     a.title
       font-size fontsize2
@@ -63,3 +108,9 @@ article
       margin-left 10px
       font-size 10px
       vertical-align super
+  //.content
+    
+  .meta
+    margin-top 1em
+    font-size fontsize3
+    color grey

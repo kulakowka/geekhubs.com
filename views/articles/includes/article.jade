@@ -1,6 +1,7 @@
 article
-  h1 
+  h1
     a.title(href="/articles/"+article.slug)= article.title
     a.edit(href="/articles/"+article.slug+"/edit") edit
-  
-  = article.content
+  .content!= article.html
+  .meta
+    time(title=moment(article.createdAt).calendar() datetime=moment(article.createdAt).format())= moment(article.createdAt).fromNow()

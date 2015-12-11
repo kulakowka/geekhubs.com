@@ -19,7 +19,7 @@ router.param('slug', function(req, res, next, slug) {
 })
 
 router.get('/', function(req, res, next) {
-  Article.find().exec(function(err, articles) {
+  Article.find().sort('-createdAt').exec(function(err, articles) {
     if (err) return next(err)
 
     res.render('articles/index', {articles})

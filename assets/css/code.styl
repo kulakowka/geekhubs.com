@@ -1,37 +1,41 @@
-code {
-  background: rgba(0,0,0,0.03);
-  border: 0px solid rgba(0,0,0,0.14);
-  font-size: 13px;
-  line-height: 1.4em;
-  padding: 0.1em 0.4em;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  color: #333;
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace !important;
-}
-pre {
-  background: rgba(0,0,0,0.03);
-  border: 0px solid rgba(0,0,0,0);
-  padding: 0.4em;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-pre code {
-  border: 0;
-  background: transparent;
-  padding: inherit;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-  display: block;
-  overflow-x: auto;
-}
+code
+  background: rgba(0,0,0,0.03)
+  border: 0px solid rgba(0,0,0,0.14)
+  font-size: fontsize3
+  line-height: 1.4em
+  padding: 0.1em 0.4em
+  border-radius: 5px
+  color: #333333
+  font-family Consolas, "Liberation Mono", Menlo, Courier, monospace !important
+
+pre
+  background: rgba(0,0,0,0.03)
+  border: 0px solid rgba(0,0,0,0.0)
+  padding: 0.4em 
+  border-radius: 5px
+
+pre code
+  border: 0
+  background: transparent
+  padding: inherit
+  border-radius: 0
+  display: block
+  overflow-x: auto
+
+/**
+ * GitHub Gist Theme
+ * Author : Louis Barranqueiro - https://github.com/LouisBarranqueiro
+ */
+
+
 .hljs-comment,
 .lang-bash .hljs-shebang,
 .lang-java .hljs-javadoc,
 .lang-javascript .hljs-javadoc,
-.lang-rust .hljs-preprocessor {
-  color: #969896;
-}
+.lang-rust .hljs-preprocessor 
+  color: #969896
+
+
 .hljs-string,
 .lang-apache .hljs-sqbracket,
 .lang-coffeescript .hljs-subst,
@@ -54,9 +58,10 @@ pre code {
 .lang-php .hljs-regexp,
 .lang-xml .hljs-value,
 .lang-less .hljs-built_in,
-.lang-scss .hljs-built_in {
-  color: #df5000;
-}
+.lang-scss .hljs-built_in 
+  color: #df5000
+
+
 .hljs-keyword,
 .lang-css .hljs-at_rule,
 .lang-css .hljs-important,
@@ -78,9 +83,10 @@ pre code {
 .lang-scss .hljs-important,
 .lang-stylus .hljs-at_rule,
 .lang-go .hljs-typename,
-.lang-swift .hljs-preprocessor {
-  color: #a71d5d;
-}
+.lang-swift .hljs-preprocessor 
+  color: #a71d5d
+
+
 .lang-apache .hljs-common,
 .lang-apache .hljs-cbracket,
 .lang-apache .hljs-keyword,
@@ -141,16 +147,18 @@ pre code {
 .lang-go .hljs-built_in,
 .lang-go .hljs-constant,
 .lang-swift .hljs-built_in,
-.lang-swift .hljs-number {
-  color: #0086b3;
-}
+.lang-swift .hljs-number 
+  color: #0086b3
+
+
 .lang-apache .hljs-tag,
 .lang-cs .hljs-xmlDocTag,
 .lang-css .hljs-tag,
 .lang-xml .hljs-title,
-.lang-stylus .hljs-tag {
-  color: #63a35c;
-}
+.lang-stylus .hljs-tag 
+  color: #63a35c
+
+
 .lang-bash .hljs-variable,
 .lang-cs .hljs-preprocessor,
 .lang-cs .hljs-preprocessor .hljs-keyword,
@@ -162,9 +170,10 @@ pre code {
 .lang-makefile .hljs-constant,
 .lang-nginx .hljs-variable,
 .lang-xml .hljs-tag,
-.lang-scss .hljs-variable {
-  color: #333;
-}
+.lang-scss .hljs-variable 
+  color: #333333
+
+
 .lang-bash .hljs-title,
 .lang-coffeescript .hljs-title,
 .lang-cpp .hljs-title,
@@ -200,144 +209,29 @@ pre code {
 .lang-stylus .hljs-pseudo,
 .lang-stylus .hljs-title,
 .lang-swift .hljs-title,
-.lang-diff .hljs-chunk {
+.lang-diff .hljs-chunk 
   color: #795da3;
-}
+
+
 .lang-coffeescript .hljs-reserved,
-.lang-coffeescript .hljs-attribute {
-  color: #1d3e81;
-}
-.lang-diff .hljs-chunk {
-  font-weight: bold;
-}
-.lang-diff .hljs-addition {
-  color: #55a532;
-  background-color: #eaffea;
-}
-.lang-diff .hljs-deletion {
-  color: #bd2c00;
-  background-color: #ffecec;
-}
-.lang-markdown .hljs-link_url {
-  text-decoration: underline;
-}
-body {
-  padding: 50px;
-  font-size: 16px;
-  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-a {
-  color: #00b7ff;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-.layout {
-  max-width: 600px;
-  margin: auto;
-}
-header {
-  background: #f0f8ff;
-  padding: 10px;
-  margin: 0 0 20px;
-}
-header a + a {
-  display: inline-block;
-  margin-left: 20px;
-}
-.articleForm button {
-  font-size: 16px;
-  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: #00b7ff;
-  color: #fff;
-  border: 0;
-  padding: 5px 20px;
-}
-.articleForm .preview,
-.articleForm input[type="text"],
-.articleForm textarea {
-  font-size: 16px;
-  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
-  display: block;
-  width: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: 0 0 10px;
-  border: 1px solid #eee;
-  resize: none;
-  padding: 5px;
-  font-size: 16px;
-  padding: 5px 10px;
-  line-height: 1.5em;
-}
-.articleForm .preview:focus,
-.articleForm input[type="text"]:focus,
-.articleForm textarea:focus {
-  outline: none;
-}
-.articleForm input[type="text"] {
-  font-size: 22px;
-}
-.articleForm .tabs .tab {
-  font-size: 13px;
-  font-weight: bold;
-  position: relative;
-  bottom: -1px;
-  display: inline-block;
-  border-top: 1px solid transparent;
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  padding: 5px 15px;
-  cursor: pointer;
-  color: #808080;
-}
-.articleForm .tabs .tab.active {
-  color: #333;
-  border-top: 1px solid #eee;
-  border-left: 1px solid #eee;
-  border-right: 1px solid #eee;
-  border-bottom: 1px solid #fff;
-}
-.articleForm .frame {
-  display: none;
-}
-.articleForm .frame.open {
-  display: block;
-}
-.articleForm .preview h1:first-child,
-.articleForm .preview h2:first-child,
-.articleForm .preview h3:first-child,
-.articleForm .preview h4:first-child,
-.articleForm .preview h5:first-child,
-.articleForm .preview h6:first-child,
-.articleForm .preview p:first-child {
-  margin-top: 0;
-}
-article + article {
-  margin-top: 50px;
-}
-article h1 a.title {
-  font-size: 22px;
-  color: #333;
-}
-article h1 a.edit {
-  font-weight: normal;
-  margin-left: 10px;
-  font-size: 10px;
-  vertical-align: super;
-}
-article .meta {
-  margin-top: 1em;
-  font-size: 13px;
-  color: #808080;
-}
+.lang-coffeescript .hljs-attribute 
+  color: #1d3e81
+
+
+.lang-diff .hljs-chunk 
+  font-weight: bold
+
+
+.lang-diff .hljs-addition 
+  color: #55a532
+  background-color: #eaffea
+
+
+.lang-diff .hljs-deletion 
+  color: #bd2c00
+  background-color: #ffecec
+
+
+.lang-markdown .hljs-link_url 
+  text-decoration: underline
+

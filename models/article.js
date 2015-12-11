@@ -2,6 +2,7 @@
 
 var mongoose = require('../config/mongoose')
 var marked = require('marked')
+var highlightjs = require('highlight.js')
 
 marked.setOptions({
   // renderer: new marked.Renderer(),
@@ -11,7 +12,10 @@ marked.setOptions({
   pedantic: false,
   sanitize: true,
   smartLists: true,
-  smartypants: false
+  smartypants: false,
+  highlight: function (code, lang, callback) {
+    return highlightjs.highlightAuto(code).value
+  }
 })
 
 var Schema = mongoose.Schema
@@ -35,6 +39,10 @@ var articleSchema = new Schema({
     required: true
   }
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
+
+articleSchema.virtual('html').get(function () {
+  return marked(this.content)
+})
 
 // articleSchema.pre('save', function (next) {
 //   this.wasNew = this.isNew

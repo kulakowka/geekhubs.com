@@ -3,6 +3,11 @@ form.articleForm(action=(article.slug ? "/articles/"+article.slug+"?_method=PUT"
   div
     input(type="text" name="title" placeholder="title" value=article.title maxLength="150")
   div
-    textarea(name="content" rows="6" placeholder="content")= article.content
+    .tabs
+      .tab.active(data-frame="write") Write
+      .tab(data-frame="preview") Preview
+    .frame.write.open
+      textarea(name="content" rows="6" placeholder="content")= article.content
+    .frame.preview
   div
     button(type="submit") save
