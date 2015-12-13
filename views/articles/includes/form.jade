@@ -1,4 +1,4 @@
-form.articleForm(action=(article.slug ? "/articles/"+article.slug+"?_method=PUT" : "/articles") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
+form.articleForm(action=(article._id ? "/articles/"+article._id+"?_method=PUT" : "/articles") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
   input(type="hidden" name="slug" placeholder="slug" value=article.slug maxLength="200")
   div
     input(type="text" name="title" placeholder="title" value=article.title maxLength="150")

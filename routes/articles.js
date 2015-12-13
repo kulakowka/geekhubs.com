@@ -8,8 +8,8 @@ var Article = require('../models/article')
 // view helpers
 router.use(getViewHelpers)
 
-router.param('slug', function(req, res, next, slug) {
-  Article.findOne({slug}).exec(function(err, article) {    
+router.param('id', function(req, res, next, id) {
+  Article.findById(id).exec(function(err, article) {    
     if (err) return next(err)
     if (!article) return next(getNotFoundError())
     
@@ -30,23 +30,26 @@ router.get('/new', function(req, res, next) {
   res.render('articles/new', {article: {}})
 })
 
-router.get('/:slug', function(req, res, next) {
-  res.render('articles/show')
-})
-
-router.get('/:slug/edit', function(req, res, next) {
+router.get('/:id/edit', function(req, res, next) {
   res.render('articles/edit')
 })
 
-router.put('/:slug', function(req, res, next) {
+router.get('/:id/:slug', function(req, res, next) {
+  res.render('articles/show')
+})
+
+
+
+router.put('/:id', function(req, res, next) {
   let article = res.locals.article
   
   article.title = req.body.title
   article.content = req.body.content
+  article.slug = req.body.slug
 
   article.save((err) => {
     if (err) return next(err)
-    res.redirect('/articles/' + article.slug)  
+    res.redirect('/articles/' + article._id + '/' + article.slug)  
   })
 })
 
@@ -60,7 +63,7 @@ router.post('/', function(req, res, next) {
   
   article.save((err) => {
     if (err) return next(err)
-    res.redirect('/articles/' + article.slug)  
+    res.redirect('/articles/' + article._id + '/' + article.slug)  
   })
 });
 

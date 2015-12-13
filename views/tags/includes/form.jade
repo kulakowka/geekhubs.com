@@ -1,0 +1,6 @@
+form.tagForm(action=(tag._id ? "/tags/"+tag.slug+"?_method=PUT" : "/tags") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
+  input(type="hidden" name="slug" placeholder="slug" value=tag.slug maxLength="200")
+  div
+    input(type="text" name="title" placeholder="title" value=tag.title maxLength="150")
+  div
+    button(type="submit") save

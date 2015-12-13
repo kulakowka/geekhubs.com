@@ -251,6 +251,7 @@ header a + a {
   display: inline-block;
   margin-left: 20px;
 }
+.tagForm button,
 .articleForm button {
   font-size: 16px;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -259,8 +260,11 @@ header a + a {
   border: 0;
   padding: 5px 20px;
 }
+.tagForm .preview,
 .articleForm .preview,
+.tagForm input[type="text"],
 .articleForm input[type="text"],
+.tagForm textarea,
 .articleForm textarea {
   font-size: 16px;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -277,14 +281,19 @@ header a + a {
   padding: 5px 10px;
   line-height: 1.5em;
 }
+.tagForm .preview:focus,
 .articleForm .preview:focus,
+.tagForm input[type="text"]:focus,
 .articleForm input[type="text"]:focus,
+.tagForm textarea:focus,
 .articleForm textarea:focus {
   outline: none;
 }
+.tagForm input[type="text"],
 .articleForm input[type="text"] {
   font-size: 22px;
 }
+.tagForm .tabs .tab,
 .articleForm .tabs .tab {
   font-size: 13px;
   font-weight: bold;
@@ -301,6 +310,7 @@ header a + a {
   cursor: pointer;
   color: #808080;
 }
+.tagForm .tabs .tab.active,
 .articleForm .tabs .tab.active {
   color: #333;
   border-top: 1px solid #eee;
@@ -308,18 +318,27 @@ header a + a {
   border-right: 1px solid #eee;
   border-bottom: 1px solid #fff;
 }
+.tagForm .frame,
 .articleForm .frame {
   display: none;
 }
+.tagForm .frame.open,
 .articleForm .frame.open {
   display: block;
 }
+.tagForm .preview h1:first-child,
 .articleForm .preview h1:first-child,
+.tagForm .preview h2:first-child,
 .articleForm .preview h2:first-child,
+.tagForm .preview h3:first-child,
 .articleForm .preview h3:first-child,
+.tagForm .preview h4:first-child,
 .articleForm .preview h4:first-child,
+.tagForm .preview h5:first-child,
 .articleForm .preview h5:first-child,
+.tagForm .preview h6:first-child,
 .articleForm .preview h6:first-child,
+.tagForm .preview p:first-child,
 .articleForm .preview p:first-child {
   margin-top: 0;
 }
@@ -340,4 +359,17 @@ article .meta {
   margin-top: 1em;
   font-size: 13px;
   color: #808080;
+}
+article .meta a {
+  color: #808080;
+}
+.tag h1 a.title {
+  font-size: 22px;
+  color: #333;
+}
+.tag h1 a.edit {
+  font-weight: normal;
+  margin-left: 10px;
+  font-size: 10px;
+  vertical-align: super;
 }

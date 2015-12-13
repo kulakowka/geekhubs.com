@@ -41,6 +41,7 @@ app.get('/js/app.js', browserify(path.join(__dirname, 'assets/js/app.js')))
 
 app.use('/', require('./routes/index'))
 app.use('/articles', require('./routes/articles'))
+app.use('/tags', require('./routes/tags'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

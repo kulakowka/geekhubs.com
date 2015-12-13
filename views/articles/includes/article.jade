@@ -1,7 +1,17 @@
 article
   h1
-    a.title(href="/articles/"+article.slug)= article.title
-    a.edit(href="/articles/"+article.slug+"/edit") edit
+    a.title(href="/articles/"+article._id+"/"+article.slug)= article.title
+    a.edit(href="/articles/"+article._id+"/edit") edit
   .content!= article.html
   .meta
     time(title=moment(article.createdAt).calendar() datetime=moment(article.createdAt).format())= moment(article.createdAt).fromNow()
+    span.author
+      = " by "
+      a(href="/users/kulakowka") kulakowka
+    span.tags 
+      = " in "
+      a(href="/tags/node-js") node.js
+      = ", "
+      a(href="/tags/javascript") javascript
+      = ", "
+      a(href="/tags/reactjs") react.js
