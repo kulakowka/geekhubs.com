@@ -41,6 +41,7 @@ router.put('/:slug', function(req, res, next) {
   
   tag.title = req.body.title
   tag.slug = req.body.slug
+  tag.description = req.body.description
 
   tag.save((err) => {
     if (err) return next(err)
@@ -52,7 +53,8 @@ router.post('/', function(req, res, next) {
 
   var tag = new Tag({
     title: req.body.title,
-    slug: req.body.slug
+    slug: req.body.slug,
+    description: req.body.description
   })
   
   tag.save((err) => {

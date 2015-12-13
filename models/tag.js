@@ -7,7 +7,14 @@ var Schema = mongoose.Schema
 var tagSchema = new Schema({ 
   title: { 
     type: String,
+    trim: true,
+    maxlength: 80,
     required: true
+  },
+  description: { 
+    type: String,
+    trim: true,
+    maxlength: 200
   },
   slug: {
     type: String,
@@ -16,7 +23,7 @@ var tagSchema = new Schema({
     unique: true,
     lowercase: true,
     trim: true,
-    maxlength: 200
+    maxlength: 100
   }
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
