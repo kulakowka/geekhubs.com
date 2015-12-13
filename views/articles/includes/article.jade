@@ -8,10 +8,13 @@ article
     span.author
       = " by "
       a(href="/users/kulakowka") kulakowka
-    span.tags 
-      = " in "
-      a(href="/tags/node-js") node.js
-      = ", "
-      a(href="/tags/javascript") javascript
-      = ", "
-      a(href="/tags/reactjs") react.js
+
+    if article.tags.length
+      span.tags 
+        = " in "
+        each tag, index in article.tags
+          if index
+            = ", "
+          a(href="/tags/"+tag.slug)= tag.title
+          
+        

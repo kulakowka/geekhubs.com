@@ -25,6 +25,7 @@ var tagSchema = new Schema({
     trim: true,
     maxlength: 100
   }
+
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
 var Tag = mongoose.model('Tag', tagSchema)

@@ -10,4 +10,11 @@ form.articleForm(action=(article._id ? "/articles/"+article._id+"?_method=PUT" :
       textarea(name="content" rows="6" placeholder="content")= article.content
     .frame.preview
   div
+    select(name="tags" multiple)
+      each tag in tags
+        if article.tags.filter(_tag => _tag._id.equals(tag._id)).length
+          option(value=tag._id selected)= tag.title
+        else
+          option(value=tag._id)= tag.title
+  div
     button(type="submit") save

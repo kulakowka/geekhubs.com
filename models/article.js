@@ -37,7 +37,9 @@ var articleSchema = new Schema({
   content: { 
     type: String,
     required: true
-  }
+  },
+  tags : [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
+
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
 articleSchema.virtual('html').get(function () {
