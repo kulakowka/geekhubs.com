@@ -24,6 +24,7 @@
     "mongoose": "^4.2.9",
     "morgan": "~1.6.1",
     "nib": "^1.1.0",
+    "selectize": "^0.12.1",
     "serve-favicon": "~2.3.0",
     "stylus": "^0.42.3"
   }

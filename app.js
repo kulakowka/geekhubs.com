@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var i18n = require('i18n');
 var browserify = require('browserify-middleware')
 var methodOverride = require('method-override')
+var moment = require('moment')
 
 var app = express();
 
@@ -38,6 +39,12 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(require('./config/stylus'))
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/js/app.js', browserify(path.join(__dirname, 'assets/js/app.js')))
+
+// view helpers
+app.use((req, res, next) => {
+  res.locals.moment = moment
+  next()
+})
 
 app.use('/', require('./routes/index'))
 app.use('/articles', require('./routes/articles'))

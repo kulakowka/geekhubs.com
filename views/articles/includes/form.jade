@@ -1,18 +1,18 @@
 form.articleForm(action=(article._id ? "/articles/"+article._id+"?_method=PUT" : "/articles") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
-  input(type="hidden" name="slug" placeholder="slug" value=article.slug maxLength="200")
+  input(type="hidden" name="slug" placeholder="Slug" value=article.slug maxLength="200")
   div
-    input(type="text" name="title" placeholder="title" value=article.title maxLength="150")
+    input(type="text" name="title" placeholder="Title" value=article.title maxLength="150")
   div
     .tabs
       .tab.active(data-frame="write") Write
       .tab(data-frame="preview") Preview
     .frame.write.open
-      textarea(name="content" rows="6" placeholder="content")= article.content
+      textarea(name="content" rows="6" placeholder="Content")= article.content
     .frame.preview
   div
-    select(name="tags" multiple)
+    select(name="tags" multiple placeholder="Tags")
       each tag in tags
-        if article.tags.filter(_tag => _tag._id.equals(tag._id)).length
+        if article.tags && article.tags.filter(_tag => _tag._id.equals(tag._id)).length
           option(value=tag._id selected)= tag.title
         else
           option(value=tag._id)= tag.title

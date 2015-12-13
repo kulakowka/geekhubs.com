@@ -3,7 +3,9 @@ fontsize2 = 22px
 fontsize3 = 13px
 fontfamily1 = "Lucida Grande", Helvetica, Arial, sans-serif
 
+@import 'selectize'
 @import 'code'
+
 
 body
   padding 50px
@@ -61,7 +63,7 @@ header
     &:focus
       outline none
       // border-color #00B7FF
-  input[type="text"]
+  input[name="title"]
     font-size fontsize2
     
   .tabs
@@ -94,6 +96,8 @@ header
     h1, h2, h3, h4, h5, h6, p 
       &:first-child 
         margin-top 0
+  .selectize-control
+    margin-bottom 10px
 
 article + article
   margin-top 50px
@@ -114,6 +118,7 @@ article
     margin-top 1em
     font-size fontsize3
     color grey
+    text-transform lowercase
     a
       color grey
       
@@ -129,3 +134,25 @@ article
       margin-left 10px
       font-size 10px
       vertical-align super
+      
+ul.tagArticles
+  list-style none
+  margin 2em 0 0
+  padding 0
+  li + li
+    margin-top 1em
+  li
+    list-style none
+    margin 0
+    padding 0
+    a.title
+      font-weight bold
+      font-size fontsize2
+      color #333
+    .meta
+      margin-top 0.3em
+      font-size fontsize3
+      color grey
+      text-transform lowercase
+      a
+        color grey

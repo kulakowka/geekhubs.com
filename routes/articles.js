@@ -1,13 +1,10 @@
 'use strict'
-var moment = require('moment')
+
 var express = require('express');
 var router = express.Router();
 
 var Article = require('../models/article')
 var Tag = require('../models/tag')
-
-// view helpers
-router.use(getViewHelpers)
 
 router.param('id', function(req, res, next, id) {
   Article
@@ -88,10 +85,6 @@ router.post('/', function(req, res, next) {
 module.exports = router;
 
 
-function getViewHelpers (req, res, next) {
-  res.locals.moment = moment
-  next()
-}
 
 function getNotFoundError () {
   var error = new Error('Article not found')

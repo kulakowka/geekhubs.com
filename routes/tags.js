@@ -4,7 +4,10 @@
 var express = require('express');
 var router = express.Router();
 
+var Article = require('../models/article')
 var Tag = require('../models/tag')
+
+
 
 router.param('slug', function(req, res, next, slug) {
   Tag.findOne({slug}).exec(function(err, tag) {    
@@ -33,7 +36,19 @@ router.get('/:slug/edit', function(req, res, next) {
 })
 
 router.get('/:slug', function(req, res, next) {
-  res.render('tags/show')
+  let tag = res.locals.tag
+
+  Article
+  .find({tags: { $in: [tag._id] }})
+  .populate('tags')
+  .sort('-createdAt')
+  .exec(function(err, articles) {
+    if (err) return next(err)
+
+    res.render('tags/show', {articles})  
+  })
+
+  
 })
 
 router.put('/:slug', function(req, res, next) {
