@@ -1,0 +1,11 @@
+form.commentForm(action=(comment._id ? "/comments/"+comment._id+"?_method=PUT" : "/comments") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
+  input(type="hidden" name="article" placeholder="article" value=article._id)
+  div
+    .tabs
+      .tab.active(data-frame="write") Write
+      .tab(data-frame="preview") Preview
+    .frame.write.open
+      textarea(name="content" rows="2" placeholder="Content")= comment.content
+    .frame.preview
+  div
+    button(type="submit") save

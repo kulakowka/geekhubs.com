@@ -1,4 +1,3 @@
-var slug = require('limax')
 var $ = require('jquery')
 var marked = require('marked')
 var highlightjs = require('highlight.js')
@@ -15,16 +14,6 @@ marked.setOptions({
     return highlightjs.highlightAuto(code).value
   }
 })
-
-module.exports.onTitleKeyup = function (event) {
-  var input = $(this)
-  var form = input.closest('form')
-  var slugInput = form.find('input[name="slug"]')
-  
-  var title = input.val()
-
-  slugInput.val(slug(title))
-}
 
 module.exports.onTabClick = function (event) {
   var tab = $(this)

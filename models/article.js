@@ -1,22 +1,9 @@
 'use strict'
 
 var mongoose = require('../config/mongoose')
-var marked = require('marked')
-var highlightjs = require('highlight.js')
+var marked = require('../config/marked')
 
-marked.setOptions({
-  // renderer: new marked.Renderer(),
-  gfm: true,
-  tables: false,
-  breaks: true,
-  pedantic: false,
-  sanitize: true,
-  smartLists: true,
-  smartypants: false,
-  highlight: function (code, lang, callback) {
-    return highlightjs.highlightAuto(code).value
-  }
-})
+var Comment = require('./comment')
 
 var Schema = mongoose.Schema
 
@@ -38,6 +25,10 @@ var articleSchema = new Schema({
     type: String,
     required: true
   },
+  commentsCount: {
+    type: Number,
+    default: 0
+  },
   tags : [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
 
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
@@ -45,6 +36,23 @@ var articleSchema = new Schema({
 articleSchema.virtual('html').get(function () {
   return marked(this.content)
 })
+
+articleSchema.methods.getCommentsCount = function (cb) {
+  return this.model('Comment').count({ article: this._id }, cb);
+}
+
+articleSchema.statics.updateCommentsCount = function (id, cb) {
+  return this.findById(id, (err, article) => {
+    if (err) return cb(err)
+
+    article.getCommentsCount((err, count) => {
+      if (err) return cb(err)
+
+      article.commentsCount = count
+      article.save(cb)
+    })
+  })
+}
 
 // articleSchema.pre('save', function (next) {
 //   this.wasNew = this.isNew

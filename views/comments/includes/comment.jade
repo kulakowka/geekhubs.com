@@ -1,0 +1,7 @@
+.comment
+  .content!= comment.html
+  .meta
+    time(title=moment(comment.createdAt).calendar() datetime=moment(comment.createdAt).format())= moment(comment.createdAt).fromNow()
+    span.author
+      = " by "
+      a(href="/users/kulakowka") kulakowka

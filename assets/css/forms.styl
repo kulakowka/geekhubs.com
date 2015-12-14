@@ -1,0 +1,66 @@
+.tagForm,
+.articleForm,
+.commentForm
+  button
+    font-size fontsize1
+    font-family fontfamily1
+    background #00B7FF
+    color #fff
+    border 0
+    padding 5px 20px
+  
+  .preview,
+  input[type="text"],
+  textarea
+    font-size fontsize1
+    font-family fontfamily1
+    display block
+    width 100%
+    box-sizing border-box 
+    margin 0 0 10px
+    border 1px solid #eee  
+    resize none
+    padding 5px
+    font-size fontsize1
+    padding 5px 10px
+    line-height 1.5em
+    &:focus
+      outline none
+      // border-color #00B7FF
+  input[name="title"]
+    font-size fontsize2
+    
+  .tabs
+    .tab
+      font-size fontsize3
+      font-weight bold
+      position relative
+      bottom -1px
+      display inline-block
+      border-top 1px solid transparent
+      border-left 1px solid transparent
+      border-right 1px solid transparent
+      border-bottom 1px solid transparent
+      border-top-left-radius 5px
+      border-top-right-radius 5px
+      padding 5px 15px 
+      cursor pointer
+      color grey
+      &.active
+        color #333
+        border-top 1px solid #eee
+        border-left 1px solid #eee
+        border-right 1px solid #eee
+        border-bottom 1px solid #fff
+  .frame
+    display none
+    &.open
+      display block
+  .preview 
+    h1, h2, h3, h4, h5, h6, p 
+      &:first-child 
+        margin-top 0
+      &:last-child 
+        margin-bottom 0
+  .selectize-control
+    margin-bottom 10px

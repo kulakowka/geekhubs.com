@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 
+var Comment = require('../models/comment')
 var Article = require('../models/article')
 var Tag = require('../models/tag')
 
@@ -47,7 +48,14 @@ router.get('/:id/edit', function(req, res, next) {
 })
 
 router.get('/:id/:slug', function(req, res, next) {
-  res.render('articles/show')
+  let article = res.locals.article
+
+  Comment
+  .find({article: article._id})
+  .sort('createdAt')
+  .exec((err, comments) => {
+    res.render('articles/show', {comments, comment: {}})  
+  })
 })
 
 

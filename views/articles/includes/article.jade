@@ -4,6 +4,8 @@ article
     a.edit(href="/articles/"+article._id+"/edit") edit
   .content!= article.html
   .meta
+    a.commentsCount(href="/articles/"+article._id+"/"+article.slug+"#comments") #{article.commentsCount} comments
+    = " | "
     time(title=moment(article.createdAt).calendar() datetime=moment(article.createdAt).format())= moment(article.createdAt).fromNow()
     span.author
       = " by "
@@ -16,5 +18,7 @@ article
           if index
             = ", "
           a(href="/tags/"+tag.slug)= tag.title
+
+
           
         

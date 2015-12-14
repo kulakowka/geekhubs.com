@@ -10,4 +10,3 @@ module.exports.onTitleKeyup = function (event) {
 
   slugInput.val(slug(title))
 }
-
