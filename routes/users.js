@@ -57,7 +57,7 @@ router.put('/:username', function(req, res, next) {
 })
 
 router.post('/', function(req, res, next) {
-  var user = new User({
+  let user = new User({
     email: req.body.email,
     username: req.body.username,
     password: req.body.password
@@ -67,10 +67,22 @@ router.post('/', function(req, res, next) {
     if (err) return next(err)
     res.redirect('/users/' + user.username)
   })
-});
+})
 
 module.exports = router;
 
+// function ifUserExists (req, res, next) {
+//   User
+//   .findOne({ $or: [
+//     { username: req.body.username }, 
+//     { email: req.body.email }
+//   ]})
+//   .exec((err, user) => {
+//     if (err) return next(err)
+//     if (!user) return next()
+//     return res.status(400).json({error: 'A user with that username or email already exists'})
+//   })
+// }
 
 
 function getNotFoundError () {
@@ -78,3 +90,4 @@ function getNotFoundError () {
   error.status = 404
   return error
 }
+

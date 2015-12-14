@@ -1,5 +1,7 @@
 'use strict'
 
+// var bcrypt = require('bcrypt')
+
 var mongoose = require('../config/mongoose')
 
 var Comment = require('./comment')
