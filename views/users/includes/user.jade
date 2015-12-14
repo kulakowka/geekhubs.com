@@ -1,0 +1,12 @@
+.user
+  h2
+    a.username(href="/users/"+user.username)= user.username
+    a.edit(href="/users/"+user.username+"/edit") edit
+  
+  .meta
+    a.articlesCount(href="") #{user.articlesCount} articles
+    = " | "
+    a.commentsCount(href="") #{user.commentsCount} comments
+    = " | "
+    time(title=moment(user.createdAt).calendar() datetime=moment(user.createdAt).format())= moment(user.createdAt).fromNow()
+    
