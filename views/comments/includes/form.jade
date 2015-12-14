@@ -5,7 +5,7 @@ form.commentForm(action=(comment._id ? "/comments/"+comment._id+"?_method=PUT" :
       .tab.active(data-frame="write") Write
       .tab(data-frame="preview") Preview
     .frame.write.open
-      textarea(name="content" rows="2" placeholder="Content")= comment.content
+      textarea(name="content" rows="2" placeholder="Comment content")= comment.content
     .frame.preview
   div
     button(type="submit") save

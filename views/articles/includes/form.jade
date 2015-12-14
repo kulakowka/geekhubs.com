@@ -7,7 +7,7 @@ form.articleForm(action=(article._id ? "/articles/"+article._id+"?_method=PUT" :
       .tab.active(data-frame="write") Write
       .tab(data-frame="preview") Preview
     .frame.write.open
-      textarea(name="content" rows="6" placeholder="Content")= article.content
+      textarea(name="content" rows="6" placeholder="Article content")= article.content
     .frame.preview
   div
     select(name="tags" multiple placeholder="Tags")
