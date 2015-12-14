@@ -63,20 +63,26 @@ router.get('/:id/:slug', function(req, res, next) {
 router.put('/:id', function(req, res, next) {
   let article = res.locals.article
   
+  let lastTags = article.tags.map(tag => tag._id.toString())
+  let newTags = req.body.tags
+  let set = new Set(lastTags.concat(newTags))
+  let tags = Array.from(set)
+    
   article.title = req.body.title
   article.content = req.body.content
   article.slug = req.body.slug
   article.tags = req.body.tags
 
-  article.save((err) => {
+  article.save((err, article) => {
     if (err) return next(err)
     res.redirect('/articles/' + article._id + '/' + article.slug)  
+    
+    Tag.updateArticlesCount(tags)
   })
 })
 
 router.post('/', function(req, res, next) {
-
-
+  
   var article = new Article({
     title: req.body.title,
     content: req.body.content,
@@ -84,9 +90,11 @@ router.post('/', function(req, res, next) {
     tags: req.body.tags
   })
   
-  article.save((err) => {
+  article.save((err, article) => {
     if (err) return next(err)
     res.redirect('/articles/' + article._id + '/' + article.slug)  
+
+    Tag.updateArticlesCount(article.tags)
   })
 });
 

@@ -12,8 +12,9 @@ var comment = require('./handlers/comment')
 // from a jQuery collection
 autosize($('textarea'))
 
-$('select').selectize({
-    create: false
+$('select[name="tags"]').selectize({
+  create: false,
+  maxItems: 10
 })
 
 $(document)

@@ -3,3 +3,6 @@
     a.title(href="/tags/"+tag.slug)= tag.title
     a.edit(href="/tags/"+tag.slug+"/edit") edit
   .description= tag.description
+  .meta
+    a.articlesCount(href="/tags/"+tag.slug) #{tag.articlesCount} articles
+

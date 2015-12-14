@@ -4,6 +4,7 @@ var mongoose = require('../config/mongoose')
 var marked = require('../config/marked')
 
 var Comment = require('./comment')
+var Tag = require('./tag')
 
 var Schema = mongoose.Schema
 
@@ -53,17 +54,6 @@ articleSchema.statics.updateCommentsCount = function (id, cb) {
     })
   })
 }
-
-// articleSchema.pre('save', function (next) {
-//   this.wasNew = this.isNew
-//   next()
-// })
-
-// // Хук вызывается после сохранения документа
-// articleSchema.post('save', function (item) {
-//   if (item.parentId === 'root') return; 
-//   if (!item.wasNew) return;
-// })
 
 var Article = mongoose.model('Article', articleSchema)
 
