@@ -1,7 +1,11 @@
 article
-  h2
-    a.title(href="/articles/"+article._id+"/"+article.slug)= article.title
-    a.edit(href="/articles/"+article._id+"/edit") edit
+  if showFullContent
+    h1
+      a.title(href="/articles/"+article._id+"/"+article.slug)= article.title
+      a.edit(href="/articles/"+article._id+"/edit") edit  
+  else
+    h2
+      a.title(href="/articles/"+article._id+"/"+article.slug)= article.title
   .content
     
     if showFullContent

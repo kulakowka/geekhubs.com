@@ -1,5 +1,8 @@
 extends ../layout
 
+block head
+  title= user.username
+
 block content
   if user.isDeleted
     h1 User deleted
