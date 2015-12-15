@@ -3,6 +3,6 @@ form.tagForm(action=(tag._id ? "/tags/"+tag.slug+"?_method=PUT" : "/tags") metho
   div
     input(type="text" name="title" placeholder="title" value=tag.title maxLength="80" required)
   div
-    textarea(name="description" rows="6" placeholder="description" maxLength="200" required)= tag.description
+    textarea(name="description" rows="6" placeholder="description" maxLength="200")= tag.description
   div
     button(type="submit") save

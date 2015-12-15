@@ -1,5 +1,12 @@
 .commentsList
   margin 2em 0
+.commentsList:not(:empty):before
+  content: 'Comments:'
+  font-size fontsize1
+  color #ccc
+  border-bottom 1px solid #eee
+  padding-bottom 0.5em
+  display block
 .comment + .comment
   margin-top 2em
 .comment
