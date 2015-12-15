@@ -2,14 +2,19 @@ article
   h2
     a.title(href="/articles/"+article._id+"/"+article.slug)= article.title
     a.edit(href="/articles/"+article._id+"/edit") edit
-  .content!= article.html
+  .content
+    
+    if showFullContent
+      != article.html
+    else
+      != article.summary
   .meta
     a.commentsCount(href="/articles/"+article._id+"/"+article.slug+"#comments") #{article.commentsCount} comments
     = " | "
     time(title=moment(article.createdAt).calendar() datetime=moment(article.createdAt).format())= moment(article.createdAt).fromNow()
     span.author
       = " by "
-      a(href="/users/kulakowka") kulakowka
+      a(href="/users/"+article.creator.username)= article.creator.username
 
     if article.tags.length
       span.tags 

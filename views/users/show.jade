@@ -1,4 +1,7 @@
 extends ../layout
 
 block content
-  include includes/user
+  if user.isDeleted
+    h1 User deleted
+  else
+    include includes/user

@@ -25,6 +25,12 @@ var tagSchema = new Schema({
     trim: true,
     maxlength: 100
   },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    required: true
+  },
   // meta information
   articlesCount: {
     type: Number,

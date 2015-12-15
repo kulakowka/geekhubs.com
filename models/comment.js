@@ -15,6 +15,12 @@ var commentSchema = new Schema({
   article: {
     type: Schema.Types.ObjectId, 
     ref: 'Article'
+  },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    required: true
   }
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 

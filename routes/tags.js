@@ -10,7 +10,10 @@ var Tag = require('../models/tag')
 
 
 router.param('slug', function(req, res, next, slug) {
-  Tag.findOne({slug}).exec(function(err, tag) {    
+  Tag
+  .findOne({slug})
+  .populate('creator')
+  .exec(function(err, tag) {    
     if (err) return next(err)
     if (!tag) return next(getNotFoundError())
     
@@ -20,7 +23,11 @@ router.param('slug', function(req, res, next, slug) {
 })
 
 router.get('/', function(req, res, next) {
-  Tag.find().sort('-createdAt').exec(function(err, tags) {
+  Tag
+  .find()
+  .populate('creator')
+  .sort('-createdAt')
+  .exec(function(err, tags) {
     if (err) return next(err)
 
     res.render('tags/index', {tags})
@@ -41,6 +48,7 @@ router.get('/:slug', function(req, res, next) {
   Article
   .find({tags: { $in: [tag._id] }})
   .populate('tags')
+  .populate('creator')
   .sort('-createdAt')
   .exec(function(err, articles) {
     if (err) return next(err)
@@ -69,7 +77,8 @@ router.post('/', function(req, res, next) {
   var tag = new Tag({
     title: req.body.title,
     slug: req.body.slug,
-    description: req.body.description
+    description: req.body.description,
+    creator: req.user._id
   })
   
   tag.save((err) => {

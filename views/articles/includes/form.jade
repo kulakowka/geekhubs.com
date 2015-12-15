@@ -3,11 +3,14 @@ form.articleForm(action=(article._id ? "/articles/"+article._id+"?_method=PUT" :
   div
     input(type="text" name="title" placeholder="Title" value=article.title maxLength="150")
   div
+    textarea(name="summary" rows="6" placeholder="Article summary. Plain text only.")= article.summary
+  div
     .tabs
       .tab.active(data-frame="write") Write
       .tab(data-frame="preview") Preview
     .frame.write.open
-      textarea(name="content" rows="6" placeholder="Article content")= article.content
+      
+      textarea(name="content" rows="6" placeholder="Article content. Markdown, plain text.")= article.content
     .frame.preview
   div
     select(name="tags" multiple placeholder="Tags")

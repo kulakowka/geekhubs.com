@@ -4,4 +4,4 @@
     time(title=moment(comment.createdAt).calendar() datetime=moment(comment.createdAt).format())= moment(comment.createdAt).fromNow()
     span.author
       = " by "
-      a(href="/users/kulakowka") kulakowka
+      a(href="/users/"+comment.creator.username)= comment.creator.username

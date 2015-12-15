@@ -1,9 +1,0 @@
-form.userForm(action=(user.username ? "/users/"+user.username+"?_method=PUT" : "/users") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
-  div
-    input(type="email" name="email" placeholder="Email" value=user.email maxLength="40")
-  div
-    input(type="text" name="username" placeholder="Username" value=user.username maxLength="40")
-  div
-    input(type="password" name="password" placeholder="Password" value=user.password)
-  div
-    button(type="submit") save

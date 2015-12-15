@@ -1,0 +1,32 @@
+header.siteHeader
+  
+
+  ul.rightMenu
+    if currentUser
+      if currentUser.isAdmin
+        li
+          a(href="/admin/users") admin
+      li
+        a(href="/users/" + currentUser.username)= currentUser.username
+      li
+        a(href="/settings") settings
+      li
+        a.js-button-logout(href="#") logout
+    else 
+      li
+        a(href="/auth/signin" rel="nofollow") Sign in      
+      li
+        a(href="/auth/signup" rel="nofollow") Sign up
+
+
+  .logo
+    a(href="/") 1 Po.st
+
+  ul.leftMenu
+    li 
+      a(href="/articles") Articles
+    li 
+      a(href="/tags") Tags
+    li
+      a(href="/users") Users
+  

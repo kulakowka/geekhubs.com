@@ -3,8 +3,12 @@
 var mongoose = require('../config/mongoose')
 var marked = require('../config/marked')
 
+// Models
 var Comment = require('./comment')
 var Tag = require('./tag')
+
+// Mongoose plugins
+var deletedAt = require('./plugins/deletedAt')
 
 var Schema = mongoose.Schema
 
@@ -22,6 +26,10 @@ var articleSchema = new Schema({
     trim: true,
     maxlength: 200
   },
+  summary: {  
+    type: String,
+    required: true
+  },
   content: { 
     type: String,
     required: true
@@ -30,9 +38,18 @@ var articleSchema = new Schema({
     type: Number,
     default: 0
   },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    required: true
+  },
   tags : [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
 
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
+
+
+articleSchema.plugin(deletedAt)
 
 articleSchema.virtual('html').get(function () {
   return marked(this.content)

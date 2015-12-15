@@ -31,10 +31,6 @@ router.get('/', function(req, res, next) {
   })
 })
 
-router.get('/new', function(req, res, next) {
-  res.render('users/new', {user: {}})
-})
-
 router.get('/:username/edit', function(req, res, next) {
   res.render('users/edit')  
 })

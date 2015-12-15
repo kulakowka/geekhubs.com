@@ -45,6 +45,7 @@ router.get('/:id', function(req, res, next) {
 
   Comment
   .findById(id)
+  .populate('creator')
   .populate('article')
   .exec((err, comment) => {
     res.render('comments/includes/comment', {comment})
@@ -71,7 +72,8 @@ router.post('/', function(req, res, next) {
 
   var comment = new Comment({
     content: req.body.content,
-    article: req.body.article
+    article: req.body.article,
+    creator: req.user._id
   })
   
   comment.save((err) => {

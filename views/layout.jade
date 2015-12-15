@@ -1,15 +1,17 @@
 doctype html
 html
   head
-    title= title
     link(rel='stylesheet', href='/css/app.css')
-
+    block head
+      title= title
+    include includes/meta
+    // include includes/ga
   body
     .layout
-      header
-        a(href="/") Home
-        a(href="/articles") Articles
-        a(href="/tags") Tags
-        a(href="/users") Users
+      include ./includes/header.jade
       block content
+      include ./includes/footer.jade
+    script.
+      // remove img with on load error
+      (function(){function cb () {this.parentNode.removeChild(this)};for(var i=0,n=document.images,l=n.length;i<l;i++) n[i].onerror = cb}())
     script(src="/js/app.js")

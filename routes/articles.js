@@ -11,6 +11,7 @@ router.param('id', function(req, res, next, id) {
   Article
   .findById(id)
   .populate('tags')
+  .populate('creator')
   .exec(function(err, article) {    
     if (err) return next(err)
     if (!article) return next(getNotFoundError())
@@ -25,6 +26,7 @@ router.get('/', function(req, res, next) {
   .find()
   .sort('-createdAt')
   .populate('tags')
+  .populate('creator')
   .exec(function(err, articles) {
     if (err) return next(err)
 
@@ -69,6 +71,7 @@ router.put('/:id', function(req, res, next) {
   let tags = Array.from(set)
     
   article.title = req.body.title
+  article.summary = req.body.summary
   article.content = req.body.content
   article.slug = req.body.slug
   article.tags = req.body.tags
@@ -85,9 +88,11 @@ router.post('/', function(req, res, next) {
   
   var article = new Article({
     title: req.body.title,
+    summary: req.body.summary,
     content: req.body.content,
     slug: req.body.slug,
-    tags: req.body.tags
+    tags: req.body.tags,
+    creator: req.user._id
   })
   
   article.save((err, article) => {
