@@ -2,6 +2,10 @@
 
 var mongoose = require('../config/mongoose')
 
+// var Article = require('./article')
+var User = require('./user')
+//var Comment = require('./comment')
+
 var Schema = mongoose.Schema
 
 var hubSchema = new Schema({ 
@@ -20,7 +24,6 @@ var hubSchema = new Schema({
     type: String,
     required: true,
     index: true,
-    unique: true,
     lowercase: true,
     trim: true,
     maxlength: 100
@@ -61,6 +64,20 @@ hubSchema.methods.updateArticlesCount = function () {
     })
   })
 }
+
+hubSchema.pre('save', function (next) {
+  this.wasNew = this.isNew
+  next()
+})
+
+// Хук вызывается после сохранения документа
+hubSchema.post('save', function (hub) {
+  if (!hub.wasNew) return
+
+  User.updateHubsCount(hub.creator, (err) => {
+    console.log('Error', err)
+  })
+})
 
 module.exports = mongoose.model('Hub', hubSchema)
 

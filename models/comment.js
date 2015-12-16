@@ -4,6 +4,8 @@ var mongoose = require('../config/mongoose')
 var marked = require('../config/marked')
 
 var Article = require('./article')
+var User = require('./user')
+//var Hub = require('./hub')
 
 var Schema = mongoose.Schema
 
@@ -38,6 +40,9 @@ commentSchema.post('save', function (comment) {
   if (!comment.wasNew) return
 
   Article.updateCommentsCount(comment.article, (err) => {
+    console.log('Error', err)
+  })
+  User.updateCommentsCount(comment.creator, (err) => {
     console.log('Error', err)
   })
 })

@@ -6,9 +6,11 @@
     p isAdmin: #{user.isAdmin}
     p isDeleted: #{user.isDeleted}
   .meta
-    a.articlesCount(href="") #{user.articlesCount} articles
+    a.articlesCount(href="/users/"+user.username+"/articles") #{user.articlesCount} articles
     = " | "
-    a.commentsCount(href="") #{user.commentsCount} comments
+    a.commentsCount(href="/users/"+user.username+"/comments") #{user.commentsCount} comments
+    = " | "
+    a.commentsCount(href="/users/"+user.username+"/hubs") #{user.hubsCount} hubs
     = " | "
     time(title=moment(user.createdAt).calendar() datetime=moment(user.createdAt).format())= moment(user.createdAt).fromNow()
     

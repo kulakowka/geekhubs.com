@@ -4,8 +4,9 @@ var mongoose = require('../config/mongoose')
 var marked = require('../config/marked')
 
 // Models
-var Comment = require('./comment')
-var Hub = require('./hub')
+var User = require('./user')
+//var Comment = require('./comment')
+//var Hub = require('./hub')
 
 // Mongoose plugins
 var deletedAt = require('./plugins/deletedAt')
@@ -21,7 +22,6 @@ var articleSchema = new Schema({
     type: String,
     required: true,
     index: true,
-    unique: true,
     lowercase: true,
     trim: true,
     maxlength: 200
@@ -71,6 +71,20 @@ articleSchema.statics.updateCommentsCount = function (id, cb) {
     })
   })
 }
+
+articleSchema.pre('save', function (next) {
+  this.wasNew = this.isNew
+  next()
+})
+
+// Хук вызывается после сохранения документа
+articleSchema.post('save', function (article) {
+  if (!article.wasNew) return
+
+  User.updateArticlesCount(article.creator, (err) => {
+    console.log('Error', err)
+  })
+})
 
 var Article = mongoose.model('Article', articleSchema)
 

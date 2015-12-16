@@ -5,8 +5,10 @@ var bcrypt = require('bcrypt')
 var mongoose = require('../config/mongoose')
 
 // Models
-var Comment = require('./comment')
+//var Comment = require('./comment')
 var VerificationToken = require('./verificationToken')
+//var Article = require('./article')
+//var Hub = require('./hub')
 
 // Services
 var SendEmail = require('../services/emails/sendEmail')
@@ -56,6 +58,12 @@ var userSchema = new Schema({
     //index: true,
     default: 0
   },
+  hubsCount: {
+    type: Number,
+    required: true,
+    //index: true,
+    default: 0
+  },
   commentsCount: {
     type: Number,
     required: true,
@@ -82,7 +90,7 @@ userSchema.methods.generateConfirmationToken = function generateConfirmationToke
 }
 
 userSchema.methods.getArticlesCount = function (cb) {
-  return this.model('Article').count({ user: this._id }, cb);
+  return this.model('Article').count({ creator: this._id }, cb);
 }
 
 userSchema.statics.updateArticlesCount = function (id, cb) {
@@ -93,6 +101,40 @@ userSchema.statics.updateArticlesCount = function (id, cb) {
       if (err) return cb(err)
 
       user.articlesCount = count
+      user.save(cb)
+    })
+  })
+}
+
+userSchema.methods.getHubsCount = function (cb) {
+  return this.model('Hub').count({ creator: this._id }, cb);
+}
+
+userSchema.statics.updateHubsCount = function (id, cb) {
+  return this.findById(id, (err, user) => {
+    if (err) return cb(err)
+
+    user.getHubsCount((err, count) => {
+      if (err) return cb(err)
+
+      user.hubsCount = count
+      user.save(cb)
+    })
+  })
+}
+
+userSchema.methods.getCommentsCount = function (cb) {
+  return this.model('Comment').count({ creator: this._id }, cb);
+}
+
+userSchema.statics.updateCommentsCount = function (id, cb) {
+  return this.findById(id, (err, user) => {
+    if (err) return cb(err)
+
+    user.getCommentsCount((err, count) => {
+      if (err) return cb(err)
+
+      user.commentsCount = count
       user.save(cb)
     })
   })

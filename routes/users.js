@@ -39,6 +39,44 @@ router.get('/:username', function(req, res, next) {
   res.render('users/show')
 })
 
+router.get('/:username/articles', function(req, res, next) {
+  Article
+  .find({creator: req.user._id})
+  .sort('-createdAt')
+  .populate('hubs')
+  .populate('creator')
+  .exec(function(err, articles) {
+    if (err) return next(err)
+
+    res.render('users/articles/index', {articles})
+  })
+})
+
+router.get('/:username/hubs', function(req, res, next) {
+  Hub
+  .find({creator: req.user._id})
+  .sort('-createdAt')
+  .populate('creator')
+  .exec(function(err, hubs) {
+    if (err) return next(err)
+
+    res.render('users/hubs/index', {hubs})
+  })
+})
+
+router.get('/:username/comments', function(req, res, next) {
+  Comment
+  .find({creator: req.user._id})
+  .sort('-createdAt')
+  .populate('aricle')
+  .populate('creator')
+  .exec(function(err, comments) {
+    if (err) return next(err)
+
+    res.render('users/comments/index', {comments})
+  })
+})
+
 router.put('/:username', function(req, res, next) {
   let user = res.locals.user
   

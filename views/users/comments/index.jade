@@ -1,0 +1,9 @@
+extends ../../layout
+
+block content
+  if user.isDeleted
+    h1 User deleted
+  else
+    include ../includes/user
+    .userComments
+      include ../../comments/includes/list
