@@ -1,0 +1,8 @@
+form.hubForm(action=(hub._id ? "/hubs/"+hub.slug+"?_method=PUT" : "/hubs") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
+  input(type="hidden" name="slug" placeholder="slug" value=hub.slug maxLength="100")
+  div
+    input(type="text" name="title" placeholder="Hub name" value=hub.title maxLength="80" required)
+  div
+    textarea(name="description" rows="6" placeholder="Hub description" maxLength="200")= hub.description
+  div
+    button(type="submit") save

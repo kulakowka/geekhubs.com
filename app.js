@@ -60,7 +60,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'))
 app.use('/articles', require('./routes/articles'))
 app.use('/comments', require('./routes/comments'))
-app.use('/tags', require('./routes/tags'))
+app.use('/hubs', require('./routes/hubs'))
 app.use('/users', require('./routes/users'))
 app.use('/auth', require('./routes/auth'))
 app.use('/settings', require('./routes/settings'))

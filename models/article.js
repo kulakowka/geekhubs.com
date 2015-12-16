@@ -5,7 +5,7 @@ var marked = require('../config/marked')
 
 // Models
 var Comment = require('./comment')
-var Tag = require('./tag')
+var Hub = require('./hub')
 
 // Mongoose plugins
 var deletedAt = require('./plugins/deletedAt')
@@ -44,7 +44,7 @@ var articleSchema = new Schema({
     index: true,
     required: true
   },
-  tags : [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
+  hubs : [{ type: Schema.Types.ObjectId, ref: 'Hub' }]
 
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 

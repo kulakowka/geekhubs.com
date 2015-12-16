@@ -5,92 +5,92 @@ var express = require('express');
 var router = express.Router();
 
 var Article = require('../models/article')
-var Tag = require('../models/tag')
+var Hub = require('../models/hub')
 
 
 
 router.param('slug', function(req, res, next, slug) {
-  Tag
+  Hub
   .findOne({slug})
   .populate('creator')
-  .exec(function(err, tag) {    
+  .exec(function(err, hub) {    
     if (err) return next(err)
-    if (!tag) return next(getNotFoundError())
+    if (!hub) return next(getNotFoundError())
     
-    res.locals.tag = tag
+    res.locals.hub = hub
     next()
   })
 })
 
 router.get('/', function(req, res, next) {
-  Tag
+  Hub
   .find()
   .populate('creator')
   .sort('-createdAt')
-  .exec(function(err, tags) {
+  .exec(function(err, hubs) {
     if (err) return next(err)
 
-    res.render('tags/index', {tags})
+    res.render('hubs/index', {hubs})
   })
 })
 
 router.get('/new', function(req, res, next) {
-  res.render('tags/new', {tag: {}})
+  res.render('hubs/new', {hub: {}})
 })
 
 router.get('/:slug/edit', function(req, res, next) {
-  res.render('tags/edit')
+  res.render('hubs/edit')
 })
 
 router.get('/:slug', function(req, res, next) {
-  let tag = res.locals.tag
+  let hub = res.locals.hub
 
   Article
-  .find({tags: { $in: [tag._id] }})
-  .populate('tags')
+  .find({hubs: { $in: [hub._id] }})
+  .populate('hubs')
   .populate('creator')
   .sort('-createdAt')
   .exec(function(err, articles) {
     if (err) return next(err)
 
-    res.render('tags/show', {articles})  
+    res.render('hubs/show', {articles})  
   })
 
   
 })
 
 router.put('/:slug', function(req, res, next) {
-  let tag = res.locals.tag
+  let hub = res.locals.hub
   
-  tag.title = req.body.title
-  tag.slug = req.body.slug
-  tag.description = req.body.description
+  hub.title = req.body.title
+  hub.slug = req.body.slug
+  hub.description = req.body.description
 
-  tag.save((err) => {
+  hub.save((err) => {
     if (err) return next(err)
-    res.redirect('/tags/' + tag.slug)  
+    res.redirect('/hubs/' + hub.slug)  
   })
 })
 
 router.post('/', function(req, res, next) {
 
-  var tag = new Tag({
+  var hub = new Hub({
     title: req.body.title,
     slug: req.body.slug,
     description: req.body.description,
     creator: req.user._id
   })
   
-  tag.save((err) => {
+  hub.save((err) => {
     if (err) return next(err)
-    res.redirect('/tags/' + tag.slug)  
+    res.redirect('/hubs/' + hub.slug)  
   })
 });
 
 module.exports = router;
 
 function getNotFoundError () {
-  var error = new Error('Tag not found')
+  var error = new Error('Hub not found')
   error.status = 404
   return error
 }

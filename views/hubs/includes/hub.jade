@@ -1,0 +1,13 @@
+.hub
+  h2
+    a.title(href="/hubs/"+hub.slug)= hub.title
+    a.edit(href="/hubs/"+hub.slug+"/edit") edit
+  .description= hub.description
+  .meta
+    a.articlesCount(href="/hubs/"+hub.slug) #{hub.articlesCount} articles
+    = " | "
+    time(title=moment(hub.createdAt).calendar() datetime=moment(hub.createdAt).format())= moment(hub.createdAt).fromNow()
+    span.author
+      = " by "
+      a(href="/users/"+hub.creator.username)= hub.creator.username
+

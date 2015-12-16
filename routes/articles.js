@@ -5,12 +5,12 @@ var router = express.Router();
 
 var Comment = require('../models/comment')
 var Article = require('../models/article')
-var Tag = require('../models/tag')
+var Hub = require('../models/hub')
 
 router.param('id', function(req, res, next, id) {
   Article
   .findById(id)
-  .populate('tags')
+  .populate('hubs')
   .populate('creator')
   .exec(function(err, article) {    
     if (err) return next(err)
@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
   Article
   .find()
   .sort('-createdAt')
-  .populate('tags')
+  .populate('hubs')
   .populate('creator')
   .exec(function(err, articles) {
     if (err) return next(err)
@@ -35,17 +35,17 @@ router.get('/', function(req, res, next) {
 })
 
 router.get('/new', function(req, res, next) {
-  Tag.find().exec(function(err, tags) {
+  Hub.find().exec(function(err, hubs) {
     if (err) return next(err)
-    res.render('articles/new', {article: {}, tags})  
+    res.render('articles/new', {article: {}, hubs})  
   })
   
 })
 
 router.get('/:id/edit', function(req, res, next) {
-  Tag.find().exec(function(err, tags) {
+  Hub.find().exec(function(err, hubs) {
     if (err) return next(err)
-    res.render('articles/edit', {tags})  
+    res.render('articles/edit', {hubs})  
   })
 })
 
@@ -66,22 +66,22 @@ router.get('/:id/:slug', function(req, res, next) {
 router.put('/:id', function(req, res, next) {
   let article = res.locals.article
   
-  let lastTags = article.tags.map(tag => tag._id.toString())
-  let newTags = req.body.tags
-  let set = new Set(lastTags.concat(newTags))
-  let tags = Array.from(set)
+  let lastHubs = article.hubs.map(hub => hub._id.toString())
+  let newHubs = req.body.hubs
+  let set = new Set(lastHubs.concat(newHubs))
+  let hubs = Array.from(set)
     
   article.title = req.body.title
   article.summary = req.body.summary
   article.content = req.body.content
   article.slug = req.body.slug
-  article.tags = req.body.tags
+  article.hubs = req.body.hubs
 
   article.save((err, article) => {
     if (err) return next(err)
     res.redirect('/articles/' + article._id + '/' + article.slug)  
     
-    Tag.updateArticlesCount(tags)
+    Hub.updateArticlesCount(hubs)
   })
 })
 
@@ -92,7 +92,7 @@ router.post('/', function(req, res, next) {
     summary: req.body.summary,
     content: req.body.content,
     slug: req.body.slug,
-    tags: req.body.tags,
+    hubs: req.body.hubs,
     creator: req.user._id
   })
   
@@ -100,7 +100,7 @@ router.post('/', function(req, res, next) {
     if (err) return next(err)
     res.redirect('/articles/' + article._id + '/' + article.slug)  
 
-    Tag.updateArticlesCount(article.tags)
+    Hub.updateArticlesCount(article.hubs)
   })
 });
 

@@ -20,13 +20,13 @@ article
       = " by "
       a(href="/users/"+article.creator.username)= article.creator.username
 
-    if article.tags.length
-      span.tags 
+    if article.hubs.length
+      span.hubs 
         = " in "
-        each tag, index in article.tags
+        each hub, index in article.hubs
           if index
             = ", "
-          a(href="/tags/"+tag.slug)= tag.title
+          a(href="/hubs/"+hub.slug)= hub.title
 
 
           

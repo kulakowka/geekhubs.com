@@ -4,7 +4,7 @@ var mongoose = require('../config/mongoose')
 
 var Schema = mongoose.Schema
 
-var tagSchema = new Schema({ 
+var hubSchema = new Schema({ 
   title: { 
     type: String,
     trim: true,
@@ -41,29 +41,27 @@ var tagSchema = new Schema({
 
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
-// Tag methods for articles
+// Hub methods for articles
 
-tagSchema.statics.updateArticlesCount = function (tags) {
-  return this.find({_id: { $in: tags }}, (err, tags) => {
-    tags.forEach(tag => tag.updateArticlesCount())
+hubSchema.statics.updateArticlesCount = function (hubs) {
+  return this.find({_id: { $in: hubs }}, (err, hubs) => {
+    hubs.forEach(hub => hub.updateArticlesCount())
   })
 }
 
-tagSchema.methods.updateArticlesCount = function () {
-  let tag = this
+hubSchema.methods.updateArticlesCount = function () {
+  let hub = this
   
-  this.model('Article').count({ tags: { $in: [this._id] } }, (err, count) => {
+  this.model('Article').count({ hubs: { $in: [this._id] } }, (err, count) => {
     if (err) return console.log('Error', err)
 
-    tag.articlesCount = count
-    tag.save(err => {
+    hub.articlesCount = count
+    hub.save(err => {
       if (err) return console.log('Error', err)
     })
   })
 }
 
-var Tag = mongoose.model('Tag', tagSchema)
-
-module.exports = Tag
+module.exports = mongoose.model('Hub', hubSchema)
 
 

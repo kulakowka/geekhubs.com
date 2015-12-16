@@ -5,7 +5,7 @@ var router = express.Router();
 
 var Comment = require('../models/comment')
 var Article = require('../models/article')
-var Tag = require('../models/tag')
+var Hub = require('../models/hub')
 
 // router.param('id', function(req, res, next, id) {
 //   Article

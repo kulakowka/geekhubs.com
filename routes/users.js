@@ -6,7 +6,7 @@ var router = express.Router();
 var User = require('../models/user')
 var Comment = require('../models/comment')
 var Article = require('../models/article')
-var Tag = require('../models/tag')
+var Hub = require('../models/hub')
 
 router.param('username', function(req, res, next, username) {
   User

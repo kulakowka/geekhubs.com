@@ -13,11 +13,11 @@ form.articleForm(action=(article._id ? "/articles/"+article._id+"?_method=PUT" :
       textarea(name="content" rows="6" placeholder="Article content. Markdown, plain text." required)= article.content
     .frame.preview
   div
-    select(name="tags" multiple placeholder="Tags")
-      each tag in tags
-        if article.tags && article.tags.filter(_tag => _tag._id.equals(tag._id)).length
-          option(value=tag._id selected)= tag.title
+    select(name="hubs" multiple placeholder="Hubs")
+      each hub in hubs
+        if article.hubs && article.hubs.filter(_hub => _hub._id.equals(hub._id)).length
+          option(value=hub._id selected)= hub.title
         else
-          option(value=tag._id)= tag.title
+          option(value=hub._id)= hub.title
   div
     button(type="submit") save

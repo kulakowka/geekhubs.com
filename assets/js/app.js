@@ -10,7 +10,7 @@ var attachFastClick = require('fastclick')
 autosize($('textarea'))
 
 // Selectize
-$('select[name="tags"]').selectize({
+$('select[name="hubs"]').selectize({
   create: false,
   maxItems: 10
 })
@@ -28,7 +28,7 @@ var auth = require('./handlers/auth')
 $(document)
   // slug
   .on('keyup', '.articleForm input[name="title"]', slug.onTitleKeyup)
-  .on('keyup', '.tagForm input[name="title"]', slug.onTitleKeyup)
+  .on('keyup', '.hubForm input[name="title"]', slug.onTitleKeyup)
 
   // marked
   .on('click', '.commentForm .tabs .tab', marked.onTabClick)
