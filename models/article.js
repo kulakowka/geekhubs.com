@@ -21,7 +21,6 @@ var articleSchema = new Schema({
   slug: { 
     type: String,
     required: true,
-    index: true,
     lowercase: true,
     trim: true,
     maxlength: 200
