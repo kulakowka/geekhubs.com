@@ -32,10 +32,10 @@ var userSchema = new Schema({
   },
   email: {
     type: String,
-    //index: true,
+    index: true,
     trim: true,
     lowercase: true,
-    unique: true
+    // unique: true
   },
   emailConfirmed: {
     type: Boolean,
