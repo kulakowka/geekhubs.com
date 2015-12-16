@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 
+var SubscriptionUserToHub = require('../models/subscriptionUserToHub')
 var User = require('../models/user')
 var Comment = require('../models/comment')
 var Article = require('../models/article')
@@ -24,6 +25,7 @@ router.get('/', function(req, res, next) {
   User
   .find()
   .sort('-createdAt')
+  .limit(30)
   .exec(function(err, users) {
     if (err) return next(err)
 
@@ -53,18 +55,43 @@ router.get('/:username/articles', function(req, res, next) {
   })
 })
 
-router.get('/:username/hubs', function(req, res, next) {
-  let user = res.locals.user
-  Hub
-  .find({creator: user._id})
-  .sort('-createdAt')
-  .populate('creator')
-  .exec(function(err, hubs) {
-    if (err) return next(err)
+router.get('/:username/hubs', 
+  function(req, res, next) {
+    if (!req.user) return next()
+    let user = res.locals.user
 
-    res.render('users/hubs/index', {hubs})
-  })
-})
+    SubscriptionUserToHub
+    .findOne({creator: user._id})
+    .populate({
+      path: 'hubs',
+      select: '_id'
+    })
+    .exec(function(err, subscription) {
+      if (err) return next(err)
+      if (!subscription) return next()
+
+      var subscribedHubsIds = subscription.hubs.map(hub => hub._id.toString())
+
+      res.locals.isSubscribed = function(hub) {
+        let id = hub._id.toString()
+        return subscribedHubsIds.indexOf(id) !== -1
+      }
+      next()
+    })
+  },
+  function(req, res, next) {
+    let user = res.locals.user
+    Hub
+    .find({creator: user._id})
+    .sort('-createdAt')
+    .populate('creator')
+    .exec(function(err, hubs) {
+      if (err) return next(err)
+
+      res.render('users/hubs/index', {hubs})
+    })
+  }
+)
 
 router.get('/:username/comments', function(req, res, next) {
   let user = res.locals.user

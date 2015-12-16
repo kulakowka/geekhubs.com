@@ -29,6 +29,7 @@ router.get('/', function(req, res, next) {
   .sort('-createdAt')
   .populate('hubs')
   .populate('creator')
+  .limit(30)
   .exec(function(err, articles) {
     if (err) return next(err)
 
@@ -103,11 +104,8 @@ router.get('/:id/:slug', function(req, res, next) {
 router.put('/:id', function(req, res, next) {
   let article = res.locals.article
   
-  let lastHubs = article.hubs.map(hub => hub._id.toString())
-  let newHubs = req.body.hubs
-  let set = new Set(lastHubs.concat(newHubs))
-  let hubs = Array.from(set)
-    
+  let lastHubs = article.hubs.map(hub => hub._id)
+  
   article.title = req.body.title
   article.summary = req.body.summary
   article.content = req.body.content
@@ -118,7 +116,7 @@ router.put('/:id', function(req, res, next) {
     if (err) return next(err)
     res.redirect('/articles/' + article._id + '/' + article.slug)  
     
-    Hub.updateArticlesCount(hubs)
+    Hub.updateArticlesCount(lastHubs) // hot fix for last hubs
   })
 })
 
@@ -136,8 +134,6 @@ router.post('/', function(req, res, next) {
   article.save((err, article) => {
     if (err) return next(err)
     res.redirect('/articles/' + article._id + '/' + article.slug)  
-
-    Hub.updateArticlesCount(article.hubs)
   })
 });
 

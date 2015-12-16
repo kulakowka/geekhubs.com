@@ -1,23 +1,27 @@
 'use strict'
 
-var User = require('../../models/user')
-var users = require('./data')
+var _ = require('lodash')
 var faker = require('faker')
+var User = require('../../models/user')
 
-const fakeUsersCount = 100
+// Settings
+const USERS_COUNT = 20
+const DEFAULT_PASSWORD = 'pass'
+const admin = {
+  username: 'admin',
+  password: 'pass',
+  isAdmin: true
+}
 
-module.exports = function seedUsers(callback) {
-
-  // Generate random fakeUsersCount users
-  for (let i = 0; i < fakeUsersCount; i++) users.push(getFakeUser())
-  
+module.exports = function seedUsers (callback) {
+  var users = _.times(USERS_COUNT, getFakeUser).concat([admin])
   User.create(users, callback)
 }
 
-function getFakeUser () {
+function getFakeUser (n) {
   return {
     username: faker.internet.userName(),
     email: faker.internet.email(),
-    password: '12345678'
+    password: DEFAULT_PASSWORD
   }
 }

@@ -12,7 +12,6 @@ var User = require('../models/user')
 // Policies
 var ifGuest = require('./policies/ifGuest')
 var ifUser = require('./policies/ifUser')
-var ifAdmin = require('./policies/ifAdmin')
 
 router.get('/signin', ifGuest, function (req, res, next) {
   res.render('auth/signin')
@@ -35,7 +34,7 @@ router.get('/confirm/:token', function (req, res, next) {
   })
 })
 
-router.post('/signup', ifGuest, function(req, res, next) {
+router.post('/signup', ifGuest, function (req, res, next) {
   User
   .findOne({username: req.body.username})
   .exec((err, user) => {

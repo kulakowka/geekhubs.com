@@ -1,11 +1,13 @@
 'use strict'
 
+// Packages
 var uuid = require('node-uuid')
 
+// Configs
 var mongoose = require('../config/mongoose')
 
+// VerificationTokenSchema schema
 var Schema = mongoose.Schema
-
 var verificationTokenSchema = Schema({
   user: {
     type: Schema.Types.ObjectId,
@@ -22,32 +24,29 @@ var verificationTokenSchema = Schema({
     type: Date,
     required: true,
     default: Date.now,
-    expires: '4h'
+    expires: '4h'         // Verification token expires after 4 hours
   }
 })
 
-verificationTokenSchema.methods.createVerificationToken = function (done) {
-  var verificationToken = this
-  var token = uuid.v4()
-  verificationToken.set('token', token)
-  verificationToken.save((err) => {
-    if (err) return done(err)
-    done(null, token)
+// Instance methods (verificationToken.createVerificationToken)
+verificationTokenSchema.methods.createVerificationToken = function (callback) {
+  let token = uuid.v4()
+  this.set('token', token)
+  return this.save((err) => {
+    if (err) return callback(err)
+    callback(null, token)
   })
 }
 
-verificationTokenSchema.static('verifyUser', function verifyUser (token, done) {
-  this
-  .findOne({token: token})
-  .populate('user')
-  .exec()
-  .catch(done)
-  .then(doc => {
-    var user = doc.user
-    user.emailConfirmed = true
-    user.save(err => {
-      if (err) return done(err)
-      done()
+verificationTokenSchema.static('verifyUser', function verifyUser (token, callback) {
+  let selft = this
+  return selft.findOne({token: token}).exec((err, verificationToken) => {
+    if (err) return callback(err)
+    if (!verificationToken) return callback(new Error('Token not found'))
+
+    selft.model('User').findOneAndUpdate({_id: verificationToken.user}, {$set: {emailConfirmed: true}}, (err) => {
+      if (err) return callback(err)
+      callback()
     })
   })
 })

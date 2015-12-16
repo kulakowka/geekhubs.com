@@ -8,6 +8,21 @@ cd geekhubs.com
 npm install 
 ```
 
+#### Seed data:
+
+```
+npm run seed
+```
+
+Seed config: 
+
+```
+/seed/articles/index.js
+/seed/comments/index.js
+/seed/hubs/index.js
+/seed/users/index.js
+```
+
 #### Development:
 
 ```

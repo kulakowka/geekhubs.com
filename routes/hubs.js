@@ -55,7 +55,7 @@ router.get('/',
     .find()
     .populate('creator')
     .sort('-createdAt')
-    .limit(10)
+    .limit(30)
     .exec(function(err, hubs) {
       if (err) return next(err)
 

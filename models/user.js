@@ -1,85 +1,72 @@
 'use strict'
 
+// Packages
 var bcrypt = require('bcrypt')
 
+// Configs
 var mongoose = require('../config/mongoose')
 
 // Models
-//var Comment = require('./comment')
 var VerificationToken = require('./verificationToken')
 var SubscriptionUserToHub = require('./subscriptionUserToHub')
-//var Hub = require('./hub')
 
 // Services
 var SendEmail = require('../services/emails/sendEmail')
 
-// Mongoose plugins
-var abilities = require('./plugins/abilities')
-var deletedAt = require('./plugins/deletedAt')
-
+// User schema
 var Schema = mongoose.Schema
-
-var userSchema = new Schema({ 
+var userSchema = new Schema({
   username: {
-    type: String,
     index: true,
-    trim: true,
-    minlength: 3,
-    maxlength: 40,
-    required: true,
     lowercase: true,
+    maxlength: 40,
+    minlength: 3,
+    required: true,
+    trim: true,
+    type: String,
     unique: true
   },
   email: {
-    type: String,
     index: true,
-    trim: true,
     lowercase: true,
-    // unique: true
+    trim: true,
+    type: String
   },
   emailConfirmed: {
-    type: Boolean,
-    default: false
+    default: false,
+    type: Boolean
   },
   isAdmin: {
-    type: Boolean,
-    default: false
+    default: false,
+    type: Boolean
   },
   password: {
-    type: String,
     required: true,
-    select: false
+    select: false,
+    type: String
   },
-
-  // meta information
   articlesCount: {
-    type: Number,
+    default: 0,
     required: true,
-    //index: true,
-    default: 0
+    type: Number
   },
   hubsCount: {
-    type: Number,
+    default: 0,
     required: true,
-    //index: true,
-    default: 0
+    type: Number
   },
   commentsCount: {
-    type: Number,
+    default: 0,
     required: true,
-    //index: true,
-    default: 0
+    type: Number
   }
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
-// Assign plugins 
-// User.plugin(createdAt, { index: true })
-// User.plugin(updatedAt)
-userSchema.plugin(deletedAt)
-userSchema.plugin(abilities) // ACL
+// Model plugins
+userSchema.plugin(require('./plugins/deletedAt'))
+userSchema.plugin(require('./plugins/abilities'))
 
-// User methods for articles
-// 
+// Instance methods (user.comparePassword)
 userSchema.methods.comparePassword = function comparePassword (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, callback)
 }
@@ -89,74 +76,43 @@ userSchema.methods.generateConfirmationToken = function generateConfirmationToke
   verificationToken.createVerificationToken(callback)
 }
 
-userSchema.methods.getArticlesCount = function (cb) {
-  return this.model('Article').count({ creator: this._id }, cb);
-}
-
-userSchema.statics.updateArticlesCount = function (id, cb) {
-  return this.findById(id, (err, user) => {
-    if (err) return cb(err)
-
-    user.getArticlesCount((err, count) => {
-      if (err) return cb(err)
-
-      user.articlesCount = count
-      user.save(cb)
+// Model static methods (User.updateArticlesCount)
+userSchema.statics.updateArticlesCount = function (_id) {
+  let self = this
+  return self.model('Article').count({ creator: _id }, function (err, articlesCount) {
+    if (err) return console.log(err)
+    self.findOneAndUpdate({_id}, {$set: {articlesCount}}, (err) => {
+      if (err) return console.log(err)
     })
   })
 }
 
-userSchema.methods.getHubsCount = function (cb) {
-  return this.model('Hub').count({ creator: this._id }, cb);
-}
-
-userSchema.statics.updateHubsCount = function (id, cb) {
-  return this.findById(id, (err, user) => {
-    if (err) return cb(err)
-
-    user.getHubsCount((err, count) => {
-      if (err) return cb(err)
-
-      user.hubsCount = count
-      user.save(cb)
+userSchema.statics.updateHubsCount = function (_id) {
+  let self = this
+  return self.model('Hub').count({ creator: _id }, function (err, hubsCount) {
+    if (err) return console.log(err)
+    self.findOneAndUpdate({_id}, {$set: {hubsCount}}, (err) => {
+      if (err) return console.log(err)
     })
   })
 }
 
-userSchema.methods.getCommentsCount = function (cb) {
-  return this.model('Comment').count({ creator: this._id }, cb);
-}
-
-userSchema.statics.updateCommentsCount = function (id, cb) {
-  return this.findById(id, (err, user) => {
-    if (err) return cb(err)
-
-    user.getCommentsCount((err, count) => {
-      if (err) return cb(err)
-
-      user.commentsCount = count
-      user.save(cb)
+userSchema.statics.updateCommentsCount = function (_id) {
+  let self = this
+  return self.model('Comment').count({ creator: _id }, function (err, commentsCount) {
+    if (err) return console.log(err)
+    self.findOneAndUpdate({_id}, {$set: {commentsCount}}, (err) => {
+      if (err) return console.log(err)
     })
   })
 }
 
-// after cllabacks
+// Pre save hooks
 userSchema.pre('save', function (next) {
   this.wasNew = this.isNew
   next()
 })
 
-userSchema.post('save', function(user) {
-  if (!user.wasNew) return
-
-  var subscription = new SubscriptionUserToHub({
-    creator: user._id
-  })
-
-  subscription.save(err => {
-    if (err) return console.log('Error:', err)
-  })
-})
 userSchema.pre('save', function (next) {
   var user = this
 
@@ -190,6 +146,16 @@ userSchema.pre('save', function (next) {
       token: token,
       template: 'users/confirm-email'
     })
+  })
+})
+
+// Post save hooks
+userSchema.post('save', function (user) {
+  if (!user.wasNew) return
+
+  // Create one-to-one subscription
+  SubscriptionUserToHub.create({creator: user._id}, err => {
+    if (err) return console.log(err)
   })
 })
 

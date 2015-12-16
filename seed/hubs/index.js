@@ -1,31 +1,33 @@
 'use strict'
 
-
-var Hub = require('../../models/hub')
-var async = require('async')
+var _ = require('lodash')
 var faker = require('faker')
+var Hub = require('../../models/hub')
+var User = require('../../models/user')
 
-module.exports = function seedHubs(users, callback) {
-  var tasks = users.map(createHubsForUser)
-  async.parallel(tasks, (err, hubsPerUser) => {
-    var allHubs = hubsPerUser.reduce((a, b) => a.concat(b))
-    callback(err, allHubs)
-  })
-}
+// Settings
+const USERS_COUNT = 10
+const HUBS_COUNT = 5
 
-function createHubsForUser(user) {
+module.exports = function seedHubs(callback) {
+  User.find().exec(function(err, users) {
+    if (err) return callback(err)
 
-  var hubs = [1,2,3].map(index => getFakeHubForUser(user))
+    var hubs = _.sample(users, USERS_COUNT).reduce(userHubsReducer, [])
 
-  return function(callback) {
     Hub.create(hubs, callback)
-  }
+  }) 
 }
 
-function getFakeHubForUser(user) {
+function userHubsReducer (hubs, user) {
+  let userHubs = _.times(HUBS_COUNT, (n) => getFakeHub(user) )
+  return hubs.concat(userHubs)
+}
+
+function getFakeHub (user) {
   return {
     creator: user._id,
-    title: faker.name.title(),
-    description: faker.lorem.sentence()
+    title: faker.hacker.noun(),
+    description: faker.hacker.phrase()
   }
 }
