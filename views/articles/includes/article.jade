@@ -15,7 +15,8 @@ article
   .meta
     a.commentsCount(href="/articles/"+article._id+"/"+article.slug+"#comments") #{article.commentsCount} comments
     = " | "
-    time(title=moment(article.createdAt).calendar() datetime=moment(article.createdAt).format())= moment(article.createdAt).fromNow()
+    a(href="/articles/"+article._id+"/"+article.slug)
+      time(title=moment(article.createdAt).calendar() datetime=moment(article.createdAt).format())= moment(article.createdAt).fromNow()
     span.author
       = " by "
       a(href="/users/"+article.creator.username)= article.creator.username

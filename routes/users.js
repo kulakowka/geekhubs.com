@@ -68,7 +68,7 @@ router.get('/:username/comments', function(req, res, next) {
   Comment
   .find({creator: req.user._id})
   .sort('-createdAt')
-  .populate('aricle')
+  .populate('article')
   .populate('creator')
   .exec(function(err, comments) {
     if (err) return next(err)

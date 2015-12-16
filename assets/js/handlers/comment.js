@@ -2,6 +2,7 @@ var $ = require('jquery')
 
 module.exports.onFormSubmit = function onFormSubmit (event) {
   var form = $(this)
+  var writeTab = form.find('.tab[data-frame="write"]')
   var content = form.find('textarea[name="content"]')
   var data = form.serialize()
   var commentsList = $('.commentsList')
@@ -13,6 +14,7 @@ module.exports.onFormSubmit = function onFormSubmit (event) {
   })
 
   form.trigger('reset')
+  writeTab.click()
 
   return false
 }

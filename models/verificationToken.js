@@ -10,12 +10,13 @@ var verificationTokenSchema = Schema({
   user: {
     type: Schema.Types.ObjectId,
     required: true,
+    index: true,
     ref: 'User'
   },
   token: {
     type: String,
-    required: true
-    // index: true
+    required: true,
+    index: true
   },
   createdAt: {
     type: Date,

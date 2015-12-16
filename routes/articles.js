@@ -56,6 +56,7 @@ router.get('/:id/:slug', function(req, res, next) {
   .find({article: article._id})
   .sort('createdAt')
   .populate('creator')
+  .populate('article')
   .exec((err, comments) => {
     res.render('articles/show', {comments, comment: {}})  
   })

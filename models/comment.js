@@ -16,6 +16,7 @@ var commentSchema = new Schema({
   },
   article: {
     type: Schema.Types.ObjectId, 
+    index: true,
     ref: 'Article'
   },
   creator: {

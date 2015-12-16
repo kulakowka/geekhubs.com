@@ -24,6 +24,7 @@ var hubSchema = new Schema({
     type: String,
     required: true,
     index: true,
+    unique: true,
     lowercase: true,
     trim: true,
     maxlength: 100

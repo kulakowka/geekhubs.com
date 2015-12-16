@@ -6,7 +6,8 @@
   .meta
     a.articlesCount(href="/hubs/"+hub.slug) #{hub.articlesCount} articles
     = " | "
-    time(title=moment(hub.createdAt).calendar() datetime=moment(hub.createdAt).format())= moment(hub.createdAt).fromNow()
+    a(href="/hubs/"+hub.slug)
+      time(title=moment(hub.createdAt).calendar() datetime=moment(hub.createdAt).format())= moment(hub.createdAt).fromNow()
     span.author
       = " by "
       a(href="/users/"+hub.creator.username)= hub.creator.username

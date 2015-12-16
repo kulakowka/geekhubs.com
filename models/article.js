@@ -44,7 +44,10 @@ var articleSchema = new Schema({
     index: true,
     required: true
   },
-  hubs : [{ type: Schema.Types.ObjectId, ref: 'Hub' }]
+  hubs : [{ 
+    type: Schema.Types.ObjectId, 
+    ref: 'Hub' 
+  }]
 
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 

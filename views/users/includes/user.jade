@@ -12,5 +12,6 @@
     = " | "
     a.commentsCount(href="/users/"+user.username+"/hubs") #{user.hubsCount} hubs
     = " | "
-    time(title=moment(user.createdAt).calendar() datetime=moment(user.createdAt).format())= moment(user.createdAt).fromNow()
+    a(href="/users/"+user.username)
+      time(title=moment(user.createdAt).calendar() datetime=moment(user.createdAt).format())= moment(user.createdAt).fromNow()
     

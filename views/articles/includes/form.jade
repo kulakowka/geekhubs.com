@@ -1,7 +1,7 @@
 form.articleForm(action=(article._id ? "/articles/"+article._id+"?_method=PUT" : "/articles") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
   input(type="hidden" name="slug" placeholder="Slug" value=article.slug maxLength="200" )
   div
-    input(type="text" name="title" placeholder="Title" value=article.title maxLength="150" required)
+    input(type="text" name="title" placeholder="Title" value=article.title maxLength="150" required autofocus)
   div
     textarea(name="summary" rows="6" placeholder="Article summary. Plain text only." required)= article.summary
   div
