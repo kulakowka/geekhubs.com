@@ -33,7 +33,6 @@ verificationTokenSchema.methods.createVerificationToken = function (done) {
   verificationToken.save((err) => {
     if (err) return done(err)
     done(null, token)
-    console.log('Verification token', verificationToken)
   })
 }
 

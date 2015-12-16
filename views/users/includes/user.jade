@@ -8,10 +8,6 @@
     h2
       a.username(href="/users/"+user.username)= user.username
   
-  .info
-    p emailConfirmed: #{user.emailConfirmed}
-    p isAdmin: #{user.isAdmin}
-    p isDeleted: #{user.isDeleted}
   .meta
     a.articlesCount(href="/users/"+user.username+"/articles") #{user.articlesCount} articles
     = " | "
