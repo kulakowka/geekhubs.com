@@ -40,8 +40,9 @@ router.get('/:username', function(req, res, next) {
 })
 
 router.get('/:username/articles', function(req, res, next) {
+  let user = res.locals.user
   Article
-  .find({creator: req.user._id})
+  .find({creator: user._id})
   .sort('-createdAt')
   .populate('hubs')
   .populate('creator')
@@ -53,8 +54,9 @@ router.get('/:username/articles', function(req, res, next) {
 })
 
 router.get('/:username/hubs', function(req, res, next) {
+  let user = res.locals.user
   Hub
-  .find({creator: req.user._id})
+  .find({creator: user._id})
   .sort('-createdAt')
   .populate('creator')
   .exec(function(err, hubs) {
@@ -65,8 +67,9 @@ router.get('/:username/hubs', function(req, res, next) {
 })
 
 router.get('/:username/comments', function(req, res, next) {
+  let user = res.locals.user
   Comment
-  .find({creator: req.user._id})
+  .find({creator: user._id})
   .sort('-createdAt')
   .populate('article')
   .populate('creator')
