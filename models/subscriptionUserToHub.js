@@ -13,6 +13,7 @@ var subscriptionUserToHubSchema = new Schema({
   },
   hubs: [{ 
     type: Schema.Types.ObjectId, 
+    unique: true,
     ref: 'Hub' 
   }],
   viewedAt: {

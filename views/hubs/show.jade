@@ -6,5 +6,13 @@ block head
 block content
   - var showFullContent = true 
   include includes/hub
+  
+  p
+    .subscriptionBtn(class=subscription ? 'subscribed' : '')
+      a.btn.unsubscribe.js-hub-unsubscribe(data-url="/hubs/"+hub.slug+"/unsubscribe") unsubscribe
+      a.btn.subscribe.js-hub-subscribe(data-url="/hubs/"+hub.slug+"/subscribe") subscribe
+  
+  p subscription #{subscription}
+
   hr
   include ../articles/includes/list

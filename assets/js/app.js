@@ -23,6 +23,7 @@ attachFastClick(document.body)
 var marked = require('./handlers/marked')
 var slug = require('./handlers/slug')
 var comment = require('./handlers/comment')
+var hub = require('./handlers/hub')
 var auth = require('./handlers/auth')
 
 $(document)
@@ -33,6 +34,10 @@ $(document)
   // marked
   .on('click', '.commentForm .tabs .tab', marked.onTabClick)
   .on('click', '.articleForm .tabs .tab', marked.onTabClick)
+
+  // hubs
+  .on('click', '.js-hub-subscribe', hub.onSubscribeClick)
+  .on('click', '.js-hub-unsubscribe', hub.onUnsubscribeClick)
 
   // comments
   .on('submit', '.commentForm', comment.onFormSubmit)
