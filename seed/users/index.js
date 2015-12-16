@@ -1,10 +1,7 @@
 'use strict'
 
 var User = require('../../models/user')
-var async = require('async')
 
-var users = require('./data')
-
-module.exports = function seedUsers(callback) {
+module.exports = function seedUsers(users, callback) {
   User.create(users, callback)
 }
