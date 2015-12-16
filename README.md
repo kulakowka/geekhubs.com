@@ -1,10 +1,10 @@
-# express-blog
+# geekhubs.com
 
 #### Install:
 
 ```
-git clone https://github.com/kulakowka/express-unobtrusive-javascript-example.git
-cd express-unobtrusive-javascript-example
+git clone https://github.com/kulakowka/geekhubs.com.git
+cd geekhubs.com
 npm install 
 ```
 
