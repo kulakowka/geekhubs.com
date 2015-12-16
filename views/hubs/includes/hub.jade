@@ -1,7 +1,13 @@
 .hub
-  h2
-    a.title(href="/hubs/"+hub.slug)= hub.title
-    a.edit(href="/hubs/"+hub.slug+"/edit") edit
+  if showFullContent
+    h1
+      a.title(href="/hubs/"+hub.slug)= hub.title
+      if currentUser && (currentUser.isAdmin || currentUser._id.equals(hub.creator._id))
+        a.edit(href="/hubs/"+hub.slug+"/edit") edit
+  else
+    h2
+      a.title(href="/hubs/"+hub.slug)= hub.title
+
   .description= hub.description
   .meta
     a.articlesCount(href="/hubs/"+hub.slug) #{hub.articlesCount} articles

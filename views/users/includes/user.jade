@@ -1,6 +1,13 @@
 .user
-  h2
-    a.username(href="/users/"+user.username)= user.username
+  if showFullContent
+    h1
+      a.username(href="/users/"+user.username)= user.username
+      if currentUser && currentUser._id.equals(user._id)
+        a.edit(href="/settings") edit
+  else
+    h2
+      a.username(href="/users/"+user.username)= user.username
+  
   .info
     p emailConfirmed: #{user.emailConfirmed}
     p isAdmin: #{user.isAdmin}
