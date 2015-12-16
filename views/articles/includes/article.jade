@@ -20,7 +20,9 @@ article
       time(title=moment(article.createdAt).calendar() datetime=moment(article.createdAt).format())= moment(article.createdAt).fromNow()
     span.author
       = " by "
-      a(href="/users/"+article.creator.username)= article.creator.username
+      a.username(href="/users/"+article.creator.username)= article.creator.username
+      = "."
+      a.club(href="/clubs/habr") habr
 
     if article.hubs.length
       span.hubs 
