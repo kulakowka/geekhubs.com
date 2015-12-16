@@ -2,6 +2,7 @@
 
 var mongoose = require('../config/mongoose')
 var marked = require('../config/marked')
+var slug = require('limax')
 
 // Models
 var User = require('./user')
@@ -76,6 +77,7 @@ articleSchema.statics.updateCommentsCount = function (id, cb) {
 
 articleSchema.pre('save', function (next) {
   this.wasNew = this.isNew
+  if (this.title) this.slug = slug(this.title)
   next()
 })
 

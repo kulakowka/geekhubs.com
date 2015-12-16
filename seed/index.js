@@ -2,8 +2,8 @@
 
 var mongoose = require('../config/mongoose')
 var seedUsers = require('./users')
+var seedHubs = require('./hubs')
 var colors = require('colors')
-var users = require('./users/data')
 
 mongoose.connection.once('open', function () {
   console.log('Mongo connection opened'.green)
@@ -15,12 +15,19 @@ mongoose.connection.once('open', function () {
 
     console.log('Create users'.green)
 
-    seedUsers(users, function(err, createdUsers) {
+    seedUsers(function(err, createdUsers) {
       if (err) return console.log(err)
 
-      createdUsers.forEach(user => console.log('user created'.blue, user.username))
+      createdUsers.forEach(user => console.log('User created'.blue, user.username))
 
-      process.exit(0)
+      console.log('Create hubs for users'.green)
+      seedHubs(createdUsers, function (err, createdHubs) {
+        if (err) return console.log(err)
+
+        createdHubs.forEach(hub => console.log('Hub created'.blue, hub.title))
+        process.exit(0)
+      })
+      
     })
   })
 })

@@ -21,15 +21,11 @@ attachFastClick(document.body)
 
 // Handlers
 var marked = require('./handlers/marked')
-var slug = require('./handlers/slug')
 var comment = require('./handlers/comment')
 var hub = require('./handlers/hub')
 var auth = require('./handlers/auth')
 
 $(document)
-  // slug
-  .on('keyup', '.articleForm input[name="title"]', slug.onTitleKeyup)
-  .on('keyup', '.hubForm input[name="title"]', slug.onTitleKeyup)
 
   // marked
   .on('click', '.commentForm .tabs .tab', marked.onTabClick)

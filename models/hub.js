@@ -1,6 +1,7 @@
 'use strict'
 
 var mongoose = require('../config/mongoose')
+var slug = require('limax')
 
 // var Article = require('./article')
 var User = require('./user')
@@ -22,7 +23,6 @@ var hubSchema = new Schema({
   },
   slug: {
     type: String,
-    required: true,
     index: true,
     unique: true,
     lowercase: true,
@@ -68,6 +68,7 @@ hubSchema.methods.updateArticlesCount = function () {
 
 hubSchema.pre('save', function (next) {
   this.wasNew = this.isNew
+  if (this.title) this.slug = slug(this.title)
   next()
 })
 

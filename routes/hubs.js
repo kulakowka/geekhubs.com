@@ -158,7 +158,6 @@ router.post('/', function(req, res, next) {
 
   var hub = new Hub({
     title: req.body.title,
-    slug: req.body.slug,
     description: req.body.description,
     creator: req.user._id
   })

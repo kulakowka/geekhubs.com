@@ -19,6 +19,7 @@
     "email-templates": "^2.0.1",
     "express": "~4.13.1",
     "express-session": "^1.12.1",
+    "faker": "^3.0.1",
     "fastclick": "^1.0.6",
     "helmet": "^0.15.0",
     "highlight.js": "^9.0.0",
