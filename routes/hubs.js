@@ -27,17 +27,42 @@ router.param('slug', function(req, res, next, slug) {
   })
 })
 
-router.get('/', function(req, res, next) {
-  Hub
-  .find()
-  .populate('creator')
-  .sort('-createdAt')
-  .exec(function(err, hubs) {
-    if (err) return next(err)
+router.get('/', 
+  function(req, res, next) {
+    if (!req.user) return next()
 
-    res.render('hubs/index', {hubs})
-  })
-})
+    SubscriptionUserToHub
+    .findOne({creator: req.user._id})
+    .populate({
+      path: 'hubs',
+      select: '_id'
+    })
+    .exec(function(err, subscription) {
+      if (err) return next(err)
+      if (!subscription) return next()
+
+      var subscribedHubsIds = subscription.hubs.map(hub => hub._id.toString())
+
+      res.locals.isSubscribed = function(hub) {
+        let id = hub._id.toString()
+        return subscribedHubsIds.indexOf(id) !== -1
+      }
+      next()
+    })
+  },
+  function(req, res, next) {
+    Hub
+    .find()
+    .populate('creator')
+    .sort('-createdAt')
+    .limit(10)
+    .exec(function(err, hubs) {
+      if (err) return next(err)
+
+      res.render('hubs/index', {hubs})
+    })
+  }
+)
 
 router.get('/new', function(req, res, next) {
   res.render('hubs/new', {hub: {}})
@@ -81,7 +106,7 @@ router.get('/:slug',
     .exec(function(err, articles) {
       if (err) return next(err)
 
-      res.render('hubs/show', {articles})  
+      res.render('hubs/show', {articles, isSubscribed: (hub) => !!res.locals.subscription })  
     })
   }
 )

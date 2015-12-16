@@ -8,9 +8,7 @@ block content
   include includes/hub
   
   
-  button.btn.subscriptionBtn(class=subscription ? 'subscribed' : '')
-    span.unsubscribe.js-hub-unsubscribe(data-url="/hubs/"+hub.slug+"/unsubscribe") unsubscribe
-    span.subscribe.js-hub-subscribe(data-url="/hubs/"+hub.slug+"/subscribe") subscribe
+  
   
   hr
   include ../articles/includes/list
