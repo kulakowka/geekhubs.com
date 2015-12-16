@@ -36,3 +36,7 @@ Open in your browser [http://localhost:3000](http://localhost:3000)
 ```
 PORT=3000 NODE_ENV=production node ./bin/www --harmony
 ```
+
+#### Tools for comfortable development
+- [Robomongo](robomongo.org) - Shell-centric cross-platform MongoDB management tool
+
