@@ -2,7 +2,5 @@ extends ../layout
 
 block content
   if currentUser
-    nav
-      a(href="/articles/new") Create article
-  
+    include includes/tabs
   include includes/list

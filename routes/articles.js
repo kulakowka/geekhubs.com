@@ -3,9 +3,11 @@
 var express = require('express');
 var router = express.Router();
 
+
 var Comment = require('../models/comment')
 var Article = require('../models/article')
 var Hub = require('../models/hub')
+var SubscriptionUserToHub = require('../models/subscriptionUserToHub')
 
 router.param('id', function(req, res, next, id) {
   Article
@@ -41,6 +43,40 @@ router.get('/new', function(req, res, next) {
   })
   
 })
+
+router.get('/subscription', 
+  function loadSubscription (req, res, next) {
+    let user = req.user
+
+    if (!user) return res.redirect('/articles')
+
+    SubscriptionUserToHub
+    .findOne({creator: user._id})
+    .populate('hubs')
+    .exec(function(err, subscription) {
+      if (err) return next(err)
+      if (!subscription) return next(getSubscriptionNotFoundError())
+      
+      res.locals.subscription = subscription
+      next()
+    })
+  },
+  function (req, res, next) {
+    let subscription = res.locals.subscription
+    let hubIds = subscription.hubs.map(hub => hub._id)
+
+    Article
+    .find({hubs: {$in: hubIds} })
+    .sort('-createdAt')
+    .populate('hubs')
+    .populate('creator')
+    .exec(function(err, articles) {
+      if (err) return next(err)
+
+      res.render('articles/subscription', {articles})
+    })
+  }
+)
 
 router.get('/:id/edit', function(req, res, next) {
   Hub.find().exec(function(err, hubs) {
@@ -111,6 +147,12 @@ module.exports = router;
 
 function getNotFoundError () {
   var error = new Error('Article not found')
+  error.status = 404
+  return error
+}
+
+function getSubscriptionNotFoundError () {
+  var error = new Error('Subscription not found')
   error.status = 404
   return error
 }

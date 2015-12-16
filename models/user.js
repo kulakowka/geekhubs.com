@@ -7,7 +7,7 @@ var mongoose = require('../config/mongoose')
 // Models
 //var Comment = require('./comment')
 var VerificationToken = require('./verificationToken')
-//var Article = require('./article')
+var SubscriptionUserToHub = require('./subscriptionUserToHub')
 //var Hub = require('./hub')
 
 // Services
@@ -141,6 +141,22 @@ userSchema.statics.updateCommentsCount = function (id, cb) {
 }
 
 // after cllabacks
+userSchema.pre('save', function (next) {
+  this.wasNew = this.isNew
+  next()
+})
+
+userSchema.post('save', function(user) {
+  if (!user.wasNew) return
+
+  var subscription = new SubscriptionUserToHub({
+    creator: user._id
+  })
+
+  subscription.save(err => {
+    if (err) return console.log('Error:', err)
+  })
+})
 userSchema.pre('save', function (next) {
   var user = this
 

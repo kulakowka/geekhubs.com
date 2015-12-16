@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  if currentUser
+    include includes/tabs
+
+  if subscription.hubs.length
+    p
+      = "You are subscribed to hubs: "
+      each hub, index in subscription.hubs
+        if index
+          = ", "
+        a(href="/hubs/"+hub.slug)= hub.title
+  else
+    p Your subscription is empty. Please subscribe to <a href="/hubs">hubs</a> that your interested.
+
+  include includes/list
