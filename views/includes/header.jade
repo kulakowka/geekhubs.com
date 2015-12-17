@@ -3,19 +3,21 @@ header.siteHeader
 
   ul.rightMenu
     if currentUser
-      if currentUser.isAdmin
-        li admin
       li
-        a(href="/users/" + currentUser.username)= currentUser.username
-      li
-        a(href="/settings") settings
-      li
-        a.js-button-logout(href="#") logout
+        span.dropdown
+          a.item.handle(href="/users/" + currentUser.username)= currentUser.username
+          span.menu
+            a(href="/users/" + currentUser.username)= currentUser.username
+            a(href="/users/" + currentUser.username + "/articles") My articles
+            a(href="/users/" + currentUser.username + "/comments") My comments
+            a(href="/users/" + currentUser.username + "/hubs") My hubs
+            a(href="/settings") Settings
+            a.js-button-logout(href="#") Logout
     else 
       li
-        a(href="/auth/signin" rel="nofollow") Sign in      
+        a.item(href="/auth/signin" rel="nofollow") Sign in      
       li
-        a(href="/auth/signup" rel="nofollow") Sign up
+        a.item(href="/auth/signup" rel="nofollow") Sign up
 
 
   .logo
@@ -23,9 +25,9 @@ header.siteHeader
 
   ul.leftMenu
     li 
-      a(href="/articles") Articles
+      a.item(href="/articles") Articles
     li 
-      a(href="/hubs") Hubs
+      a.item(href="/hubs") Hubs
     li
-      a(href="/users") Users
+      a.item(href="/users") Users
   

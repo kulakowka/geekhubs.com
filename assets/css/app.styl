@@ -7,6 +7,7 @@ fontfamily1 = "Lucida Grande", Helvetica, Arial, sans-serif
 @import '_variables'
 @import 'selectize'
 @import 'buttons'
+@import 'dropdown'
 @import 'code'
 @import 'comments'
 @import 'articles'
@@ -18,9 +19,11 @@ fontfamily1 = "Lucida Grande", Helvetica, Arial, sans-serif
 
 
 body
-  padding 50px
+  padding 0px
+  margin 0
   font-size fontsize1 
   font-family fontfamily1
+  background #f8f8ff
 
 *
   box-sizing border-box
@@ -40,21 +43,27 @@ a
 .layout
   max-width 800px
   margin auto
+  background #fff
+  > .content 
+    padding 0 20px
 footer
+  background #eee
   margin 50px 0 0
-  height 300px
+  padding 20px
+  font-size fontsize3
   border-top 1px solid #eee
-  color #ccc
+  color #999
 header
-  background aliceblue
-  padding 10px
+  background #4078c0
+  padding 0 20px
   margin 0 0 20px
-  overflow hidden
+  min-height 40px
   .logo
     float left
     font-size 1.2em
+    line-height 40px
     a
-      color #333
+      color white
       font-weight bold
   .leftMenu
     float left
@@ -68,6 +77,12 @@ header
       margin 0 10px
       paddin 0
       display inline-block
-  a + a
-    display inline-block
-    margin-left 20px
+      a.item
+        display inline-block
+        line-height 40px
+        color white
+      a.item:first-letter
+        text-transform uppercase 
+      a.item + a.item
+        display inline-block
+        margin-left 20px

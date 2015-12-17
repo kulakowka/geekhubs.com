@@ -1,0 +1,27 @@
+.dropdown
+  position relative
+  .handle
+    display inline-block
+  .menu
+    display none
+    background white
+    position absolute
+    right -20px
+    top -8px
+    box-shadow 0 2px 8px 0 rgba(0, 0, 0, 0.1)
+    text-align right
+    a
+      display block
+      padding 10px 20px
+      white-space nowrap
+      text-decoration none
+      color #333
+      &:first-letter
+        text-transform uppercase
+      &:hover
+        background #00B7FF
+        color white
+//.dropdown:hover,
+.dropdown.open
+  .menu
+    display inline-block

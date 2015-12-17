@@ -25,8 +25,12 @@ var comment = require('./handlers/comment')
 var article = require('./handlers/article')
 var hub = require('./handlers/hub')
 var auth = require('./handlers/auth')
+var dropdown = require('./handlers/dropdown')
 
 $(document)
+
+  // dropdown
+  .on('click', '.dropdown .handle', dropdown.onHandleClick)
 
   // marked
   .on('click', '.commentForm .tabs .tab', marked.onTabClick)
