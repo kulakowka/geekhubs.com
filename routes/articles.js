@@ -99,43 +99,35 @@ router.get('/:id/:slug', function(req, res, next) {
   })
 })
 
-
-
-router.put('/:id', function(req, res, next) {
+router.put('/:id', function (req, res, next) {
   let article = res.locals.article
-  
   let lastHubs = article.hubs.map(hub => hub._id)
-  
+
   article.title = req.body.title
   article.summary = req.body.summary
   article.content = req.body.content
-  article.slug = req.body.slug
   article.hubs = req.body.hubs
 
   article.save((err, article) => {
     if (err) return next(err)
-    res.redirect('/articles/' + article._id + '/' + article.slug)  
-    
+    res.redirect('/articles/' + article._id + '/' + article.slug)
     Hub.updateArticlesCount(lastHubs) // hot fix for last hubs
   })
 })
 
-router.post('/', function(req, res, next) {
-  
+router.post('/', function (req, res, next) {
   var article = new Article({
     title: req.body.title,
     summary: req.body.summary,
     content: req.body.content,
-    slug: req.body.slug,
     hubs: req.body.hubs,
     creator: req.user._id
   })
-  
   article.save((err, article) => {
     if (err) return next(err)
-    res.redirect('/articles/' + article._id + '/' + article.slug)  
+    res.redirect('/articles/' + article._id + '/' + article.slug)
   })
-});
+})
 
 module.exports = router;
 

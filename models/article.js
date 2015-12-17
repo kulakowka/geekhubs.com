@@ -76,9 +76,9 @@ articleSchema.pre('save', function (next) {
 
 // Post save hooks
 articleSchema.post('save', function (article) {
-  if (!this.wasNew) return
-
   Hub.updateArticlesCountHubs(this.hubs)
+
+  if (!this.wasNew) return
   User.updateArticlesCount(this.creator)
 })
 
