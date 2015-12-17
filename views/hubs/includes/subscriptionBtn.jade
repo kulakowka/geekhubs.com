@@ -1,4 +1,4 @@
 if currentUser
   span.subscriptionBtn(class=isSubscribed(hub) ? 'subscribed' : '')
-    button.btn.unsubscribe.js-hub-unsubscribe(data-url="/hubs/"+hub.slug+"/unsubscribe") unsubscribe
-    button.btn.btn-action.subscribe.js-hub-subscribe(data-url="/hubs/"+hub.slug+"/subscribe") subscribe
+    button.btn.unsubscribe.js-hub-unsubscribe(data-hub=hub._id.toString()) unsubscribe
+    button.btn.btn-action.subscribe.js-hub-subscribe(data-hub=hub._id.toString()) subscribe

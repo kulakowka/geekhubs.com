@@ -64,7 +64,7 @@ app.use('/hubs', require('./routes/hubs'))
 app.use('/users', require('./routes/users'))
 app.use('/auth', require('./routes/auth'))
 app.use('/settings', require('./routes/settings'))
-
+app.use('/subscription', require('./routes/subscription'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

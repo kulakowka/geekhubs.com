@@ -2,14 +2,14 @@ var $ = require('jquery')
 
 module.exports.onSubscribeClick = function onFormSubmit (event) {
   var button = $(this)
-  var url = button.attr('data-url')
+  var hubId = button.attr('data-hub')
   var subscriptionBtn = button.closest('.subscriptionBtn')
-  
+
   subscriptionBtn.addClass('subscribed')
 
-  $.post(url).done(function(json) {
-    
-  }).fail(function(json) {
+  $.post('/subscription/hub/' + hubId + '/create').done(function (json) {
+    console.log('done', json)
+  }).fail(function (json) {
     console.log('error')
   })
 
@@ -18,14 +18,14 @@ module.exports.onSubscribeClick = function onFormSubmit (event) {
 
 module.exports.onUnsubscribeClick = function onFormSubmit (event) {
   var button = $(this)
-  var url = button.attr('data-url')
+  var hubId = button.attr('data-hub')
   var subscriptionBtn = button.closest('.subscriptionBtn')
 
   subscriptionBtn.removeClass('subscribed')
 
-  $.post(url).done(function(json) {
-    
-  }).fail(function(json) {
+  $.post('/subscription/hub/' + hubId + '/remove').done(function (json) {
+    console.log('done', json)
+  }).fail(function (json) {
     console.log('error')
   })
 

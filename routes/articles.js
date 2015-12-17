@@ -32,15 +32,10 @@ router.get('/', (req, res, next) => {
   })
 })
 
-// GET /articles/new
-router.get('/new', ifUser, loadHubs, (req, res, next) => {
-  res.render('articles/new', {article: {}})
-})
-
 // GET /articles/subscription
-router.get('/subscription', ifUser, loadSubscription, (req, res, next) => {
-  let subscription = res.locals.subscription
-  let hubs = subscription.hubs.map(hub => hub._id)
+router.get('/subscription', ifUser, loadSubscriptions, (req, res, next) => {
+  let subscriptions = res.locals.subscriptions
+  let hubs = subscriptions.map(subscription => subscription.hub)
 
   Article
   .find({hubs: {$in: hubs}})
@@ -53,8 +48,13 @@ router.get('/subscription', ifUser, loadSubscription, (req, res, next) => {
   })
 })
 
+// GET /articles/new
+router.get('/new', ifUser, loadHubs, (req, res, next) => {
+  res.render('articles/new', {article: {}})
+})
+
 // GET /articles/:id/edit
-router.get('/:id/edit', ifUser, loadArticle, loadHubs, (req, res, next) => {
+router.get('/:id/edit', ifUser, loadArticle, ifCanEdit, loadHubs, (req, res, next) => {
   res.render('articles/edit')
 })
 
@@ -74,25 +74,19 @@ router.get('/:id/:slug', loadArticle, function (req, res, next) {
 })
 
 // PUT /articles/:id
-// This don't use loadArticle() becouse we don't need populate hubs
-router.put('/:id', ifUser, function (req, res, next) {
-  let id = req.params.id
-  Article.findById(id, function (err, article) {
+router.put('/:id', ifUser, loadArticleNoPopulate, ifCanEdit, (req, res, next) => {
+  let article = res.locals.article
+
+  Object.assign(article, {
+    title: req.body.title,
+    summary: req.body.summary,
+    content: req.body.content,
+    hubs: req.body.hubs
+  })
+
+  article.save((err, article) => {
     if (err) return next(err)
-    if (!article) return next(getNotFoundError())
-    if (!req.user.can('edit', article)) return next(getForbiddenError())
-
-    Object.assign(article, {
-      title: req.body.title,
-      summary: req.body.summary,
-      content: req.body.content,
-      hubs: req.body.hubs
-    })
-
-    article.save((err, article) => {
-      if (err) return next(err)
-      res.json({article})
-    })
+    res.json({article})
   })
 })
 
@@ -105,6 +99,7 @@ router.post('/', ifUser, (req, res, next) => {
     hubs: req.body.hubs,
     creator: req.user._id
   })
+
   article.save((err, article) => {
     if (err) return next(err)
     res.json({article})
@@ -115,6 +110,16 @@ module.exports = router
 
 // Middlewares for this router
 
+function loadArticleNoPopulate (req, res, next) {
+  Article
+  .findById(req.params.id)
+  .exec((err, article) => {
+    if (err) return next(err)
+    if (!article) return next(getNotFoundError('Article not found'))
+    res.locals.article = article
+    next()
+  })
+}
 function loadArticle (req, res, next) {
   let id = req.params.id
 
@@ -124,8 +129,7 @@ function loadArticle (req, res, next) {
   .populate('creator')
   .exec((err, article) => {
     if (err) return next(err)
-    if (!article) return next(getNotFoundError())
-
+    if (!article) return next(getNotFoundError('Article not found'))
     res.locals.article = article
     next()
   })
@@ -139,13 +143,18 @@ function loadHubs (req, res, next) {
   })
 }
 
-function loadSubscription (req, res, next) {
+function loadSubscriptions (req, res, next) {
   SubscriptionUserToHub
-  .findOne({creator: req.user._id})
-  .populate('hubs')
-  .exec((err, subscription) => {
+  .find({creator: req.user._id})
+  .populate('hub')
+  .exec((err, subscriptions) => {
     if (err) return next(err)
-    res.locals.subscription = subscription
+    res.locals.subscriptions = subscriptions
     next()
   })
+}
+
+function ifCanEdit (req, res, next) {
+  let article = res.locals.article
+  if (!req.user.can('edit', article)) return next(getForbiddenError())
 }

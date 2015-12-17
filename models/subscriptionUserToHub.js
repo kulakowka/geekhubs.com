@@ -12,15 +12,11 @@ var subscriptionUserToHubSchema = new Schema({
     index: true,
     required: true
   },
-  hubs: [{
+  hub: {
     type: Schema.Types.ObjectId,
-    unique: true,
-    ref: 'Hub'
-  }],
-  viewedAt: {
-    type: Date,
-    required: true,
-    default: Date.now
+    ref: 'Hub',
+    index: true,
+    required: true
   }
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
