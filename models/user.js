@@ -149,16 +149,6 @@ userSchema.pre('save', function (next) {
   })
 })
 
-// Post save hooks
-userSchema.post('save', function (user) {
-  if (!user.wasNew) return
-
-  // Create one-to-one subscription
-  SubscriptionUserToHub.create({creator: user._id}, err => {
-    if (err) return console.log(err)
-  })
-})
-
 module.exports = mongoose.model('User', userSchema)
 
 

@@ -1,8 +1,5 @@
 extends ../layout
 
 block content
-  if currentUser
-    nav
-      a(href="/hubs/new") Create hub
-  
+  include includes/tabs
   include includes/list

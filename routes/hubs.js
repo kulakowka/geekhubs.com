@@ -38,6 +38,29 @@ router.get('/', loadSubscriptions, (req, res, next) => {
   })
 })
 
+// GET /hubs/subscription
+router.get('/subscription', ifUser, loadSubscriptions, (req, res, next) => {
+  let subscriptions = res.locals.subscriptions || []
+  let subscribedHubsIds = subscriptions.map(subscription => subscription.hub.toString())
+
+  Hub
+  .find({_id: {$in: subscribedHubsIds}})
+  .populate('creator')
+  .sort('-createdAt')
+  .limit(30)
+  .exec((err, hubs) => {
+    if (err) return next(err)
+
+    res.locals.isSubscribed = (hub) => {
+      let id = hub._id.toString()
+      return subscribedHubsIds.indexOf(id) !== -1
+    }
+
+    res.render('hubs/index', {hubs, subscriptionPage: true})
+  })
+})
+
+
 // GET /hubs/new
 router.get('/new', ifUser, (req, res, next) => {
   res.render('hubs/new', {hub: {}})
