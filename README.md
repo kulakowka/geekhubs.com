@@ -1,4 +1,4 @@
-# geekhubs.com
+# The project is in development
 
 ![Site screenshot](https://habrastorage.org/files/a78/b66/10d/a78b6610d33748c5ae256bfc7cfc5061.png)
 
