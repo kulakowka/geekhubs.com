@@ -157,4 +157,5 @@ function loadSubscriptions (req, res, next) {
 function ifCanEdit (req, res, next) {
   let article = res.locals.article
   if (!req.user.can('edit', article)) return next(getForbiddenError())
+  next()
 }

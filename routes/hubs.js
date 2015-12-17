@@ -161,4 +161,5 @@ function loadSubscriptions (req, res, next) {
 function ifCanEdit (req, res, next) {
   let hub = res.locals.hub
   if (!req.user.can('edit', hub)) return next(getForbiddenError())
+  next()
 }
