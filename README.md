@@ -23,6 +23,7 @@ Seed config:
 /seed/comments/index.js
 /seed/hubs/index.js
 /seed/users/index.js
+/seed/subscriptions/index.js
 ```
 
 #### Development:
