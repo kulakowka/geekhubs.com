@@ -40,6 +40,15 @@ Open in your browser [http://localhost:3000](http://localhost:3000)
 PORT=3000 NODE_ENV=production node ./bin/www --harmony
 ```
 
+Start with pm2:
+```
+$ pm2 start start.json --env production
+```
+
+More info: 
+- [Pm2 docs](http://pm2.keymetrics.io/docs/usage/application-declaration/)
+- [pm2 quick start](http://pm2.keymetrics.io/docs/usage/quick-start/)
+
 #### Tools for comfortable development
 - [Robomongo](robomongo.org) - Shell-centric cross-platform MongoDB management tool
 

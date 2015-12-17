@@ -1,0 +1,13 @@
+{
+  "apps" : [{
+    "name"        : "www-app",
+    "script"      : "bin/www",
+    "node_args"   : "--harmony",
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "env_production" : {
+       "NODE_ENV": "production"
+    }
+  }]
+}
