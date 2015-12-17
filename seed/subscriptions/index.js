@@ -7,7 +7,7 @@ var User = require('../../models/user')
 var Hub = require('../../models/hub')
 
 // Settings
-const SUBSCRIPTIONS_COUNT = 10
+const SUBSCRIPTIONS_COUNT = 1000
 
 module.exports = function seedSubscriptions (callback) {
   async.parallel({users: getUsers, hubs: getHubs}, (err, result) => {

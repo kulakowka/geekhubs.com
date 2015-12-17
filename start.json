@@ -1,8 +1,9 @@
 {
   "apps" : [{
-    "name"        : "www-app",
-    "script"      : "bin/www",
-    "node_args"   : "--harmony",
+    "name"               : "www-app",
+    "script"             : "bin/www",
+    "node_args"          : "--harmony",
+    "instances"          : 2,
     "env": {
       "NODE_ENV": "development"
     },

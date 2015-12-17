@@ -8,8 +8,8 @@ var Hub = require('../../models/hub')
 var User = require('../../models/user')
 
 // Settings
-const ARTICLES_COUNT = 20
-const HUBS_PER_ARTICLE_COUNT = 4
+const ARTICLES_COUNT = 100
+const HUBS_PER_ARTICLE_COUNT = 6
 
 module.exports = function seedArticles (callback) {
   async.parallel({users: getUsers, hubs: getHubs}, (err, result) => {
@@ -32,7 +32,7 @@ function getHubs (callback) {
 function getFakeArticle (result) {
   var user = _.sample(result.users)
   var hubs = _.sample(result.hubs, HUBS_PER_ARTICLE_COUNT).map(hub => hub._id)
-  
+
   return {
     hubs: hubs,
     creator: user._id,

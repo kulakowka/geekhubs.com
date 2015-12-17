@@ -1,30 +1,31 @@
 'use strict'
 
 var _ = require('lodash')
+var async = require('async')
 var faker = require('faker')
 var Hub = require('../../models/hub')
 var User = require('../../models/user')
 
 // Settings
-const USERS_COUNT = 5
-const HUBS_COUNT = 5
+const HUBS_COUNT = 1000
 
-module.exports = function seedHubs(callback) {
-  User.find().exec(function(err, users) {
+module.exports = function seedHubs (callback) {
+  async.parallel({users: getUsers}, (err, result) => {
     if (err) return callback(err)
 
-    var hubs = _.sample(users, USERS_COUNT).reduce(userHubsReducer, [])
+    var hubs = _.times(HUBS_COUNT, (n) => getFakeHub(result))
 
     Hub.create(hubs, callback)
-  }) 
+  })
 }
 
-function userHubsReducer (hubs, user) {
-  let userHubs = _.times(HUBS_COUNT, (n) => getFakeHub(user) )
-  return hubs.concat(userHubs)
+function getUsers (callback) {
+  User.find().exec(callback)
 }
 
-function getFakeHub (user) {
+function getFakeHub (result) {
+  var user = _.sample(result.users)
+
   return {
     creator: user._id,
     title: faker.hacker.noun(),
