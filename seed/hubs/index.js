@@ -6,7 +6,7 @@ var Hub = require('../../models/hub')
 var User = require('../../models/user')
 
 // Settings
-const USERS_COUNT = 50
+const USERS_COUNT = 5
 const HUBS_COUNT = 5
 
 module.exports = function seedHubs(callback) {

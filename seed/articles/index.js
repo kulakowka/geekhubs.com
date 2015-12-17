@@ -8,7 +8,7 @@ var Hub = require('../../models/hub')
 var User = require('../../models/user')
 
 // Settings
-const ARTICLES_COUNT = 200
+const ARTICLES_COUNT = 20
 const HUBS_PER_ARTICLE_COUNT = 4
 
 module.exports = function seedArticles (callback) {

@@ -5,7 +5,7 @@ var faker = require('faker')
 var User = require('../../models/user')
 
 // Settings
-const USERS_COUNT = 100
+const USERS_COUNT = 20
 const DEFAULT_PASSWORD = 'pass'
 const admin = {
   username: 'admin',

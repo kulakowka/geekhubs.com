@@ -1,6 +1,8 @@
-.pageTabs
-  a.tab(href="/articles" class=subscription ? "" : "active") All article
-  a.tab(href="/articles/subscription" class=subscription ? "active" : "") Subscription
-
-nav
-  a(href="/articles/new") Create article
+if currentUser
+  .pageTabs
+    .rightTabs
+      a.btn(href="/articles/new") Create article
+    a.tab(href="/articles/subscription" class=subscription ? "active" : "") Subscription
+    a.tab(href="/articles" class=subscription ? "" : "active") All article
+    
+    

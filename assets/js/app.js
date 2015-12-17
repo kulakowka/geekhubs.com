@@ -3,8 +3,9 @@
 
 var $ = require('jquery')
 var autosize = require('autosize')
-var selectize = require('selectize')
 var attachFastClick = require('fastclick')
+require('selectize')
+
 
 // from a jQuery collection
 autosize($('textarea'))
@@ -12,16 +13,16 @@ autosize($('textarea'))
 // Selectize
 $('select[name="hubs"]').selectize({
   create: false,
-  maxItems: 10
+  maxItems: 3
 })
 
 // Fast click
 attachFastClick(document.body)
 
-
 // Handlers
 var marked = require('./handlers/marked')
 var comment = require('./handlers/comment')
+var article = require('./handlers/article')
 var hub = require('./handlers/hub')
 var auth = require('./handlers/auth')
 
@@ -37,6 +38,9 @@ $(document)
 
   // comments
   .on('submit', '.commentForm', comment.onFormSubmit)
+
+  // articles
+  .on('submit', '.articleForm', article.onFormSubmit)
 
   // users
   .on('click', '.js-button-logout', auth.logout)

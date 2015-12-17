@@ -63,14 +63,13 @@ hubSchema.statics.updateArticlesCount = function (_id) {
 // Pre save hooks
 hubSchema.pre('save', function (next) {
   this.wasNew = this.isNew
-  if (this.isModified('title')) this.slug = slug(this.title)
+  this.slug = slug(this.title)
   next()
 })
 
 // Post save hooks
 hubSchema.post('save', function (hub) {
   if (!hub.wasNew) return
-
   User.updateHubsCount(hub.creator)
 })
 

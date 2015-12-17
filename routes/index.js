@@ -4,7 +4,8 @@ var express = require('express')
 var router = express.Router()
 
 router.get('/', function (req, res, next) {
-  res.render('index')
+  if (req.user) return res.redirect('/articles/subscription')
+  res.redirect('/articles')
 })
 
 module.exports = router

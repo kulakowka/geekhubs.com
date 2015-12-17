@@ -2,6 +2,7 @@
 
 // Packages
 var slug = require('limax')
+var _ = require('lodash')
 
 // Configs
 var mongoose = require('../config/mongoose')
@@ -56,6 +57,11 @@ articleSchema.virtual('html').get(function () {
   return marked(this.content)
 })
 
+articleSchema.path('hubs').set(function (hubs) {
+  this._previousHubs = this.hubs
+  return hubs
+})
+
 // Model static methods (Article.updateCommentsCount)
 articleSchema.statics.updateCommentsCount = function (_id) {
   let self = this
@@ -70,14 +76,19 @@ articleSchema.statics.updateCommentsCount = function (_id) {
 // Pre save hooks
 articleSchema.pre('save', function (next) {
   this.wasNew = this.isNew
-  if (this.isModified('title')) this.slug = slug(this.title)
+  this.slug = slug(this.title)
   next()
 })
 
 // Post save hooks
 articleSchema.post('save', function (article) {
-  Hub.updateArticlesCountHubs(this.hubs)
+  var hubs = this._previousHubs.concat(this.hubs || [])
+  hubs = _.uniq(hubs.map(hub => hub.toString()))
 
+  Hub.updateArticlesCountHubs(hubs)
+})
+
+articleSchema.post('save', function (article) {
   if (!this.wasNew) return
   User.updateArticlesCount(this.creator)
 })

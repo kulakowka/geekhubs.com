@@ -8,7 +8,7 @@ var faker = require('faker')
 var User = require('../../models/user')
 
 // Settings
-const COMMENTS_COUNT = 1000
+const COMMENTS_COUNT = 10
 
 module.exports = function seedComments (callback) {
   async.parallel({users: getUsers, articles: getArticles}, (err, result) => {

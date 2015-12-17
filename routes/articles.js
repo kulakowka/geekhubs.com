@@ -1,92 +1,65 @@
 'use strict'
 
-var express = require('express');
-var router = express.Router();
+// Packages
+var express = require('express')
+var router = express.Router()
 
-
+// Models
 var Comment = require('../models/comment')
 var Article = require('../models/article')
 var Hub = require('../models/hub')
 var SubscriptionUserToHub = require('../models/subscriptionUserToHub')
 
-router.param('id', function(req, res, next, id) {
-  Article
-  .findById(id)
-  .populate('hubs')
-  .populate('creator')
-  .exec(function(err, article) {    
-    if (err) return next(err)
-    if (!article) return next(getNotFoundError())
-    
-    res.locals.article = article
-    next()
-  })
-})
+// Policies
+const ifUser = require('./policies/ifUser')
 
-router.get('/', function(req, res, next) {
+// Error responses
+const getForbiddenError = require('./errors/forbidden')
+const getNotFoundError = require('./errors/notFound')
+
+// GET /articles
+router.get('/', (req, res, next) => {
   Article
   .find()
   .sort('-createdAt')
   .populate('hubs')
   .populate('creator')
   .limit(30)
-  .exec(function(err, articles) {
+  .exec((err, articles) => {
     if (err) return next(err)
 
     res.render('articles/index', {articles})
   })
 })
 
-router.get('/new', function(req, res, next) {
-  Hub.find().exec(function(err, hubs) {
-    if (err) return next(err)
-    res.render('articles/new', {article: {}, hubs})  
-  })
-  
+// GET /articles/new
+router.get('/new', ifUser, loadHubs, (req, res, next) => {
+  res.render('articles/new', {article: {}})
 })
 
-router.get('/subscription', 
-  function loadSubscription (req, res, next) {
-    let user = req.user
+// GET /articles/subscription
+router.get('/subscription', ifUser, loadSubscription, (req, res, next) => {
+  let subscription = res.locals.subscription
+  let hubs = subscription.hubs.map(hub => hub._id)
 
-    if (!user) return res.redirect('/articles')
-
-    SubscriptionUserToHub
-    .findOne({creator: user._id})
-    .populate('hubs')
-    .exec(function(err, subscription) {
-      if (err) return next(err)
-      if (!subscription) return next(getSubscriptionNotFoundError())
-      
-      res.locals.subscription = subscription
-      next()
-    })
-  },
-  function (req, res, next) {
-    let subscription = res.locals.subscription
-    let hubIds = subscription.hubs.map(hub => hub._id)
-
-    Article
-    .find({hubs: {$in: hubIds} })
-    .sort('-createdAt')
-    .populate('hubs')
-    .populate('creator')
-    .exec(function(err, articles) {
-      if (err) return next(err)
-
-      res.render('articles/subscription', {articles})
-    })
-  }
-)
-
-router.get('/:id/edit', function(req, res, next) {
-  Hub.find().exec(function(err, hubs) {
+  Article
+  .find({hubs: {$in: hubs}})
+  .sort('-createdAt')
+  .populate('hubs')
+  .populate('creator')
+  .exec((err, articles) => {
     if (err) return next(err)
-    res.render('articles/edit', {hubs})  
+    res.render('articles/subscription', {articles})
   })
 })
 
-router.get('/:id/:slug', function(req, res, next) {
+// GET /articles/:id/edit
+router.get('/:id/edit', ifUser, loadArticle, loadHubs, (req, res, next) => {
+  res.render('articles/edit')
+})
+
+// GET /articles/:id/:slug
+router.get('/:id/:slug', loadArticle, function (req, res, next) {
   let article = res.locals.article
 
   Comment
@@ -95,27 +68,36 @@ router.get('/:id/:slug', function(req, res, next) {
   .populate('creator')
   .populate('article')
   .exec((err, comments) => {
-    res.render('articles/show', {comments, comment: {}})  
-  })
-})
-
-router.put('/:id', function (req, res, next) {
-  let article = res.locals.article
-  let lastHubs = article.hubs.map(hub => hub._id)
-
-  article.title = req.body.title
-  article.summary = req.body.summary
-  article.content = req.body.content
-  article.hubs = req.body.hubs
-
-  article.save((err, article) => {
     if (err) return next(err)
-    res.redirect('/articles/' + article._id + '/' + article.slug)
-    Hub.updateArticlesCount(lastHubs) // hot fix for last hubs
+    res.render('articles/show', {comments, comment: {}})
   })
 })
 
-router.post('/', function (req, res, next) {
+// PUT /articles/:id
+// This don't use loadArticle() becouse we don't need populate hubs
+router.put('/:id', ifUser, function (req, res, next) {
+  let id = req.params.id
+  Article.findById(id, function (err, article) {
+    if (err) return next(err)
+    if (!article) return next(getNotFoundError())
+    if (!req.user.can('edit', article)) return next(getForbiddenError())
+
+    Object.assign(article, {
+      title: req.body.title,
+      summary: req.body.summary,
+      content: req.body.content,
+      hubs: req.body.hubs
+    })
+
+    article.save((err, article) => {
+      if (err) return next(err)
+      res.json({article})
+    })
+  })
+})
+
+// POST /articles
+router.post('/', ifUser, (req, res, next) => {
   var article = new Article({
     title: req.body.title,
     summary: req.body.summary,
@@ -125,22 +107,45 @@ router.post('/', function (req, res, next) {
   })
   article.save((err, article) => {
     if (err) return next(err)
-    res.redirect('/articles/' + article._id + '/' + article.slug)
+    res.json({article})
   })
 })
 
-module.exports = router;
+module.exports = router
 
+// Middlewares for this router
 
+function loadArticle (req, res, next) {
+  let id = req.params.id
 
-function getNotFoundError () {
-  var error = new Error('Article not found')
-  error.status = 404
-  return error
+  Article
+  .findById(id)
+  .populate('hubs')
+  .populate('creator')
+  .exec((err, article) => {
+    if (err) return next(err)
+    if (!article) return next(getNotFoundError())
+
+    res.locals.article = article
+    next()
+  })
 }
 
-function getSubscriptionNotFoundError () {
-  var error = new Error('Subscription not found')
-  error.status = 404
-  return error
+function loadHubs (req, res, next) {
+  Hub.find().exec((err, hubs) => {
+    if (err) return next(err)
+    res.locals.hubs = hubs
+    next()
+  })
+}
+
+function loadSubscription (req, res, next) {
+  SubscriptionUserToHub
+  .findOne({creator: req.user._id})
+  .populate('hubs')
+  .exec((err, subscription) => {
+    if (err) return next(err)
+    res.locals.subscription = subscription
+    next()
+  })
 }

@@ -4,14 +4,12 @@
       a.title(href="/hubs/"+hub.slug)= hub.title
       if currentUser && (currentUser.isAdmin || currentUser._id.equals(hub.creator._id))
         a.edit(href="/hubs/"+hub.slug+"/edit") edit
+      include subscriptionBtn
   else
     h2
       a.title(href="/hubs/"+hub.slug)= hub.title
+      include subscriptionBtn
   
-  if currentUser
-    span.subscriptionBtn(class=isSubscribed(hub) ? 'subscribed' : '')
-      button.btn.unsubscribe.js-hub-unsubscribe(data-url="/hubs/"+hub.slug+"/unsubscribe") unsubscribe
-      button.btn.subscribe.js-hub-subscribe(data-url="/hubs/"+hub.slug+"/subscribe") subscribe
 
   .description= hub.description
   .meta

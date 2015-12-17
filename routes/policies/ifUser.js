@@ -1,4 +1,7 @@
 module.exports = (req, res, next) => {
-  if (!req.user) return res.status(401).json({error: 'Unauthorized, login please'})
+  var error = new Error('Unauthorized, login please')
+  error.status = 403
+
+  if (!req.user) return req.xhr ? res.status(403).json({error: 'Unauthorized, login please'}) : next(error)
   next()
 }

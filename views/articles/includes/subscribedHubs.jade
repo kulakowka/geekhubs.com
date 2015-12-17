@@ -1,0 +1,9 @@
+if subscription.hubs.length
+  .userNotice
+    = "You are subscribed to hubs: "
+    each hub, index in subscription.hubs
+      if index
+        = ", "
+      a(href="/hubs/"+hub.slug)= hub.title
+else
+  .userNotice Your subscription is empty. Please subscribe to <a href="/hubs">hubs</a> that your interested.
