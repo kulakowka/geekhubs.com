@@ -6,17 +6,16 @@ var async = require('async')
 var User = require('../../models/user')
 var Hub = require('../../models/hub')
 
-// Settings
-const SUBSCRIPTIONS_COUNT = 1000
+module.exports = function seedSubscriptions (subscriptionsCount) {
+  return (callback) => {
+    async.parallel({users: getUsers, hubs: getHubs}, (err, result) => {
+      if (err) return callback(err)
 
-module.exports = function seedSubscriptions (callback) {
-  async.parallel({users: getUsers, hubs: getHubs}, (err, result) => {
-    if (err) return callback(err)
+      var subscriptions = _.times(subscriptionsCount, (n) => getFakeSubscription(result))
 
-    var subscriptions = _.times(SUBSCRIPTIONS_COUNT, (n) => getFakeSubscription(result))
-
-    SubscriptionUserToHub.create(subscriptions, callback)
-  })
+      SubscriptionUserToHub.create(subscriptions, callback)
+    })
+  }
 }
 
 function getHubs (callback) {

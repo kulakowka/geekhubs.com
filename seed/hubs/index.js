@@ -6,17 +6,16 @@ var faker = require('faker')
 var Hub = require('../../models/hub')
 var User = require('../../models/user')
 
-// Settings
-const HUBS_COUNT = 1000
+module.exports = function seedHubs (hubsCount) {
+  return (callback) => {
+    async.parallel({users: getUsers}, (err, result) => {
+      if (err) return callback(err)
 
-module.exports = function seedHubs (callback) {
-  async.parallel({users: getUsers}, (err, result) => {
-    if (err) return callback(err)
+      var hubs = _.times(hubsCount, (n) => getFakeHub(result))
 
-    var hubs = _.times(HUBS_COUNT, (n) => getFakeHub(result))
-
-    Hub.create(hubs, callback)
-  })
+      Hub.create(hubs, callback)
+    })
+  }
 }
 
 function getUsers (callback) {

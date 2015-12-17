@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "seed": "node seed --harmony",
+    "seed": "node seed",
     "start": "DEBUG=app:* nodemon ./bin/www --harmony"
   },
   "dependencies": {

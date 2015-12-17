@@ -5,7 +5,6 @@ var faker = require('faker')
 var User = require('../../models/user')
 
 // Settings
-const USERS_COUNT = 100
 const DEFAULT_PASSWORD = 'pass'
 const admin = {
   username: 'admin',
@@ -13,9 +12,11 @@ const admin = {
   isAdmin: true
 }
 
-module.exports = function seedUsers (callback) {
-  var users = _.times(USERS_COUNT, getFakeUser).concat([admin])
-  User.create(users, callback)
+module.exports = function seedUsers (usersCount) {
+  return (callback) => {
+    var users = _.times(usersCount, getFakeUser).concat([admin])
+    User.create(users, callback)
+  }
 }
 
 function getFakeUser (n) {

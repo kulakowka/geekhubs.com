@@ -1,4 +1,4 @@
-# The project is in development
+# The project is in development :octocat:
 
 ![Site screenshot](https://habrastorage.org/files/a78/b66/10d/a78b6610d33748c5ae256bfc7cfc5061.png)
 
@@ -10,42 +10,71 @@ cd geekhubs.com
 npm install 
 ```
 
-#### Seed data:
+## Seed data:
 
+#### Attention! :point_up::guardsman: 
+
+
+> The script will drop database before you start :bomb::bomb::bomb:
+
+
+Seed script help:
+```
+node seed -h
+```
+
+#### Seed data with default settings:
+
+In order to fill your project with fake data, run this command in console.
+```
+node seed
+```
+Or with npm:
 ```
 npm run seed
 ```
 
-Seed config: 
-
+#### Seed data with custom settings:
 ```
-/seed/articles/index.js
-/seed/comments/index.js
-/seed/hubs/index.js
-/seed/users/index.js
-/seed/subscriptions/index.js
+node seed -U 5 -S 10 -H 10 -C 100 -A 30
+```
+Or full arguments names:
+```
+node seed --users 5 --subscriptions 10 --hubs 10 --comments 100 --articles 30
 ```
 
-#### Development:
+#### Admin user
 
+The generator will give you a user with administrative privileges.
+
+Username: **admin**
+
+Password: **pass**
+
+## Run application:
+
+#### Development
+
+In order to start application in `development` mode, run this command in console.
 ```
 npm start
 ```
 
-Open in your browser [http://localhost:3000](http://localhost:3000)
+Now, open in your browser [http://localhost:3000](http://localhost:3000)
 
 #### Production:
 
+In order to start application in `production` mode, run this command in console.
 ```
 PORT=3000 NODE_ENV=production node ./bin/www --harmony
 ```
 
-Start with pm2:
+Or start with pm2:
 ```
 $ pm2 start start.json --env production
 ```
 
-More info: 
+More info about pm2: 
 - [Pm2 docs](http://pm2.keymetrics.io/docs/usage/application-declaration/)
 - [pm2 quick start](http://pm2.keymetrics.io/docs/usage/quick-start/)
 
