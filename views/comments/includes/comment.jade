@@ -1,5 +1,5 @@
 .comment
-  .content!= comment.html
+  .content.textHtml!= comment.html
   .meta
     a(href="/articles/"+comment.article._id+"/"+comment.article.slug)
       time(title=moment(comment.createdAt).calendar() datetime=moment(comment.createdAt).format())= moment(comment.createdAt).fromNow()

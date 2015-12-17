@@ -7,7 +7,7 @@ article
   else
     h2
       a.title(href="/articles/"+article._id+"/"+article.slug)= article.title
-  .content
+  .content.textHtml
     
     if showFullContent
       != article.html

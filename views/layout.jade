@@ -8,10 +8,12 @@ html
     // include includes/ga
   body
     .layout
-      include ./includes/header.jade
+      include ./includes/header
       .content 
         block content
-      include ./includes/footer.jade
+      include ./includes/sidebar
+
+      include ./includes/footer
     script.
       // remove img with on load error
       (function(){function cb () {this.parentNode.removeChild(this)};for(var i=0,n=document.images,l=n.length;i<l;i++) n[i].onerror = cb}())
