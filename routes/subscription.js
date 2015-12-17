@@ -25,10 +25,13 @@ router.post('/hub/:hubId/create', ifUser, loadSubscription, function (req, res, 
 // POST /subscription/:hubId/remove
 router.post('/hub/:hubId/remove', ifUser, function (req, res, next) {
   SubscriptionUserToHub
-  .remove({creator: req.user._id, hub: req.params.hubId})
-  .exec((err, result) => {
+  .findOne({creator: req.user._id, hub: req.params.hubId})
+  .exec((err, subscription) => {
     if (err) return next(err)
-    res.json({result})
+    subscription.remove((err, result) => {
+      if (err) return next(err)
+      res.json({subscription})
+    })
   })
 })
 

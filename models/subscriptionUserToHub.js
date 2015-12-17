@@ -3,9 +3,12 @@
 // Configs
 var mongoose = require('../config/mongoose')
 
+// Models
+var Hub = require('./hub')
+
 // SubscriptionUserToHub schema
 var Schema = mongoose.Schema
-var subscriptionUserToHubSchema = new Schema({
+var schema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -20,4 +23,20 @@ var subscriptionUserToHubSchema = new Schema({
   }
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
-module.exports = mongoose.model('SubscriptionUserToHub', subscriptionUserToHubSchema)
+// Pre save hooks
+schema.pre('save', function (next) {
+  this.wasNew = this.isNew
+  next()
+})
+
+// Post save hooks
+schema.post('save', function (subscription) {
+  if (!this.wasNew) return
+  Hub.updateSubscribersCount(this.hub)
+})
+
+schema.post('remove', function (subscription) {
+  Hub.updateSubscribersCount(this.hub)
+})
+
+module.exports = mongoose.model('SubscriptionUserToHub', schema)

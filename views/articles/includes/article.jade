@@ -21,8 +21,6 @@ article
     span.author
       = " by "
       a.username(href="/users/"+article.creator.username)= article.creator.username
-      = "."
-      a.club(href="/clubs/habr") habr
 
     if article.hubs.length
       span.hubs 

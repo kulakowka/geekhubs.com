@@ -14,7 +14,7 @@ var Hub = require('./hub')
 
 // Article schema
 var Schema = mongoose.Schema
-var articleSchema = new Schema({
+var schema = new Schema({
   title: {
     type: String,
     required: true
@@ -50,20 +50,20 @@ var articleSchema = new Schema({
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
 // Model plugins
-articleSchema.plugin(require('./plugins/deletedAt'))
+schema.plugin(require('./plugins/deletedAt'))
 
 // Model virtual attributes
-articleSchema.virtual('html').get(function () {
+schema.virtual('html').get(function () {
   return marked(this.content)
 })
 
-articleSchema.path('hubs').set(function (hubs) {
+schema.path('hubs').set(function (hubs) {
   this._previousHubs = this.hubs
   return hubs
 })
 
 // Model static methods (Article.updateCommentsCount)
-articleSchema.statics.updateCommentsCount = function (_id) {
+schema.statics.updateCommentsCount = function (_id) {
   let self = this
   return self.model('Comment').count({ article: _id }, function (err, commentsCount) {
     if (err) return console.log(err)
@@ -73,24 +73,30 @@ articleSchema.statics.updateCommentsCount = function (_id) {
   })
 }
 
+schema.statics.incrementCommentsCount = function (_id) {
+  return this.findOneAndUpdate({_id}, {$inc: {commentsCount: 1}}, function (err) {
+    if (err) return console.log(err)
+  })
+}
+
 // Pre save hooks
-articleSchema.pre('save', function (next) {
+schema.pre('save', function (next) {
   this.wasNew = this.isNew
   this.slug = slug(this.title)
   next()
 })
 
 // Post save hooks
-articleSchema.post('save', function (article) {
+schema.post('save', function (article) {
   var hubs = this._previousHubs.concat(this.hubs || [])
   hubs = _.uniq(hubs.map(hub => hub.toString()))
 
   Hub.updateArticlesCountHubs(hubs)
 })
 
-articleSchema.post('save', function (article) {
+schema.post('save', function (article) {
   if (!this.wasNew) return
-  User.updateArticlesCount(this.creator)
+  User.incrementArticlesCount(this.creator)
 })
 
-module.exports = mongoose.model('Article', articleSchema)
+module.exports = mongoose.model('Article', schema)

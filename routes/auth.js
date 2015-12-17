@@ -56,14 +56,14 @@ router.post('/signup', ifGuest, function (req, res, next) {
 })
 
 router.post('/signin', ifGuest, function (req, res, next) {
-    passport.authenticate('local', (err, user, info) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) { return next(err) }
+    if (!user) { return res.status(400).json({error: 'Invalid username or password'}) }
+    req.logIn(user, (err) => {
       if (err) { return next(err) }
-      if (!user) { return res.status(400).json({error: 'Invalid username or password'}) }
-      req.logIn(user, (err) => {
-        if (err) { return next(err) }
-        res.json({user})
-      })
-    })(req, res, next)
+      res.json({user})
+    })
+  })(req, res, next)
 })
 
 router.post('/logout', ifUser, function (req, res, next) {

@@ -11,7 +11,7 @@ var User = require('./user')
 
 // Hub schema
 var Schema = mongoose.Schema
-var hubSchema = new Schema({
+var schema = new Schema({
   title: {
     type: String,
     trim: true,
@@ -41,16 +41,21 @@ var hubSchema = new Schema({
     type: Number,
     required: true,
     default: 0
+  },
+  subscribersCount: {
+    type: Number,
+    required: true,
+    default: 0
   }
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
 // Model static methods (Hub.updateArticlesCountHubs)
-hubSchema.statics.updateArticlesCountHubs = function (hubs) {
+schema.statics.updateArticlesCountHubs = function (hubs) {
   let self = this
   hubs.forEach(id => self.updateArticlesCount(id))
 }
 
-hubSchema.statics.updateArticlesCount = function (_id) {
+schema.statics.updateArticlesCount = function (_id) {
   let self = this
   return self.model('Article').count({hubs: {$in: [_id]}}, function (err, articlesCount) {
     if (err) return console.log(err)
@@ -60,17 +65,27 @@ hubSchema.statics.updateArticlesCount = function (_id) {
   })
 }
 
+schema.statics.updateSubscribersCount = function (_id) {
+  let self = this
+  return self.model('SubscriptionUserToHub').count({hub: _id}, function (err, subscribersCount) {
+    if (err) return console.log(err)
+    self.findOneAndUpdate({_id}, {$set: {subscribersCount}}, (err, hub) => {
+      if (err) return console.log(err)
+    })
+  })
+}
+
 // Pre save hooks
-hubSchema.pre('save', function (next) {
+schema.pre('save', function (next) {
   this.wasNew = this.isNew
   this.slug = slug(this.title)
   next()
 })
 
 // Post save hooks
-hubSchema.post('save', function (hub) {
+schema.post('save', function (hub) {
   if (!hub.wasNew) return
-  User.updateHubsCount(hub.creator)
+  User.incrementHubsCount(hub.creator)
 })
 
-module.exports = mongoose.model('Hub', hubSchema)
+module.exports = mongoose.model('Hub', schema)

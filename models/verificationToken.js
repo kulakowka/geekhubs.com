@@ -8,7 +8,7 @@ var mongoose = require('../config/mongoose')
 
 // VerificationTokenSchema schema
 var Schema = mongoose.Schema
-var verificationTokenSchema = Schema({
+var schema = Schema({
   user: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -29,7 +29,7 @@ var verificationTokenSchema = Schema({
 })
 
 // Instance methods (verificationToken.createVerificationToken)
-verificationTokenSchema.methods.createVerificationToken = function (callback) {
+schema.methods.createVerificationToken = function (callback) {
   let token = uuid.v4()
   this.set('token', token)
   return this.save((err) => {
@@ -38,7 +38,7 @@ verificationTokenSchema.methods.createVerificationToken = function (callback) {
   })
 }
 
-verificationTokenSchema.static('verifyUser', function verifyUser (token, callback) {
+schema.static('verifyUser', function verifyUser (token, callback) {
   let selft = this
   return selft.findOne({token: token}).exec((err, verificationToken) => {
     if (err) return callback(err)
@@ -51,4 +51,4 @@ verificationTokenSchema.static('verifyUser', function verifyUser (token, callbac
   })
 })
 
-module.exports = mongoose.model('VerificationToken', verificationTokenSchema)
+module.exports = mongoose.model('VerificationToken', schema)

@@ -8,14 +8,13 @@ var mongoose = require('../config/mongoose')
 
 // Models
 var VerificationToken = require('./verificationToken')
-var SubscriptionUserToHub = require('./subscriptionUserToHub')
 
 // Services
 var SendEmail = require('../services/emails/sendEmail')
 
 // User schema
 var Schema = mongoose.Schema
-var userSchema = new Schema({
+var schema = new Schema({
   username: {
     index: true,
     lowercase: true,
@@ -63,21 +62,21 @@ var userSchema = new Schema({
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
 // Model plugins
-userSchema.plugin(require('./plugins/deletedAt'))
-userSchema.plugin(require('./plugins/abilities'))
+schema.plugin(require('./plugins/deletedAt'))
+schema.plugin(require('./plugins/abilities'))
 
 // Instance methods (user.comparePassword)
-userSchema.methods.comparePassword = function comparePassword (candidatePassword, callback) {
+schema.methods.comparePassword = function comparePassword (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, callback)
 }
 
-userSchema.methods.generateConfirmationToken = function generateConfirmationToken (callback) {
+schema.methods.generateConfirmationToken = function generateConfirmationToken (callback) {
   var verificationToken = new VerificationToken({user: this._id})
   verificationToken.createVerificationToken(callback)
 }
 
-// Model static methods (User.updateArticlesCount)
-userSchema.statics.updateArticlesCount = function (_id) {
+// Model static methods (User.updateArticlesCount(user._id))
+schema.statics.updateArticlesCount = function (_id) {
   let self = this
   return self.model('Article').count({ creator: _id }, function (err, articlesCount) {
     if (err) return console.log(err)
@@ -87,7 +86,7 @@ userSchema.statics.updateArticlesCount = function (_id) {
   })
 }
 
-userSchema.statics.updateHubsCount = function (_id) {
+schema.statics.updateHubsCount = function (_id) {
   let self = this
   return self.model('Hub').count({ creator: _id }, function (err, hubsCount) {
     if (err) return console.log(err)
@@ -97,7 +96,25 @@ userSchema.statics.updateHubsCount = function (_id) {
   })
 }
 
-userSchema.statics.updateCommentsCount = function (_id) {
+schema.statics.incrementArticlesCount = function (_id) {
+  return this.findOneAndUpdate({_id}, {$inc: {articlesCount: 1}}, function (err) {
+    if (err) return console.log(err)
+  })
+}
+
+schema.statics.incrementCommentsCount = function (_id) {
+  return this.findOneAndUpdate({_id}, {$inc: {commentsCount: 1}}, function (err) {
+    if (err) return console.log(err)
+  })
+}
+
+schema.statics.incrementHubsCount = function (_id) {
+  return this.findOneAndUpdate({_id}, {$inc: {hubsCount: 1}}, function (err) {
+    if (err) return console.log(err)
+  })
+}
+
+schema.statics.updateCommentsCount = function (_id) {
   let self = this
   return self.model('Comment').count({ creator: _id }, function (err, commentsCount) {
     if (err) return console.log(err)
@@ -108,12 +125,12 @@ userSchema.statics.updateCommentsCount = function (_id) {
 }
 
 // Pre save hooks
-userSchema.pre('save', function (next) {
+schema.pre('save', function (next) {
   this.wasNew = this.isNew
   next()
 })
 
-userSchema.pre('save', function (next) {
+schema.pre('save', function (next) {
   var user = this
 
   if (!user.isModified('password')) return next()
@@ -130,7 +147,7 @@ userSchema.pre('save', function (next) {
   })
 })
 
-userSchema.pre('save', function (next) {
+schema.pre('save', function (next) {
   var user = this
 
   if (!user.isModified('email')) return next()
@@ -149,6 +166,4 @@ userSchema.pre('save', function (next) {
   })
 })
 
-module.exports = mongoose.model('User', userSchema)
-
-
+module.exports = mongoose.model('User', schema)

@@ -10,7 +10,7 @@ var User = require('./user')
 
 // Comment schema
 var Schema = mongoose.Schema
-var commentSchema = new Schema({
+var schema = new Schema({
   content: {
     type: String,
     required: true
@@ -29,25 +29,25 @@ var commentSchema = new Schema({
 }, { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } })
 
 // Model plugins
-commentSchema.plugin(require('./plugins/deletedAt'))
+schema.plugin(require('./plugins/deletedAt'))
 
 // Model virtual attributes
-commentSchema.virtual('html').get(function () {
+schema.virtual('html').get(function () {
   return marked(this.content)
 })
 
 // Pre save hooks
-commentSchema.pre('save', function (next) {
+schema.pre('save', function (next) {
   this.wasNew = this.isNew
   next()
 })
 
 // Post save hooks
-commentSchema.post('save', function (comment) {
+schema.post('save', function (comment) {
   if (!comment.wasNew) return
 
-  Article.updateCommentsCount(comment.article)
-  User.updateCommentsCount(comment.creator)
+  Article.incrementCommentsCount(comment.article)
+  User.incrementCommentsCount(comment.creator)
 })
 
-module.exports = mongoose.model('Comment', commentSchema)
+module.exports = mongoose.model('Comment', schema)
