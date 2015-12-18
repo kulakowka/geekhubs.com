@@ -73,7 +73,7 @@ PORT=3000 NODE_ENV=production node ./bin/www --harmony
 
 Or start with pm2:
 ```
-$ pm2 start start.json --env production
+$ pm2 start ecosystem.json --env production
 ```
 
 More info about pm2: 
