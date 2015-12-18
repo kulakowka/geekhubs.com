@@ -51,6 +51,7 @@ app.use(passport.session())
 
 // view helpers
 app.use((req, res, next) => {
+  res.locals.env = process.env.NODE_ENV
   res.locals.moment = moment
   res.locals.currentUser = req.user
   next()
