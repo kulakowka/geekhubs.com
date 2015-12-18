@@ -6,7 +6,6 @@ var autosize = require('autosize')
 var attachFastClick = require('fastclick')
 require('selectize')
 
-
 // from a jQuery collection
 autosize($('textarea'))
 

@@ -2,6 +2,8 @@
 
 var $ = require('jquery')
 
+var onAjaxError = require('./errors').onAjaxError
+
 module.exports.logout = logout
 module.exports.signin = signin
 module.exports.signup = signup
@@ -16,34 +18,70 @@ function logout () {
 }
 
 function signin () {
-  var data = $(this).serialize()
-  $.post('/auth/signin', data, function (json) {
-    if (json.user) document.location.href = '/'// + json.user.username
-  }, 'json')
+  var form = $(this)
+  var data = form.serialize()
+  var url = '/auth/signin'
+  var buttons = form.find('button[type="submit"]')
+
+  buttons.prop('disabled', true).addClass('loading')
+
+  $.post(url, data, 'json').done(function (json) {
+    if (json.user) document.location.href = '/'
+  }).fail(function (res) {
+    buttons.prop('disabled', false).removeClass('loading')
+    onAjaxError(res.responseJSON)
+  })
   return false
 }
 
 function signup () {
-  var data = $(this).serialize()
-  $.post('/auth/signup', data, function (json) {
+  var form = $(this)
+  var data = form.serialize()
+  var url = '/auth/signup'
+  var buttons = form.find('button[type="submit"]')
+
+  buttons.prop('disabled', true).addClass('loading')
+
+  $.post(url, data, 'json').done(function (json) {
     if (json.user) document.location.href = '/auth/signup/success'
-  }, 'json')
+  }).fail(function (res) {
+    buttons.prop('disabled', false).removeClass('loading')
+    onAjaxError(res.responseJSON)
+  })
   return false
 }
 
 function userUpdate () {
-  var data = $(this).serialize()
-  $.post('/settings', data, function (json) {
+  var form = $(this)
+  var data = form.serialize()
+  var url = '/settings'
+  var buttons = form.find('button[type="submit"]')
+
+  buttons.prop('disabled', true).addClass('loading')
+
+  $.post(url, data, 'json').done(function (json) {
     if (json.user) document.location.href = '/users/' + json.user.username
-  }, 'json')
+  }).fail(function (res) {
+    buttons.prop('disabled', false).removeClass('loading')
+    onAjaxError(res.responseJSON)
+  })
   return false
 }
 
 function userDestroy () {
   if (!confirm('Are you sure?')) return
-  var data = $(this).serialize()
-  $.post('/auth/destroy', data, function (json) {
+  var form = $(this)
+  var data = form.serialize()
+  var url = '/auth/destroy'
+  var buttons = form.find('button[type="submit"]')
+
+  buttons.prop('disabled', true).addClass('loading')
+
+  $.post(url, data, 'json').done(function (json) {
     if (json.user) document.location.href = '/'// + json.user.username
-  }, 'json')
+  }).fail(function (res) {
+    buttons.prop('disabled', false).removeClass('loading')
+    onAjaxError(res.responseJSON)
+  })
   return false
 }
