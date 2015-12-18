@@ -1,36 +1,38 @@
-var bodyParser = require('body-parser');
+var bodyParser = require('body-parser')
 var browserify = require('browserify-middleware')
-var cookieParser = require('cookie-parser');
-var express = require('express');
-var favicon = require('serve-favicon');
+var cookieParser = require('cookie-parser')
+var express = require('express')
+var favicon = require('serve-favicon')
 var helmet = require('helmet')
-var i18n = require('i18n');
-var logger = require('morgan');
+var i18n = require('i18n')
+var logger = require('morgan')
 var methodOverride = require('method-override')
 var moment = require('moment')
 var passport = require('passport')
-var path = require('path');
+var path = require('path')
+var pmx = require('pmx')
 
-var app = express();
+pmx.init()
+
+var app = express()
 
 // minimal config
 i18n.configure({
   defaultLocale: 'en',
   locales: ['en'],
-  directory: __dirname+'/locales'
-});
+  directory: __dirname + '/locales'
+})
 
 app.use(methodOverride('_method'))
 
 app.use(helmet())
 
 // init i18n module for this loop
-app.use(i18n.init);
-
+app.use(i18n.init)
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'jade')
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

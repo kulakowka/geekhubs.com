@@ -1,7 +1,7 @@
-.comment
+.comment(id=comment._id.toString())
   .content.textHtml!= comment.html
   .meta
-    a(href="/articles/"+comment.article._id+"/"+comment.article.slug)
+    a(href="/articles/"+comment.article._id+"/"+comment.article.slug+"#"+comment._id)
       time(title=moment(comment.createdAt).calendar() datetime=moment(comment.createdAt).format())= moment(comment.createdAt).fromNow()
     span.author
       = " by "
