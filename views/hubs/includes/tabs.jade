@@ -1,9 +1,9 @@
 if currentUser
   .pageTabs
     .rightTabs
-      a.btn.btn-action(href="/hubs/new") Create hub
-    a.tab(href="/hubs/subscription" class=subscriptionPage ? "active" : "") Subscription
-    a.tab(href="/hubs" class=subscriptionPage ? "" : "active") All hubs
+      a.btn.btn-action(href="/hubs/new")= __('Create hub')
+    a.tab(href="/hubs/subscription" class=subscriptionPage ? "active" : "")= __('Subscription')
+    a.tab(href="/hubs" class=subscriptionPage ? "" : "active")= __('All hubs')
 
     
     

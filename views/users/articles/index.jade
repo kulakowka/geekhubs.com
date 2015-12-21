@@ -2,7 +2,7 @@ extends ../../layout
 
 block content
   if user.isDeleted
-    h1 User deleted
+    include ../includes/deleted
   else
     include ../includes/user
     .userArticles

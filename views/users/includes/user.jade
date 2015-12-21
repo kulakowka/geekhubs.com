@@ -3,17 +3,17 @@
     h1
       a.username(href="/users/"+user.username)= user.username
       if currentUser && currentUser._id.equals(user._id)
-        a.edit(href="/settings") edit
+        a.edit(href="/settings")= __('edit')
   else
     h2
       a.username(href="/users/"+user.username)= user.username
   
   .meta
-    a.articlesCount(href="/users/"+user.username+"/articles") #{user.articlesCount} articles
+    a.articlesCount(href="/users/"+user.username+"/articles")= __n('%s articles', user.articlesCount)
     = " | "
-    a.commentsCount(href="/users/"+user.username+"/comments") #{user.commentsCount} comments
+    a.commentsCount(href="/users/"+user.username+"/comments")= __n('%s comments', user.commentsCount)
     = " | "
-    a.commentsCount(href="/users/"+user.username+"/hubs") #{user.hubsCount} hubs
+    a.commentsCount(href="/users/"+user.username+"/hubs")= __n('%s hubs', user.hubsCount)
     = " | "
     a(href="/users/"+user.username)
       time(title=moment(user.createdAt).calendar() datetime=moment(user.createdAt).format())= moment(user.createdAt).fromNow()

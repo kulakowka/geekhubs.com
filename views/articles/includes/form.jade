@@ -1,22 +1,21 @@
 form.articleForm(action=(article._id ? "/articles/"+article._id+"?_method=PUT" : "/articles") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
   div
-    input(type="text" name="title" placeholder="Title" value=article.title maxLength="150" required autofocus)
+    input(type="text" name="title" placeholder=__("Title") value=article.title maxLength="150" required autofocus)
   div
-    textarea(name="summary" rows="6" placeholder="Article summary. Plain text only." required)= article.summary
+    textarea(name="summary" rows="6" placeholder=__("Article summary. Plain text only.") required)= article.summary
   div
     .tabs
-      .tab.active(data-frame="write") Write
-      .tab(data-frame="preview") Preview
+      .tab.active(data-frame="write")= __('Write')
+      .tab(data-frame="preview")= __('Preview')
     .frame.write.open
-      
-      textarea(name="content" rows="6" placeholder="Article content. Markdown, plain text." required)= article.content
+      textarea(name="content" rows="6" placeholder=__("Article content. Markdown, plain text.") required)= article.content
     .frame.preview
   div
-    select(name="hubs" multiple placeholder="Hubs")
+    select(name="hubs" multiple placeholder=__("Hubs"))
       each hub in hubs
         if article.hubs && article.hubs.filter(_hub => _hub._id.equals(hub._id)).length
           option(value=hub._id selected)= hub.title
         else
           option(value=hub._id)= hub.title
   div
-    button.btn.btn-submit(type="submit") save
+    button.btn.btn-submit(type="submit")= __('save')

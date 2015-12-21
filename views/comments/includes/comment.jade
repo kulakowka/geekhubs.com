@@ -4,5 +4,5 @@
     a(href="/articles/"+comment.article._id+"/"+comment.article.slug+"#"+comment._id)
       time(title=moment(comment.createdAt).calendar() datetime=moment(comment.createdAt).format())= moment(comment.createdAt).fromNow()
     span.author
-      = " by "
+      = " " + __('by') + " "
       a(href="/users/"+comment.creator.username)= comment.creator.username

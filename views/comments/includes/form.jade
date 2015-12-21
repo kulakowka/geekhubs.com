@@ -1,18 +1,18 @@
 unless currentUser
   .guestNotice 
-    a(href="/auth/signin" rel="nofollow") Sign in
-    = " or "
-    a(href="/auth/signup" rel="nofollow") sign up
-    = " to post comments"
+    a(href="/auth/signin" rel="nofollow")= __('Sign in')
+    = " " + __('or') + " "
+    a(href="/auth/signup" rel="nofollow")= __('sign up')
+    = " " + __("to post comments")
 else
   form.commentForm(action=(comment._id ? "/comments/"+comment._id+"?_method=PUT" : "/comments") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
     input(type="hidden" name="article" placeholder="article" value=article._id)
     div
       .tabs
-        .tab.active(data-frame="write") Write
-        .tab(data-frame="preview") Preview
+        .tab.active(data-frame="write")= __('Write')
+        .tab(data-frame="preview")= __('Preview')
       .frame.write.open
-        textarea(name="content" rows="2" placeholder="Comment content" required)= comment.content
+        textarea(name="content" rows="2" placeholder=__("Comment content") required)= comment.content
       .frame.preview
     div
-      button(type="submit") save
+      button(type="submit")= __('save')

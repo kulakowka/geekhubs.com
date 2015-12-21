@@ -3,7 +3,7 @@
     h1
       a.title(href="/hubs/"+hub.slug)= hub.title
       if currentUser && (currentUser.isAdmin || currentUser._id.equals(hub.creator._id))
-        a.edit(href="/hubs/"+hub.slug+"/edit") edit
+        a.edit(href="/hubs/"+hub.slug+"/edit")= __('edit')
       include subscriptionBtn
   else
     h2
@@ -13,13 +13,13 @@
 
   .description= hub.description
   .meta
-    a.articlesCount(href="/hubs/"+hub.slug) #{hub.articlesCount} articles
+    a.articlesCount(href="/hubs/"+hub.slug)= __n('%s articles', hub.articlesCount)
     = " | "
-    span.subscribersCount #{hub.subscribersCount} subscribers
+    span.subscribersCount= __n('%s subscribers', hub.subscribersCount)
     = " | "
     a(href="/hubs/"+hub.slug)
       time(title=moment(hub.createdAt).calendar() datetime=moment(hub.createdAt).format())= moment(hub.createdAt).fromNow()
     span.author
-      = " by "
+      = " " + __('by') + " "
       a(href="/users/"+hub.creator.username)= hub.creator.username
 

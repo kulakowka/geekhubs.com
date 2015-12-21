@@ -1,17 +1,17 @@
 extends ../layout
 
 block head
-  title Sign in
+  title= __('Sign in')
 
 block content
-  h1 Sign in
+  h1= __('Sign in')
 
   form.authForm.js-form-signin
     .field
-      label.field-label(for="username-field") username:
-      input.field-input(id="username-field" type="text" name="username" placeholder="username" maxLength="20" required)
+      label.field-label(for="username-field")= __('username:')
+      input.field-input(id="username-field" type="text" name="username" placeholder=__("username") maxLength="20" required)
     .field
-      label.field-label(for="password-field") password:
-      input.field-input(id="password-field" type="password" name="password" placeholder="password" required)
+      label.field-label(for="password-field")= __('password:')
+      input.field-input(id="password-field" type="password" name="password" placeholder=__("password") required)
     .field
-      button.btn.btn-submit(type="submit") Submit
+      button.btn.btn-submit(type="submit")= __('Submit')

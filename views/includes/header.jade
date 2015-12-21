@@ -1,6 +1,4 @@
 header.siteHeader
-  
-
   ul.rightMenu
     if currentUser
       li
@@ -8,26 +6,26 @@ header.siteHeader
           a.item.handle(href="/users/" + currentUser.username)= currentUser.username
           span.menu
             a(href="/users/" + currentUser.username)= currentUser.username
-            a(href="/users/" + currentUser.username + "/articles") My articles
-            a(href="/users/" + currentUser.username + "/comments") My comments
-            a(href="/users/" + currentUser.username + "/hubs") My hubs
-            a(href="/settings") Settings
-            a.js-button-logout(href="#") Logout
+            a(href="/users/" + currentUser.username + "/articles")= __('My articles')
+            a(href="/users/" + currentUser.username + "/comments")= __('My comments')
+            a(href="/users/" + currentUser.username + "/hubs")= __('My hubs')
+            a(href="/settings")= __('Settings')
+            a.js-button-logout(href="#")= __('Logout')
     else 
       li
-        a.item(href="/auth/signin" rel="nofollow") Sign in      
+        a.item(href="/auth/signin" rel="nofollow")= __('Sign in')
       li
-        a.item(href="/auth/signup" rel="nofollow") Sign up
+        a.item(href="/auth/signup" rel="nofollow")= __('Sign up')
 
 
   .logo
-    a(href="/") GeekHubs.com
+    a(href="/")= __('Sitename.com')
 
   ul.leftMenu
     li 
-      a.item(href="/articles") Articles
+      a.item(href="/articles")= __('Articles')
     li 
-      a.item(href="/hubs") Hubs
+      a.item(href="/hubs")= __('Hubs')
     li
-      a.item(href="/users") Users
+      a.item(href="/users")= __('Users')
   

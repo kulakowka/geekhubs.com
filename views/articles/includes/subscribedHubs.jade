@@ -1,9 +1,12 @@
 if subscriptions.length
   .userNotice
-    = "You are subscribed to hubs: "
+    = __("You are subscribed to hubs: ")
     each subscription, index in subscriptions
       if index
         = ", "
       a(href="/hubs/"+subscription.hub.slug)= subscription.hub.title
 else
-  .userNotice Your subscription is empty. Please subscribe to <a href="/hubs">hubs</a> that your interested.
+  .userNotice
+    = __('Your subscription is empty. Please subscribe to ')
+    a(href="/hubs")= __('hubs')
+    = __(' that your interested.')
