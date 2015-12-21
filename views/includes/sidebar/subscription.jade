@@ -1,0 +1,7 @@
+section.subscription
+  p= __('Subscribe to new articles')
+  form.subscriptionForm()
+    .field
+      input.field-input(type="text" name="email" placeholder=__("Email"))
+    .field
+      button.btn.btn-submit(type="submit")= __('Subscribe')
