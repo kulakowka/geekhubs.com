@@ -72,7 +72,7 @@ app.use('/settings', require('./routes/settings'))
 app.use('/subscription', require('./routes/subscription'))
 
 // Mount kue JSON api
-app.use('/admin/kue', kue.app)
+app.use('/admin/kue', require('./routes/policies/isAdmin'), kue.app)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
