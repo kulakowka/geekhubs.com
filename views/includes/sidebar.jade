@@ -1,2 +1,7 @@
-sidebar
-  .banner Banner
+aside#sidebar
+  section.subscription
+    p= __('Subscribe to new articles')
+    form.subscriptionForm()
+      input(name="email" placeholder=__("Email"))
+      button(type="submit")= __('Subscribe')
+  section.banner banner

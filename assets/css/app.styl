@@ -17,6 +17,8 @@ fontfamily1 = "Lucida Grande", Helvetica, Arial, sans-serif
 @import 'pageTabs'
 @import 'notices'
 @import 'forms'
+@import 'includes/sidebar'
+@import 'includes/sidebar/subscription'
 
 
 
@@ -54,29 +56,17 @@ a
   > .content 
     padding 0 20px
 
-  > sidebar
-    .banner
-      width 300px
-      height 500px
-      line-height 500px
-      text-align center
-      background #eee
-      color #ccc
-      font-size 40px
-
-
-
 .layout header, 
 .layout > .content, 
 .layout footer
   flex 1 100%
-.layout > sidebar
+.layout > aside#sidebar
   flex 1 auto
 .layout > .content 
   flex 33.2 0px
 .layout > .content    
   order 2
-.layout > sidebar 
+.layout > aside#sidebar
   order 3
 .layout > footer 
   order 4
