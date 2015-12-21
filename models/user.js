@@ -39,6 +39,10 @@ var schema = new Schema({
     default: false,
     type: Boolean
   },
+  subscribedToArticlesDigest: {
+    default: false,
+    type: Boolean
+  },
   password: {
     required: true,
     select: false,

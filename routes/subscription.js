@@ -6,9 +6,23 @@ var router = express.Router()
 
 // Models
 var SubscriptionUserToHub = require('../models/subscriptionUserToHub')
+var SubscriptionUserToArticle = require('../models/subscriptionUserToArticle')
 
 // Policies
 const ifUser = require('./policies/ifUser')
+
+// POST /subscription
+router.post('/', function (req, res, next) {
+  let email = req.body.email
+  let creator = req.user && req.user._id
+
+  SubscriptionUserToArticle
+  .create({email, creator}, function (err, subscription) {
+    if (err) return next(err)
+    req.session.subscribedToArticlesDigest = true
+    res.json({subscription})
+  })
+})
 
 // POST /subscription/:hubId/create
 router.post('/hub/:hubId/create', ifUser, loadSubscription, function (req, res, next) {

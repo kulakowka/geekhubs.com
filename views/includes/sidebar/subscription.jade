@@ -1,7 +1,13 @@
-section.subscription
-  p= __('Subscribe to new articles')
-  form.subscriptionForm()
-    .field
-      input.field-input(type="text" name="email" placeholder=__("Email"))
-    .field
-      button.btn.btn-submit(type="submit")= __('Subscribe')
+if currentUser && currentUser.subscribedToArticlesDigest || subscribedToArticlesDigest
+  section.subscription.subscribed
+    p= __('You have subscribed to new articles')
+else
+  section.subscription
+    p= __('Subscribe to new articles')
+    form.subscriptionForm()
+      .field
+        input.field-input(type="email" name="email" placeholder=__("Email") required)
+      .field
+        button.btn.btn-submit(type="submit")= __('Subscribe')
+    .successSubscriptionForm.hidden
+      p= __('You have subscribed!')
