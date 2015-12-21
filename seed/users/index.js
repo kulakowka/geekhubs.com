@@ -22,7 +22,7 @@ module.exports = function seedUsers (usersCount) {
 function getFakeUser (n) {
   return {
     username: faker.internet.userName(),
-    email: faker.internet.email(),
+    // email: faker.internet.email(),
     password: DEFAULT_PASSWORD
   }
 }

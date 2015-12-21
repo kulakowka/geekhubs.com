@@ -1,0 +1,10 @@
+extends ../layout
+
+block head
+  title= hub.title
+
+block content
+  - var showFullHub = true 
+  include includes/hub
+  hr
+  include ../users/includes/list

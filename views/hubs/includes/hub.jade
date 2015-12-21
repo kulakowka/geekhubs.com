@@ -15,7 +15,7 @@
   .meta
     a.articlesCount(href="/hubs/"+hub.slug)= __n('%s articles', hub.articlesCount)
     = " | "
-    span.subscribersCount= __n('%s subscribers', hub.subscribersCount)
+    a.subscribersCount(href="/hubs/"+hub.slug+"/subscribers")= __n('%s subscribers', hub.subscribersCount)
     = " | "
     a(href="/hubs/"+hub.slug)
       time(title=moment(hub.createdAt).calendar() datetime=moment(hub.createdAt).format())= moment(hub.createdAt).fromNow()
