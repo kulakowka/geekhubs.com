@@ -1,0 +1,14 @@
+//- New comment to your article
+extends ../../layout
+
+block content
+  p Hello #{user.username}!
+
+  p 
+    = "You have new comment to your article "
+    a(href="http://geekhubs.com/articles/"+article._id+"/"+article.slug)= article.title
+  
+  p 
+    a.btn(href="http://geekhubs.com/articles/"+article._id+"/"+article.slug+"#"+comment._id) Read comment
+
+  

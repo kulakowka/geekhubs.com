@@ -6,6 +6,8 @@ var Queue = require('../../config/kue').Queue
 //  template: 'welcome'
 // }
 module.exports = function sendEmail (data) {
+
+  
   Queue
   .create('email', data)
   .removeOnComplete(true)

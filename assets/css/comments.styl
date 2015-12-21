@@ -15,10 +15,13 @@
   border-bottom 1px solid #eee
   padding-bottom 0.5em
   display block
-.comment + .comment
-  margin-top 2em
+
 .comment
-  
+  margin 0 -20px
+  padding 20px 20px
+  &:target
+    outline 1px dashed deepskyblue
+    
   .content
     line-height 1.5em
     font-size fontsize1

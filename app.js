@@ -11,6 +11,7 @@ var moment = require('moment')
 var passport = require('passport')
 var path = require('path')
 var pmx = require('pmx')
+var kue = require('kue')
 
 pmx.init()
 
@@ -69,6 +70,9 @@ app.use('/users', require('./routes/users'))
 app.use('/auth', require('./routes/auth'))
 app.use('/settings', require('./routes/settings'))
 app.use('/subscription', require('./routes/subscription'))
+
+// Mount kue JSON api
+app.use('/admin/kue', kue.app)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
