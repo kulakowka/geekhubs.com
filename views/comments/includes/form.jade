@@ -7,12 +7,12 @@ unless currentUser
 else
   form.commentForm(action=(comment._id ? "/comments/"+comment._id+"?_method=PUT" : "/comments") method="post" autocomplete="off" enctype="application/x-www-form-urlencoded")
     input(type="hidden" name="article" placeholder="article" value=article._id)
-    div
+    .field
       .tabs
         .tab.active(data-frame="write")= __('Write')
         .tab(data-frame="preview")= __('Preview')
       .frame.write.open
         textarea(name="content" rows="2" placeholder=__("Comment content") required)= comment.content
       .frame.preview
-    div
+    .field
       button(type="submit")= __('save')
