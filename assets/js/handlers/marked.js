@@ -25,7 +25,7 @@ module.exports.onTabClick = function (event) {
   var preview = form.find('.preview')
 
   frames.removeClass('open')
-  form.find('.'+frame).addClass('open')
+  form.find('.' + frame).addClass('open')
 
   tabs.removeClass('active')
   tab.addClass('active')
@@ -34,5 +34,21 @@ module.exports.onTabClick = function (event) {
 
   preview.html(previewHtml || 'Nothing to preview')
 
+  if (frame === 'write') content.focus()
+
   return false
+}
+
+module.exports.onFocus = function (event) {
+  var textarea = $(this)
+  var field = textarea.closest('.field')
+  var tab = field.find('.tab.active')
+  tab.addClass('focus')
+}
+
+module.exports.onBlur = function (event) {
+  var textarea = $(this)
+  var field = textarea.closest('.field')
+  var tab = field.find('.tab.focus')
+  tab.removeClass('focus')
 }

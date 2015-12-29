@@ -31,7 +31,8 @@
     line-height 1.5em
     &:focus
       outline none
-      // border-color #00B7FF
+      // background-color rgba(0, 0, 0, 0.03)
+      border-color #00B7FF
   input[name="title"]
     font-size fontsize2
     
@@ -56,6 +57,11 @@
         border-top 1px solid #eee
         border-left 1px solid #eee
         border-right 1px solid #eee
+        border-bottom 1px solid #fff
+      &.focus
+        border-top 1px solid #00B7FF
+        border-left 1px solid #00B7FF
+        border-right 1px solid #00B7FF
         border-bottom 1px solid #fff
   .frame
     display none

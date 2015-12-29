@@ -36,6 +36,12 @@ $(document)
   .on('click', '.commentForm .tabs .tab', marked.onTabClick)
   .on('click', '.articleForm .tabs .tab', marked.onTabClick)
 
+  // active tab in focus
+  .on('focus', '.articleForm textarea[name="content"]', marked.onFocus)
+  .on('blur', '.articleForm textarea[name="content"]', marked.onBlur)
+  .on('focus', '.commentForm textarea[name="content"]', marked.onFocus)
+  .on('blur', '.commentForm textarea[name="content"]', marked.onBlur)
+
   // hubs
   .on('click', '.js-hub-subscribe', hub.onSubscribeClick)
   .on('click', '.js-hub-unsubscribe', hub.onUnsubscribeClick)
