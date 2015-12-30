@@ -1,12 +1,12 @@
 User-agent: *
-Disallow: /api
-Disallow: /login
-Disallow: /register
+Disallow: /auth
+Disallow: /subscription
 Disallow: /admin
 Disallow: /settings
-Disallow: /c/create
-Disallow: /c/*/reply
-Disallow: /c/*/replies
+Disallow: /articles/new
+Disallow: /articles/edit
+Disallow: /hubs/new
+Disallow: /hubs/edit
 
-Sitemap: http://1po.st/sitemap.xml
-Host: 1po.st
+Sitemap: http://geekhubs.com/sitemap.xml
+Host: geekhubs.com
