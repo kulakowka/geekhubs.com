@@ -46,6 +46,7 @@ app.use(require('./config/session'))
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(require('./config/stylus'))
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'static')));
 app.get('/js/app.js', browserify(path.join(__dirname, 'assets/js/app.js')))
 
 // Passport.js

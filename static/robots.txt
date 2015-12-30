@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /api
+Disallow: /login
+Disallow: /register
+Disallow: /admin
+Disallow: /settings
+Disallow: /c/create
+Disallow: /c/*/reply
+Disallow: /c/*/replies
+
+Sitemap: http://1po.st/sitemap.xml
+Host: 1po.st
