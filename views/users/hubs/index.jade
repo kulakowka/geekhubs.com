@@ -1,5 +1,8 @@
 extends ../../layout
 
+block head
+  title= __('User\'s hubs')
+
 block content
   if user.isDeleted
     include ../includes/deleted
