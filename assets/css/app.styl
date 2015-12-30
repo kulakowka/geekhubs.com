@@ -20,6 +20,9 @@ fontfamily1 = "Lucida Grande", Helvetica, Arial, sans-serif
 @import 'forms'
 @import 'includes/sidebar'
 @import 'includes/sidebar/subscription'
+@import 'includes/sidebar/topArticles'
+@import 'includes/sidebar/topHubs'
+@import 'includes/sidebar/topWriters'
 
 
 
@@ -28,7 +31,7 @@ body
   margin 0
   font-size fontsize1 
   font-family fontfamily1
-  background #f8f8ff
+  background #fff //#f8f8ff
 
 *
   box-sizing border-box
@@ -52,31 +55,32 @@ a
 .layout
   max-width 1024px
   margin auto
-  background #fff
-  
-  display flex
-  flex-flow row wrap
-  
-  > .content 
-    padding 0 20px
+  // background #fff
+  &:after
+    content: "."
+    display: block
+    height: 0
+    clear: both
+    visibility: hidden
 
-.layout header, 
-.layout > .content, 
-.layout footer
-  flex 1 100%
-.layout > aside#sidebar
-  flex 1 auto
-.layout > .content 
-  flex 33.2 0px
-.layout > .content    
-  order 2
-.layout > aside#sidebar
-  order 3
-.layout > footer 
-  order 4
+    
+  > .siteHeader
+    width 100%
+    display block
+  > .sidebar
+    width 300px
+    display block
+    float right
+    vartical-align top
+  > .content 
+    margin-right 320px
+    display block
+    padding 0 0px
+
 
 
 footer
+  clear: both
   background #eee
   margin 50px 0 0
   padding 20px

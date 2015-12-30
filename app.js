@@ -62,6 +62,7 @@ app.use((req, res, next) => {
 })
 
 // Routes
+app.use(require('./routes/sidebar'))
 app.use('/', require('./routes/index'))
 app.use('/articles', require('./routes/articles'))
 app.use('/comments', require('./routes/comments'))

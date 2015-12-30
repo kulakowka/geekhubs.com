@@ -1,0 +1,6 @@
+section.topWriters
+  h3 #{moment().format('YYYY')} TOP writers
+  ol
+    each user in topWriters
+      li
+        a.userName(href="/users/"+user.username)= user.username

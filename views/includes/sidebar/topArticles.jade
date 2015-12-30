@@ -1,0 +1,11 @@
+section.topArticles
+  h3 #{moment().format('YYYY')} TOP articles
+  ol
+    each article in topArticles
+      li
+        a.articleTitle(href="/articles/"+article._id+"/"+article.slug)= article.title
+        .meta
+          a.commentsCount(href="/articles/"+article._id+"/"+article.slug+"#comments")= __n('%s comments', article.commentsCount)
+          = " | "
+          a(href="/articles/"+article._id+"/"+article.slug)
+            time(title=moment(article.createdAt).calendar() datetime=moment(article.createdAt).format())= moment(article.createdAt).fromNow()

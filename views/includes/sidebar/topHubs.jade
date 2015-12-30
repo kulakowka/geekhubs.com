@@ -1,0 +1,8 @@
+section.topHubs
+  h3 #{moment().format('YYYY')} TOP hubs
+  ol
+    each hub in topHubs
+      li
+        a.hubTitle(href="/hubs/"+hub.slug)= hub.title
+
+          
