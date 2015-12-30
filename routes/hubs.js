@@ -20,13 +20,17 @@ const getNotFoundError = require('./errors/notFound')
 router.get('/', loadSubscriptions, (req, res, next) => {
   let subscriptions = res.locals.subscriptions || []
   let subscribedHubsIds = subscriptions.map(subscription => subscription.hub.toString())
-
+  var options = {
+    perPage: 10,
+    delta: 3,
+    page: req.query.page
+  }
   Hub
   .find()
   .populate('creator')
   .sort('-createdAt')
   .limit(30)
-  .exec((err, hubs) => {
+  .paginater(options, (err, data) => {
     if (err) return next(err)
 
     res.locals.isSubscribed = (hub) => {
@@ -34,7 +38,7 @@ router.get('/', loadSubscriptions, (req, res, next) => {
       return subscribedHubsIds.indexOf(id) !== -1
     }
 
-    res.render('hubs/index', {hubs})
+    res.render('hubs/index', data)
   })
 })
 
@@ -42,24 +46,28 @@ router.get('/', loadSubscriptions, (req, res, next) => {
 router.get('/subscription', ifUser, loadSubscriptions, (req, res, next) => {
   let subscriptions = res.locals.subscriptions || []
   let subscribedHubsIds = subscriptions.map(subscription => subscription.hub.toString())
+  var options = {
+    perPage: 10,
+    delta: 3,
+    page: req.query.page
+  }
 
   Hub
   .find({_id: {$in: subscribedHubsIds}})
   .populate('creator')
   .sort('-createdAt')
   .limit(30)
-  .exec((err, hubs) => {
+  .paginater(options, (err, data) => {
     if (err) return next(err)
 
     res.locals.isSubscribed = (hub) => {
       let id = hub._id.toString()
       return subscribedHubsIds.indexOf(id) !== -1
     }
-
-    res.render('hubs/index', {hubs, subscriptionPage: true})
+    data.subscriptionPage = true
+    res.render('hubs/index', data)
   })
 })
-
 
 // GET /hubs/new
 router.get('/new', ifUser, (req, res, next) => {
@@ -74,7 +82,11 @@ router.get('/:slug/edit', ifUser, loadHub, ifCanEdit, (req, res, next) => {
 // GET /hubs/:slug
 router.get('/:slug', loadHub, loadSubscription, (req, res, next) => {
   let hub = res.locals.hub
-
+  var options = {
+    perPage: 10,
+    delta: 3,
+    page: req.query.page
+  }
   res.locals.isSubscribed = (hub) => !!res.locals.subscription
 
   Article
@@ -82,9 +94,9 @@ router.get('/:slug', loadHub, loadSubscription, (req, res, next) => {
   .populate('hubs')
   .populate('creator')
   .sort('-createdAt')
-  .exec((err, articles) => {
+  .paginater(options, (err, data) => {
     if (err) return next(err)
-    res.render('hubs/show', {articles})
+    res.render('hubs/show', data)
   })
 })
 

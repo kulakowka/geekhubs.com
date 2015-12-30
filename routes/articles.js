@@ -19,16 +19,20 @@ const getNotFoundError = require('./errors/notFound')
 
 // GET /articles
 router.get('/', (req, res, next) => {
+  var options = {
+    perPage: 10,
+    delta: 3,
+    page: req.query.page
+  }
+
   Article
   .find()
   .sort('-createdAt')
   .populate('hubs')
   .populate('creator')
-  .limit(30)
-  .exec((err, articles) => {
+  .paginater(options, (err, data) => {
     if (err) return next(err)
-
-    res.render('articles/index', {articles})
+    res.render('articles/index', data)
   })
 })
 
@@ -36,15 +40,20 @@ router.get('/', (req, res, next) => {
 router.get('/subscription', ifUser, loadSubscriptions, (req, res, next) => {
   let subscriptions = res.locals.subscriptions
   let hubs = subscriptions.map(subscription => subscription.hub)
+  var options = {
+    perPage: 10,
+    delta: 3,
+    page: req.query.page
+  }
 
   Article
   .find({hubs: {$in: hubs}})
   .sort('-createdAt')
   .populate('hubs')
   .populate('creator')
-  .exec((err, articles) => {
+  .paginater(options, (err, data) => {
     if (err) return next(err)
-    res.render('articles/subscription', {articles})
+    res.render('articles/subscription', data)
   })
 })
 
