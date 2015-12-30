@@ -63,12 +63,16 @@ router.get('/:username/hubs', loadUser, loadSubscriptions, (req, res, next) => {
   const subscriptions = res.locals.subscriptions || []
   const subscribedHubsIds = subscriptions.map(subscription => subscription.hub.toString())
   const user = res.locals.user
-
+  var options = {
+    perPage: 10,
+    delta: 3,
+    page: req.query.page
+  }
   Hub
   .find({creator: user._id})
   .sort('-createdAt')
   .populate('creator')
-  .exec((err, hubs) => {
+  .paginater(options, (err, data) => {
     if (err) return next(err)
 
     res.locals.isSubscribed = (hub) => {
@@ -76,22 +80,26 @@ router.get('/:username/hubs', loadUser, loadSubscriptions, (req, res, next) => {
       return subscribedHubsIds.indexOf(id) !== -1
     }
 
-    res.render('users/hubs/index', {hubs})
+    res.render('users/hubs/index', data)
   })
 })
 
 // GET /users/:username/comments
 router.get('/:username/comments', loadUser, (req, res, next) => {
   const user = res.locals.user
+  var options = {
+    perPage: 10,
+    delta: 3,
+    page: req.query.page
+  }
   Comment
   .find({creator: user._id})
   .sort('-createdAt')
   .populate('article')
   .populate('creator')
-  .exec((err, comments) => {
+  .paginater(options, (err, data) => {
     if (err) return next(err)
-
-    res.render('users/comments/index', {comments})
+    res.render('users/comments/index', data)
   })
 })
 

@@ -103,21 +103,25 @@ router.get('/:slug', loadHub, loadSubscription, (req, res, next) => {
 // GET /hubs/:slug/subscribers
 router.get('/:slug/subscribers', loadHub, loadSubscription, (req, res, next) => {
   let hub = res.locals.hub
+  var options = {
+    perPage: 10,
+    delta: 3,
+    page: req.query.page
+  }
 
   res.locals.isSubscribed = (hub) => !!res.locals.subscription
-  
+
   SubscriptionUserToHub
-  .find({hub: hub._id })
+  .find({hub: hub._id})
   .populate('creator')
   .sort('-createdAt')
-  .exec((err, subscriptions) => {
+  .paginater(options, (err, data) => {
     if (err) return next(err)
-    let users = subscriptions.map(subscription => subscription.creator)
-    res.render('hubs/subscribers', {users})
+    data.results = data.results.map(subscription => subscription.creator)
+    
+    res.render('hubs/subscribers', data)
   })
 })
-
-
 
 // PUT /hubs/:slug
 router.put('/:slug', ifUser, loadHub, ifCanEdit, (req, res, next) => {

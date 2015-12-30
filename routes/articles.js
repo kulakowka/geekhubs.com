@@ -78,7 +78,7 @@ router.get('/:id/:slug', loadArticle, function (req, res, next) {
   .populate('article')
   .exec((err, comments) => {
     if (err) return next(err)
-    res.render('articles/show', {comments, comment: {}})
+    res.render('articles/show', {results: comments, comment: {}})
   })
 })
 
