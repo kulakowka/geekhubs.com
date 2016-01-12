@@ -1,21 +1,20 @@
-var bodyParser = require('body-parser')
-var browserify = require('browserify-middleware')
-var cookieParser = require('cookie-parser')
-var express = require('express')
-var favicon = require('serve-favicon')
-var helmet = require('helmet')
-var i18n = require('i18n')
-var logger = require('morgan')
-var methodOverride = require('method-override')
-var moment = require('moment')
-var passport = require('passport')
-var path = require('path')
-var pmx = require('pmx')
-var kue = require('kue')
+import bodyParser from 'body-parser'
+import browserify from 'browserify-middleware'
+import cookieParser from 'cookie-parser'
+import express from 'express'
+import favicon from 'serve-favicon'
+import helmet from 'helmet'
+import i18n from 'i18n'
+import logger from 'morgan'
+import methodOverride from 'method-override'
+import passport from 'passport'
+import path from 'path'
+import pmx from 'pmx'
+import kue from 'kue'
 
 pmx.init()
 
-var app = express()
+let app = express()
 
 // minimal config
 i18n.configure({
@@ -35,18 +34,16 @@ app.use(i18n.init)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(logger('dev'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
 app.use(require('./config/session'))
-app.use(require('stylus').middleware(path.join(__dirname, 'public')));
+app.use(require('stylus').middleware(path.join(__dirname, 'public')))
 app.use(require('./config/stylus'))
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')))
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'static')))
 app.get('/js/app.js', browserify(path.join(__dirname, 'assets/js/app.js')))
 
 // Passport.js
@@ -54,13 +51,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // view helpers
-app.use((req, res, next) => {
-  res.locals.subscribedToArticlesDigest = req.session.subscribedToArticlesDigest
-  res.locals.env = process.env.NODE_ENV
-  res.locals.moment = moment
-  res.locals.currentUser = req.user
-  next()
-})
+app.use(require('./config/viewHelpers'))
 
 // Routes
 app.use(require('./routes/sidebar'))
@@ -77,35 +68,20 @@ app.use('/subscription', require('./routes/subscription'))
 app.use('/admin/kue', require('./routes/policies/ifAdmin'), kue.app)
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+app.use((req, res, next) => {
+  var err = new Error('Not Found')
+  err.status = 404
+  next(err)
+})
 
 // error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
+app.use((err, req, res, next) => {
+  let error = app.get('env') === 'development' ? err : {}
+  res.status(err.status || 500)
   res.render('error', {
     message: err.message,
-    error: {}
-  });
-});
+    error: error
+  })
+})
 
-
-module.exports = app;
+module.exports = app
