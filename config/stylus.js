@@ -6,6 +6,7 @@ function compile (str, path) {
   return stylus(str)
     .set('filename', path)
     .set('compress', true)
+    // .set('include css', true)
     .use(nib())
     .import('nib')
 }
