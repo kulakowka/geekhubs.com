@@ -14,21 +14,21 @@ module.exports = function (req, res, next) {
   let time = moment().startOf('year')
 
   async.parallel({
-    topArticles: function (callback) {
+    topArticles (callback) {
       Article
       .find({createdAt: {$gte: time}})
       .sort('-commentsCount')
       .limit(10)
       .exec(callback)
     },
-    topWriters: function (callback) {
+    topWriters (callback) {
       User
       .find({createdAt: {$gte: time}})
       .sort('-articlesCount')
       .limit(10)
       .exec(callback)
     },
-    topHubs: function (callback) {
+    topHubs (callback) {
       Hub
       .find({createdAt: {$gte: time}})
       .sort('-articlesCount')
