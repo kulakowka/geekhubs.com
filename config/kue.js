@@ -1,8 +1,6 @@
-var kue = require('kue')
-var GetEmailTemplateService = require('../services/emails/getTemplate')
-
-var mailgunSend = require('./mailgun').mailgunSend
-
+const kue = require('kue')
+const GetEmailTemplateService = require('../services/emails/getTemplate')
+const mailgunSend = require('./mailgun').mailgunSend
 const maxActiveJobs = 20
 
 // Disable events on objects for better job performance
@@ -19,7 +17,6 @@ Queue.process('email', maxActiveJobs, processEmail)
  * The function is called for each job in the queue
  */
 function processEmail (job, done) {
-  
   GetEmailTemplateService(job.data)
   .then(result => {
     var data = getData(job, result)

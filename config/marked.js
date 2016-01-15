@@ -1,7 +1,7 @@
 'use strict'
 
-var marked = require('marked')
-var highlightjs = require('highlight.js')
+const marked = require('marked')
+const highlightjs = require('highlight.js')
 
 marked.setOptions({
   // renderer: new marked.Renderer(),

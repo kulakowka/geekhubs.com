@@ -1,16 +1,18 @@
-import bodyParser from 'body-parser'
-import browserify from 'browserify-middleware'
-import cookieParser from 'cookie-parser'
-import express from 'express'
-import favicon from 'serve-favicon'
-import helmet from 'helmet'
-import i18n from 'i18n'
-import logger from 'morgan'
-import methodOverride from 'method-override'
-import passport from 'passport'
-import path from 'path'
-import pmx from 'pmx'
-import kue from 'kue'
+'use strict'
+
+const bodyParser = require('body-parser')
+const browserify = require('browserify-middleware')
+const cookieParser = require('cookie-parser')
+const express = require('express')
+const favicon = require('serve-favicon')
+const helmet = require('helmet')
+const i18n = require('i18n')
+const logger = require('morgan')
+const methodOverride = require('method-override')
+const passport = require('passport')
+const path = require('path')
+const pmx = require('pmx')
+const kue = require('kue')
 
 pmx.init()
 

@@ -1,4 +1,6 @@
-import moment from 'moment'
+'use strict'
+
+const moment = require('moment')
 
 module.exports = function viewHelpers (req, res, next) {
   res.locals.subscribedToArticlesDigest = req.session.subscribedToArticlesDigest
